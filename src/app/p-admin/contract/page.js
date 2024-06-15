@@ -149,10 +149,11 @@ function ContractPage() {
         resultData = UnitsInRegion.map((unit) => {
           // console.log("foundUnit ----->", unit.schoolCode)
           const foundUnit = contractlist.find(
-            (cl) => cl.unitcode == unit.schoolCode && cl.isConfirm != 2
+            (cl) => cl.unitcode == unit.schoolCode 
+            && cl.isConfirm != 2
           );
           if (foundUnit) {
-            console.log("founded--->", foundUnit);
+            // console.log("founded--->", foundUnit);
             return {
               regioncode: foundUnit.regioncode,
               regionname: foundUnit.regionname,
@@ -160,7 +161,7 @@ function ContractPage() {
               unitname: foundUnit.unitname,
               unitgrade: foundUnit.Unit?.schoolGrade,
               unitAddress: foundUnit.Unit?.schoolAddress,
-              companyname: foundUnit.companyname,
+              companyname: foundUnit?.companyname,
               companyowner: foundUnit.company?.owner,
               companyphone: foundUnit.company?.phone,
               address: foundUnit.address,
@@ -170,7 +171,7 @@ function ContractPage() {
                   : foundUnit.isConfirm == 1
                   ? "1-تایید شده  "
                   : foundUnit.isConfirm == 2
-                  ? "2-لغو شده"
+                  ? "2-رد شده"
                   : foundUnit.isConfirm == 10
                   ? "10-قرارداد ندارد"
                   : "100-بدون اقدام",
