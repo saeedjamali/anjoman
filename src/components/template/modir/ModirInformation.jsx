@@ -102,7 +102,7 @@ function ModirInformation({ modir }) {
                 pauseOnHover
                 theme="light"
             />
-            <div className='w-full border-2 border-slate-100 mt-2 '>
+            <div className='w-full border-2 border-slate-100 mt-2 font-iranSans'>
                 <div className='flex items-center  bg-slate-100 p-2' onClick={() => setIsModriInformation(prev => !prev)}>
                     <span className=' w-full flex text-[12px]'>اطلاعات مدیر</span>
                     <span className={isActiveState == 0 ? 'text-orange-500 ' : isActiveState == 1 ? ' text-green-500 ' : 'text-red-500'}>
