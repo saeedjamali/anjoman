@@ -94,7 +94,7 @@ const valiadtePhone = (phone) => {
 };
 
 const valiadtePassword = (password) => {
-  const pattern = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/g;
+  const pattern = /^(?=.*?[a-zA-Z])(?=.*?[0-9]).{8,}$/g;
   //min 8 char includes number and character
   return pattern.test(password);
 };
