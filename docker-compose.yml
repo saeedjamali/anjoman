@@ -1,0 +1,15 @@
+services:
+  app:
+    image: anjoman:latest
+    ports:
+      - "80:3000"
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/anjoman
+    volumes:
+      - ./data:/upload
+  mongodb:
+    image: mongo:5.0
+    volumes:
+      - ./mongo-data:/data/db
+    ports:
+      - 27017:27017

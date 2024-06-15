@@ -1,0 +1,174 @@
+@import url("../style/fonts.css");
+@import url("../style/style.css");
+@import '~react-toastify/dist/ReactToastify.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  font-family: iranSans;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  font-size: 16px;
+
+
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+
+/* Input {
+  font-family: 'font-iranyekan';
+} */
+
+/* width */
+::-webkit-scrollbar {
+  direction: rtl;
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #5f5e5e;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Remove Arrows/Spinners */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  /* font-family: "font-iranSans"; */
+}
+
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center
+  }
+
+  .flex-col-center {
+    @apply flex flex-col items-center justify-center
+  }
+
+  .role-section {
+    @apply col-span-1 cursor-pointer bg-gradient-to-b from-primary_color via-primary_color to-secondary_color rounded-lg overflow-hidden flex-col-center w-36
+  }
+
+  .input-text {
+    @apply text-[14px] border-2 px-4 p-2 rounded-md w-full outline-none text-header-font-color;
+  }
+
+  .input-text-information {
+    @apply text-[14px] border-[1px] px-4 p-2 rounded-t-md w-full outline-none text-header-font-color;
+  }
+
+  .input-text-modal {
+    @apply text-[16px] border-[1px] px-4 p-2 rounded-md w-full outline-none text-header-font-color;
+  }
+
+  .sidebar_item {
+    @apply w-full py-2 px-2 flex flex-col cursor-pointer bg-slate-300 mt-2;
+
+  }
+
+  .header-table {
+    @apply mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between font-iranyekanBold
+  }
+
+  .bg-table {
+    @apply p-4 bg-slate-200 rounded-lg
+  }
+
+}
+
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* input type file button */
+
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.custom-file-input::before {
+  content: 'بارگذاری از اکسل';
+  display: inline-block;
+  /* background: linear-gradient(top, #f9f9f9, #e3e3e3); */
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.custom-file-input:hover::before {
+  border-color: black;
+}
+
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+input[type='file'] {
+  color: transparent;
+  width: 96px;
+}
+
+TableCell {
+  font-size: 14px;
+}
