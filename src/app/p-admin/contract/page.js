@@ -152,16 +152,17 @@ function ContractPage() {
             (cl) => cl.unitcode == unit.schoolCode && cl.isConfirm != 2
           );
           if (foundUnit) {
+            console.log("founded--->", foundUnit);
             return {
               regioncode: foundUnit.regioncode,
               regionname: foundUnit.regionname,
               unitcode: foundUnit.unitcode,
               unitname: foundUnit.unitname,
-              unitgrade: foundUnit.Unit.schoolGrade,
-              unitAddress: foundUnit.Unit.schoolAddress,
+              unitgrade: foundUnit.Unit?.schoolGrade,
+              unitAddress: foundUnit.Unit?.schoolAddress,
               companyname: foundUnit.companyname,
-              companyowner: foundUnit.company.owner,
-              companyphone: foundUnit.company.phone,
+              companyowner: foundUnit.company?.owner,
+              companyphone: foundUnit.company?.phone,
               address: foundUnit.address,
               isConfirm:
                 foundUnit.isConfirm == 0
