@@ -20,7 +20,7 @@ export default function Home() {
   // const { phone } = useAppProvider();
 
   return (
-    <div >
+    <div className="">
       <ToastContainer
         bodyClassName={() =>
           " flex-center text-sm font-white p-3"
@@ -36,24 +36,35 @@ export default function Home() {
         pauseOnHover
         theme="light"
       />
-      <div className="w-full h-screen bg-white md:flex flex-row-reverse bg-blu">
-        <div className="w-full h-2/5 md:h-screen md:w-3/5 bg-gradient-to-b from-primary_color via-primary_color to-secondary_color flex-center relative">
-          <div className="w-4/5 h-full flex-col-center absolute top-[2%] md:top-0 space-y-8 mt-8 md:mt-0">
-            <span className="font-shabnam text-header-font-color text-center ">
-              برنامه ریزی آموزشی درست آینده ما را می سازد
-            </span>
+      <div className="w-full h-screen   bg-white lg:flex lg:flex-row-reverse relative">
+        <div className="order-2 lg:order-1 w-full h-2/5 lg:h-screen lg:w-3/5 bg-gradient-to-b from-primary_color via-primary_color to-secondary_color flex-center relative rounded-b-xl lg:rounded-bl-none lg:rounded-r-xl">
+          <div className="w-4/5 h-full flex-col-center absolute top-[20%] lg:top-0 space-y-8 mt-8 lg:mt-0">
+            <div className="bg-green-200 w-4/5 h-[450px] flex-col-center rounded-xl">
+              <span className=" text-header-font-color text-center ">
+                برنامه ریزی آموزشی درست آینده ما را می سازد
+              </span>
+              <Image
+                src={"/images/group.png"}
+                width={100}
+                height={100}
+                alt="banner"
+                className="w-64 h-64 lg:w-96 lg:h-96"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="order-1 w-full h-3/5 lg:h-screen lg:w-2/5 lg:relative flex-col-center shadow-lg  ">
+          <div className="w-48 h-48 absolute top-0 right-0 p-8">
             <Image
-              src={"/images/group.png"}
+              src={"/images/logo.webp"}
               width={100}
               height={100}
               alt="banner"
-              className="w-48 h-48 md:w-80 md:h-80"
+              className="w-64"
             />
           </div>
-        </div>
-        <div className="w-full h-full md:h-screen md:w-2/5 relative flex-col-center shadow-lg  ">
-          <div className="absolute top-[10%] md:top-[21%] md:-left-20 flex-col-center bg-white  rounded-lg shadow-lg shadow-indigo-300 min-w-80 max-w-96 min-h-96   md:h-[27rem]">
-            <div className=" p-4 md:p-8 ">
+          <div className="absolute top-[55%] lg:top-[25%] lg:-left-20 flex-col-center bg-white  rounded-lg shadow-lg shadow-indigo-300 min-w-80 max-w-96 min-h-96   lg:h-[27rem]">
+            <div className=" p-4 lg:p-8 ">
               {/* Select Role */}
 
               {authTypesForm == authTypes.ROLES && (
