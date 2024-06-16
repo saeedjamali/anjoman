@@ -148,6 +148,7 @@ function ContractPage() {
       case 100: //?گزارش جامع
         resultData = UnitsInRegion.map((unit) => {
           // console.log("foundUnit ----->", unit.schoolCode)
+          contractlist.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
           const foundUnit = contractlist.find(
             (cl) => cl.unitcode == unit.schoolCode 
             && cl.isConfirm != 2
@@ -205,7 +206,7 @@ function ContractPage() {
         "مالک شرکت",
         "شماره تماس مالک",
         "آدرس محل توزیع",
-        "وضعیت تایید",
+        "آخرین وضعیت ",
         "نام مدیر",
         "شماره تماس مدیر",
         "تاریخ ثبت ",
