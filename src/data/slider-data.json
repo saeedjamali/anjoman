@@ -1,58 +1,16 @@
 [
   {
     "id": 1,
-    "title": "ARE AWESOME",
-    "tagline": "NEXTJS 13 & SWIPER SLIDER",
-    "image": "/images/Home32.jpg",
-    "buttons": [
-      {
-        "id": 1,
-        "text": "Roberto Nickson",
-        "link": "https://www.pexels.com/@rpnickson/",
-        "type": "btn-dark btn-circle"
-      }
-    ]
+    "title": "فراخوان جذب مدرس",
+    "tagline": "اداره انجمن اولیا اداره آموزش و پرورش خراسان رضوی در نظر دارد از طریق مدرسین با موضوعات مختلف جذب نماید",
+    "image": "/images/burst.svg",
+    "date": "1403-03-31"
   },
   {
     "id": 2,
-    "title": "GIVE IT A SHOOT",
-    "tagline": "IF YOU LIKE IT",
-    "image": "/images/clubset1.jpg",
-    "buttons": [
-      {
-        "id": 1,
-        "text": "Julia M Cameron",
-        "link": "https://www.pexels.com/@julia-m-cameron/",
-        "type": "btn-dark btn-circle"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "title": "GIVE IT A SHOOT",
-    "tagline": "IF YOU LIKE IT",
-    "image": "/images/clubset1.jpg",
-    "buttons": [
-      {
-        "id": 1,
-        "text": "Julia M Cameron",
-        "link": "https://www.pexels.com/@julia-m-cameron/",
-        "type": "btn-dark btn-circle"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "title": "GIVE IT A SHOOT",
-    "tagline": "IF YOU LIKE IT",
-    "image": "/images/clubset1.jpg",
-    "buttons": [
-      {
-        "id": 1,
-        "text": "Julia M Cameron",
-        "link": "https://www.pexels.com/@julia-m-cameron/",
-        "type": "btn-dark btn-circle"
-      }
-    ]
+    "title": "رونمایی از سامانه انجمن اولیا",
+    "tagline": "سامانه استانی انجمن اولیا با حضور مدیر کل محترم رونمایی شد",
+    "image": "/images/burst.svg",
+    "date": "1403-03-22"
   }
 ]

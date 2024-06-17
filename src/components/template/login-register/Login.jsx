@@ -185,7 +185,7 @@ function Login({ role, SetAuthTypesForm }) {
                                 </span>
                             </Tooltip>
                         </div>
-                        <button className="w-full bg-btn-secondary text-btn-font-secondary font-iranyekan  py-2 rounded-full mt-4" onClick={() => SetAuthTypesForm(authTypes.REGISTER)}>ثبت نام</button>
+                        <button className="w-full bg-btn-secondary text-btn-font-secondary   py-2 rounded-full mt-4" onClick={() => SetAuthTypesForm(authTypes.REGISTER)}>ثبت نام</button>
                     </form>
                 </div>
             </div>

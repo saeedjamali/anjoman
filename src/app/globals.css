@@ -91,6 +91,26 @@ body {
   /* font-family: "font-iranSans"; */
 }
 
+/* .swiper {
+  width: 600px;
+  height: 300px;
+} */
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #2AD4FF;
+  font-size: 8px;
+  opacity: 0.3
+    /* height: 12px; */
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  color: #1dcdf9;
+  opacity: 1
+    /* height: 12px; */
+}
+
 @layer components {
   .flex-center {
     @apply flex items-center justify-center
