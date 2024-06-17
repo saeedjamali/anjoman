@@ -172,7 +172,7 @@ function Register({ SetAuthTypesForm, role }) {
                     <IoMdArrowRoundForward />
                 </span>
                 <div className="w-full flex-1" >
-                    <span className="font-shabnamBold text-header-font-color md:mb-8 flex-center mb-6">{`ثبت نام ${role.title}`}</span>
+                    <span className=" text-header-font-color md:mb-8 flex-center mb-6">{`ثبت نام ${role.title}`}</span>
                     <form className="w-full" >
                         {role == roles.MODIR &&
                             <Input

@@ -20,6 +20,11 @@
   src: url("/fonts/iranyekan/IranyekanBold.ttf")
 }
 
+@font-face {
+  font-family: iranNastaliq;
+  src: url("/fonts/irannas/IranNastaliq.ttf");
+}
+
 
 @font-face {
   font-family: shabnam;
@@ -31,6 +36,7 @@
   font-family: shabnamBold;
   src: url("/fonts/shabnam/Shabnam-Bold.woff");
 }
+
 /* 
 @font-face {
   font-family: iransans;

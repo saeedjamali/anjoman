@@ -24,7 +24,8 @@ module.exports = {
         shabnam: ["shabnam"],
         shabnamBold: ["shabnamBold"],
         iranSans: ["iransans"],
-        vazir: ["Vazirmatn"]
+        vazir: ["Vazirmatn"],
+        iranNastaliq: ["iranNastaliq"]
        
 
       },

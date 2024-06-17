@@ -130,7 +130,7 @@ function Login({ role, SetAuthTypesForm }) {
                 <span className="bg-btn-secondary m-2 rounded-full w-6 h-6 cursor-pointer flex-center" >
                     <IoMdArrowRoundForward onClick={() => SetAuthTypesForm(authTypes.ROLES)} />
                 </span>
-                <span className="font-shabnamBold text-header-font-color md:mb-12 flex-center mb-8 ">ورود به پنل کاربری</span>
+                <span className="text-[xl] text-header-font-color md:mb-12 flex-center mb-8 ">ورود به پنل کاربری</span>
                 <div className="w-full" >
                     <form className="w-full " onSubmit={() => loginHandler(event)} >
 
