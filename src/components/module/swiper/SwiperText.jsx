@@ -87,7 +87,7 @@ function SwiperText({ data }) {
                     body: "py-6 bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                     base: "border-[#292f46] bg-slate-500 text-black",
-                    header: " border-[#292f46] text-white",
+                    header: " border-[#292f46] text-white bg-primary_color ",
                     footer: " border-[#292f46] bg-white",
                     closeButton: "hover:bg-white/5 active:bg-white/10 ",
                 }}
@@ -96,10 +96,10 @@ function SwiperText({ data }) {
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col justify-between items-start ">
-                                <span className='text-[16px]'>
+                                <span className='text-[16px] font-iranyekan'>
                                     {title}
                                 </span>
-                                <span className='text-[8px]'>
+                                <span className='text-[8px] font-iranSans'>
                                     تاریخ خبر : {date}
                                 </span>
                             </ModalHeader>

@@ -506,11 +506,11 @@ export default function ModirManager({ selectedKeys,
                 onOpenChange={onOpenChange}
                 radius="lg"
                 classNames={{
-                    body: "py-6",
+                    body: "py-6 bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                     base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                    header: "border-b-[1px] border-[#292f46]",
-                    footer: "border-t-[1px] border-[#292f46]",
+                    header: " border-[#292f46]  bg-primary_color text-white",
+                    footer: " border-[#292f46] bg-white",
                     closeButton: "hover:bg-white/5 active:bg-white/10",
                 }}
             >
@@ -540,9 +540,9 @@ export default function ModirManager({ selectedKeys,
                                                     <div className="flex gap-2">
                                                         {/* <Input type="text" label="آیدی کاربری" value={user} disabled /> */}
                                                         {/* <Input type="text" label="وضعیت فعالیت (0-1-2)" value={isActive == 0 ? 'در حال بررسی' : isActive == 1 ? 'تایید شده' : 'رد شده'} onChange={() => setIsActive(event.target.value)} /> */}
-                                                        <div className="bg-white rounded-lg p-2 flex-1">
+                                                        <div className="bg-stone-100 rounded-lg p-2 flex-1">
                                                             <RadioGroup
-                                                                className="bg-white text-[14px]"
+                                                                className="text-[14px]"
                                                                 label="وضعیت فعالیت"
                                                                 orientation="horizontal"
                                                                 value={isActive}
@@ -583,16 +583,13 @@ export default function ModirManager({ selectedKeys,
                                         بستن
                                     </Button>
                                     <Button
-                                        className="bg-green-700 text-white"
+                                        isLoading={isLoadingForModalbtn}
+                                        className="bg-green-700 text-white hover:bg-green-500"
                                         color="success"
                                         variant="light"
                                         onClick={updateModirsHandler}
                                     >
-                                        <div className="flex-1 flex">ویرایش</div>
-                                        <div className='flex-center'>
-                                            {isLoadingForModalbtn && <Spinner />}
-                                        </div>
-
+                                        ویرایش
                                     </Button>
 
                                 </ModalFooter>

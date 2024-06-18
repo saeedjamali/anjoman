@@ -664,11 +664,11 @@ export default function ModirUnitAdmin({ children }) {
                 onOpenChange={onOpenChange}
                 radius="lg"
                 classNames={{
-                    body: "py-6",
+                    body: "py-6 bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                     base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                    header: "border-b-[1px] border-[#292f46]",
-                    footer: "border-t-[1px] border-[#292f46]",
+                    header: " border-[#292f46]  bg-primary_color text-white",
+                    footer: " border-[#292f46] bg-white",
                     closeButton: "hover:bg-white/5 active:bg-white/10",
                 }}
             >
@@ -698,9 +698,9 @@ export default function ModirUnitAdmin({ children }) {
                                                             <Input type="text" label="توضیحات" value={comment} onChange={() => setComment(event.target.value)} />
 
                                                         </div>
-                                                        <div className="bg-white rounded-md p-2">
+                                                        <div className="bg-stone-100 rounded-md p-2">
                                                             <RadioGroup
-                                                                className="bg-white text-[14px]"
+                                                                className=" text-[14px]"
                                                                 label="وضعیت"
                                                                 orientation="horizontal"
                                                                 value={isActiveM}
@@ -729,16 +729,13 @@ export default function ModirUnitAdmin({ children }) {
                                             بستن
                                         </Button>
                                         <Button
+                                            isLoading={isLoading}
                                             className="bg-green-700 text-white"
                                             color="success"
                                             variant="light"
                                             onClick={updateModirsHandler}
                                         >
-                                            <div className="flex-1 flex">ویرایش</div>
-                                            <div className='flex-center'>
-                                                {isLoadingForModalbtn && <Spinner />}
-                                            </div>
-
+                                            ویرایش
                                         </Button>
 
                                     </ModalFooter>
@@ -781,9 +778,9 @@ export default function ModirUnitAdmin({ children }) {
                                                             <Input type="text" label="سال تحصیلی" value={year} disabled />
 
                                                         </div>
-                                                        <div className="bg-white rounded-md p-2">
+                                                        <div className="bg-stone-100 rounded-md p-2">
                                                             <RadioGroup
-                                                                className="bg-white text-[14px]"
+                                                                className=" text-[14px]"
                                                                 label="وضعیت"
                                                                 orientation="horizontal"
                                                                 value={isConfirm}
@@ -797,9 +794,7 @@ export default function ModirUnitAdmin({ children }) {
 
 
                                                         </div>
-                                                        <div className="flex bg-white ">
 
-                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -816,16 +811,13 @@ export default function ModirUnitAdmin({ children }) {
                                             بستن
                                         </Button>
                                         <Button
+                                            isLoading={isLoadingForModalbtn}
                                             className="bg-green-700 text-white"
                                             color="success"
                                             variant="light"
                                             onClick={updateUnitHandler}
                                         >
-                                            <div className="flex-1 flex">ویرایش</div>
-                                            <div className='flex-center'>
-                                                {isLoadingForModalbtn && <Spinner />}
-                                            </div>
-
+                                            ویرایش
                                         </Button>
 
                                     </ModalFooter>

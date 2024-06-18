@@ -542,11 +542,11 @@ export default function AdminManager({ selectedKeys,
                 onOpenChange={onOpenChange}
                 radius="lg"
                 classNames={{
-                    body: "py-6",
+                    body: "py-6 bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                     base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                    header: "border-b-[1px] border-[#292f46]",
-                    footer: "border-t-[1px] border-[#292f46]",
+                    header: " border-[#292f46]  bg-primary_color text-white",
+                    footer: " border-[#292f46] bg-white",
                     closeButton: "hover:bg-white/5 active:bg-white/10",
                 }}
             >
@@ -579,12 +579,12 @@ export default function AdminManager({ selectedKeys,
 
                                                     </div>
 
-                                                    <div className="flex gap-2">
+                                                    <div className="flex gap-2 ">
                                                         {/* <Input type="text" label="آیدی کاربری" value={user} disabled /> */}
-                                                        <div className="bg-white rounded-lg p-2 flex-1">
+                                                        <div className="bg-stone-100 rounded-lg p-2 flex-1 ">
                                                             <RadioGroup
-                                                                className="bg-white text-[14px]"
-                                                                label="سطح"
+                                                                className=" text-[14px] bg-"
+                                                                label="وضعیت"
                                                                 orientation="horizontal"
                                                                 value={isActive}
                                                                 onValueChange={setIsActive}
@@ -599,9 +599,9 @@ export default function AdminManager({ selectedKeys,
                                                     </div>
                                                     <div className="flex gap-2">
                                                         {/* <Input type="text" label="آیدی کاربری" value={user} disabled /> */}
-                                                        <div className="bg-white rounded-lg p-2 flex-1">
+                                                        <div className="bg-stone-100 rounded-lg p-2 flex-1">
                                                             <RadioGroup
-                                                                className="bg-white text-[14px]"
+                                                                className="text-[14px]"
                                                                 label="سطح"
                                                                 orientation="horizontal"
                                                                 value={level}

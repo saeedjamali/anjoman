@@ -533,11 +533,11 @@ export default function UserManager({ selectedKeys,
                 onOpenChange={onOpenChange}
                 radius="lg"
                 classNames={{
-                    body: "py-6",
+                    body: "py-6 bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                     base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                    header: "border-b-[1px] border-[#292f46]",
-                    footer: "border-t-[1px] border-[#292f46]",
+                    header: " border-[#292f46]  bg-primary_color text-white",
+                    footer: " border-[#292f46] bg-white",
                     closeButton: "hover:bg-white/5 active:bg-white/10",
                 }}
             >
@@ -562,9 +562,9 @@ export default function UserManager({ selectedKeys,
                                                     </div>
                                                     <div className="flex gap-2">
                                                         {/* <Input type="text" label="وضعیت فعالیت (0-1-2)" value={isActive} onChange={() => setIsActive(event.target.value)} /> */}
-                                                        <div className="bg-white rounded-md p-2 flex-1">
+                                                        <div className="bg-stone-100 rounded-md p-2 flex-1">
                                                             <RadioGroup
-                                                                className="bg-white text-[14px]"
+                                                                className=" text-[14px]"
                                                                 label="وضعیت"
                                                                 orientation="vertical"
                                                                 value={isActive}
@@ -579,9 +579,9 @@ export default function UserManager({ selectedKeys,
 
                                                         </div>
                                                         {/* <Input type="text" label="تعلیق کاربری" value={isBan ? "" : "تعلیق"} onChange={() => setisBan(event.target.value)} /> */}
-                                                        <div className="bg-white rounded-md p-2 flex-1">
+                                                        <div className="bg-stone-100 rounded-md p-2 flex-1">
                                                             <RadioGroup
-                                                                className="bg-white text-[14px]"
+                                                                className=" text-[14px]"
                                                                 label="مسدود سازی"
                                                                 orientation="vertical"
                                                                 value={isBan}

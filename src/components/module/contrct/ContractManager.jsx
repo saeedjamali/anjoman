@@ -567,11 +567,11 @@ export default function ContractManager({
                     onOpenChange={onOpenChange}
                     radius="lg"
                     classNames={{
-                        body: "py-6",
+                        body: "py-6 bg-white",
                         backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-                        base: "border-[#292f46] bg-slate-600 text-[#a8b0d3]",
-                        header: "border-b-[1px] border-[#292f46]",
-                        footer: "border-t-[1px] border-[#292f46]",
+                        base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
+                        header: " border-[#292f46]  bg-primary_color text-white",
+                        footer: " border-[#292f46] bg-white",
                         closeButton: "hover:bg-white/5 active:bg-white/10",
                     }}
                 >
@@ -672,11 +672,11 @@ export default function ContractManager({
                     onOpenChange={onOpenChange}
                     radius="lg"
                     classNames={{
-                        body: "py-6",
+                        body: "py-6 bg-white",
                         backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                         base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                        header: "border-b-[1px] border-[#292f46]",
-                        footer: "border-t-[1px] border-[#292f46]",
+                        header: " border-[#292f46]  bg-red-900 text-white",
+                        footer: " border-[#292f46] bg-white",
                         closeButton: "hover:bg-white/5 active:bg-white/10",
                     }}
                 >
@@ -691,7 +691,7 @@ export default function ContractManager({
                                         <form>
                                             <div className="relative mt-2 flex justify-end col-span-1">
                                                 <div className="flex flex-col  w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
-                                                    <div className="flex gap-2">
+                                                    <div className="flex gap-2 text-black">
                                                         <p>
                                                             {`از حذف قرارداد با واحد سازمانی ${currenContract.unitname} اطمینان دارید؟`}
                                                         </p>
@@ -706,7 +706,7 @@ export default function ContractManager({
                                     <Button color="foreground" variant="light" onPress={onClose}>
                                         بستن
                                     </Button>
-                                    <Button color="danger" variant="light" isLoading={isLoadingForModalbtn} onPress={() => onDeleteContractHandler(currenContract, contractlist)}>
+                                    <Button className="bg-red-700 text-white" variant="light" isLoading={isLoadingForModalbtn} onPress={() => onDeleteContractHandler(currenContract, contractlist)}>
                                         حذف
                                     </Button>
                                 </ModalFooter>

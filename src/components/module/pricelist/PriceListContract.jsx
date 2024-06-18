@@ -241,11 +241,11 @@ export default function PriceListContract({ selectedYear, selectedUnit, selected
                 onOpenChange={onOpenChange}
                 radius="lg"
                 classNames={{
-                    body: "py-6",
+                    body: "py-6 bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-                    base: "border-[#292f46] bg-slate-600 text-[#a8b0d3]",
-                    header: "border-b-[1px] border-[#292f46]",
-                    footer: "border-t-[1px] border-[#292f46]",
+                    base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
+                    header: " border-[#292f46]  bg-primary_color text-white",
+                    footer: " border-[#292f46] bg-white",
                     closeButton: "hover:bg-white/5 active:bg-white/10",
                 }}
             >
@@ -272,7 +272,7 @@ export default function PriceListContract({ selectedYear, selectedUnit, selected
                                                         <Input required autoFocus type="Number" label="تعداد" color={"success"} value={quantity == 0 ? null : quantity} onChange={(event) => setQuantity(event.target.value)} />
                                                         <Input required type="text" label="قیمت قرارداد (ریال)" color={"success"} value={priceInContract == 0 ? null : parseFloat(priceInContract.replace(/,/g, '')).toLocaleString()} onChange={(e) => setPriceInContract(e.target.value)} />
                                                     </div>
-                                                    <span className="text-[12px] ">کلیه قیمت ها براساس قیمت واحد می باشد و از درج قیمت کلی خودداری شود</span>
+                                                    <span className="text-[12px] text-black">کلیه قیمت ها براساس قیمت واحد می باشد و از درج قیمت کلی خودداری شود</span>
                                                 </div>
 
                                             </div>

@@ -614,11 +614,11 @@ export default function UnitManager() {
                 onOpenChange={onOpenChange}
                 radius="lg"
                 classNames={{
-                    body: "py-6",
+                    body: "py-6 bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                     base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                    header: "border-b-[1px] border-[#292f46]",
-                    footer: "border-t-[1px] border-[#292f46]",
+                    header: " border-[#292f46]  bg-primary_color text-white",
+                    footer: " border-[#292f46] bg-white",
                     closeButton: "hover:bg-white/5 active:bg-white/10",
                 }}
             >
@@ -629,10 +629,10 @@ export default function UnitManager() {
                         <ModalContent>
                             {(onClose) => (
                                 <>
-                                    <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
+                                    <ModalHeader className="flex flex-col gap-1  text-md bg-red-900">
                                         حذف واحد سازمانی
                                     </ModalHeader>
-                                    <ModalBody className="font-iranyekan">
+                                    <ModalBody className="text-black">
                                         <p>
                                             {`از حذف واحد سازمانی ${school.schoolName} با کد ${school.schoolCode} در سال تحصیلی ${school.year} اطمینان دارید ؟  
                                             `}
@@ -647,15 +647,12 @@ export default function UnitManager() {
                                             بستن
                                         </Button>
                                         <Button
+                                            isLoading={isLoadingForModalbtn}
                                             className="bg-red-600 text-white"
                                             variant="light"
                                             onClick={removeUnitHandler}
                                         >
-                                            <div className="flex-1 flex">حذف</div>
-                                            <div className='flex-center '>
-                                                {isLoadingForModalbtn && <Spinner />}
-                                            </div>
-
+                                            حذف
                                         </Button>
 
                                     </ModalFooter>
@@ -699,7 +696,7 @@ export default function UnitManager() {
                                                         </div>
                                                         <div className="flex gap-2">
                                                             <Input type="text" label="سال تحصیلی" value={year} onChange={() => setYear(event.target.value)} />
-                                                            <Input type="text" label="اصلاح شده توسط کاربر" value={school.isModifiedByUser} />
+                                                            <Input type="text" label="اصلاح شده توسط کاربر" value={school.isModifiedByUser?'بلی' : 'خیر'} />
                                                         </div>
                                                     </div>
 

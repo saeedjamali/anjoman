@@ -638,11 +638,11 @@ export default function CompanyManager({ selectedKeys,
                 onOpenChange={onOpenChange}
                 radius="lg"
                 classNames={{
-                    body: "py-6",
+                    body: "py-6 bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                     base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                    header: "border-b-[1px] border-[#292f46]",
-                    footer: "border-t-[1px] border-[#292f46]",
+                    header: " border-[#292f46]  bg-primary_color text-white",
+                    footer: " border-[#292f46] bg-white",
                     closeButton: "hover:bg-white/5 active:bg-white/10",
                 }}
             >
@@ -653,10 +653,10 @@ export default function CompanyManager({ selectedKeys,
                         <ModalContent>
                             {(onClose) => (
                                 <>
-                                    <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
+                                    <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md bg-red-900">
                                         لغو همکاری شرکت
                                     </ModalHeader>
-                                    <ModalBody className="font-iranyekan">
+                                    <ModalBody className="text-black">
                                         <p>
                                             {`از لغو شرکت ${company.name} با کد ${company.code}  اطمینان دارید ؟  
                                             `}
@@ -671,14 +671,12 @@ export default function CompanyManager({ selectedKeys,
                                             بستن
                                         </Button>
                                         <Button
-                                            className="bg-red-600 text-white"
+                                            isLoading={isLoadingForModalbtn}
+                                            className="bg-red-700 text-white hover:bg-red-500"
                                             variant="light"
                                             onClick={removeCompanyHandler}
                                         >
-                                            <div className="flex-1 flex">حذف</div>
-                                            <div className='flex-center '>
-                                                {isLoadingForModalbtn && <Spinner />}
-                                            </div>
+                                            حذف
 
                                         </Button>
 
@@ -740,16 +738,13 @@ export default function CompanyManager({ selectedKeys,
                                                 بستن
                                             </Button>
                                             <Button
+                                                isLoading={isLoadingForModalbtn}
                                                 className="bg-green-700 text-white"
                                                 color="success"
                                                 variant="light"
                                                 onClick={updateCompanyHandler}
                                             >
-                                                <div className="flex-1 flex">ویرایش</div>
-                                                <div className='flex-center'>
-                                                    {isLoadingForModalbtn && <Spinner />}
-                                                </div>
-
+                                                ویرایش
                                             </Button>
 
                                         </ModalFooter>
@@ -759,7 +754,7 @@ export default function CompanyManager({ selectedKeys,
                             <ModalContent>
                                 {(onClose) => (
                                     <>
-                                        <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
+                                        <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md ">
                                             موقعیت شرکت بر روی نقشه
                                         </ModalHeader>
                                         <ModalBody className="font-iranyekan">
@@ -775,7 +770,7 @@ export default function CompanyManager({ selectedKeys,
                                                                 <Input type="text" label="آدرس" value={address} onChange={() => setAddress(event.target.value)} />
                                                             </div>
                                                             <div className="flex gap-2 ">
-                                                                <input className={`input-text-information mt-2 text-white `} name='maleno' type='text' disabled value={`${Number(lng).toFixed(5)} , ${Number(lat).toFixed(5)} `} placeholder='موقعیت جغرافیایی' ></input>
+                                                                <input className={`input-text-information mt-2  `} name='maleno' type='text' disabled value={`${Number(lng).toFixed(5)} , ${Number(lat).toFixed(5)} `} placeholder='موقعیت جغرافیایی' ></input>
                                                             </div>
 
                                                             <div className='w-full  mt-4 rounded-md bg-green-600 z-10 '>

@@ -541,11 +541,11 @@ export default function PriceListManager({ selectedKeys,
                 onOpenChange={onOpenChange}
                 radius="lg"
                 classNames={{
-                    body: "py-6",
+                    body: "py-6 bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                     base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                    header: "border-b-[1px] border-[#292f46]",
-                    footer: "border-t-[1px] border-[#292f46]",
+                    header: " border-[#292f46]  bg-primary_color text-white",
+                    footer: " border-[#292f46] bg-white",
                     closeButton: "hover:bg-white/5 active:bg-white/10",
                 }}
             >
@@ -556,10 +556,10 @@ export default function PriceListManager({ selectedKeys,
                         <ModalContent>
                             {(onClose) => (
                                 <>
-                                    <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
+                                    <ModalHeader className="flex flex-col gap-1 bg-red-900 text-md ">
                                         حذف محصول
                                     </ModalHeader>
-                                    <ModalBody className="font-iranyekan">
+                                    <ModalBody className="text-black">
                                         <p>
                                             {`از حذف محصول ${priceItem.type} با کد ${priceItem.code}  اطمینان دارید ؟  
                                             `}
@@ -574,15 +574,12 @@ export default function PriceListManager({ selectedKeys,
                                             بستن
                                         </Button>
                                         <Button
+                                            isLoading={isLoadingForModalbtn}
                                             className="bg-red-600 text-white"
                                             variant="light"
                                             onClick={removePriceItemHandler}
                                         >
-                                            <div className="flex-1 flex">حذف</div>
-                                            <div className='flex-center '>
-                                                {isLoadingForModalbtn && <Spinner />}
-                                            </div>
-
+                                            حذف
                                         </Button>
 
                                     </ModalFooter>
@@ -619,9 +616,9 @@ export default function PriceListManager({ selectedKeys,
                                                             <Input type="text" label="گروه" value={group} onChange={() => setGroup(event.target.value)} />
                                                         </div>
                                                         <div className="flex gap-2">
-                                                            <div className="bg-white rounded-lg p-2 flex-1">
+                                                            <div className="bg-stone-100 rounded-lg p-2 flex-1">
                                                                 <RadioGroup
-                                                                    className="bg-white text-[14px]"
+                                                                    className=" text-[14px]"
                                                                     label="جنسیت"
                                                                     orientation="horizontal"
                                                                     value={gender}
@@ -636,9 +633,9 @@ export default function PriceListManager({ selectedKeys,
                                                             </div>
                                                         </div>
                                                         <div className="flex gap-2">
-                                                            <div className="bg-white rounded-lg p-2 flex-1">
+                                                            <div className="bg-stone-100 rounded-lg p-2 flex-1">
                                                                 <RadioGroup
-                                                                    className="bg-white text-[14px]"
+                                                                    className=" text-[14px]"
                                                                     label="مقطع"
                                                                     orientation="horizontal"
                                                                     value={grade}
@@ -672,16 +669,13 @@ export default function PriceListManager({ selectedKeys,
                                             بستن
                                         </Button>
                                         <Button
+                                            isLoading={isLoadingForModalbtn}
                                             className="bg-green-700 text-white"
                                             color="success"
                                             variant="light"
                                             onClick={updatePriceListHandler}
                                         >
-                                            <div className="flex-1 flex">ویرایش</div>
-                                            <div className='flex-center'>
-                                                {isLoadingForModalbtn && <Spinner />}
-                                            </div>
-
+                                            ویرایش
                                         </Button>
 
                                     </ModalFooter>
