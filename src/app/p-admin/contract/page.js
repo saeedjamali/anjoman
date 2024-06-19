@@ -235,7 +235,7 @@ function ContractPage() {
     <>
       <ToastContainer
         bodyClassName={() =>
-          " flex-center text-sm font-white font-iranyekan p-3"
+          " flex-center text-sm font-white p-3"
         }
         position="top-left"
         rtl={true}
@@ -255,11 +255,11 @@ function ContractPage() {
             className="flex flex-col items-center justify-center h-24 col-span-1"
             color="primary"
           >
-            <span className="text-white font-iranyekanBold text-2xl">
+            <span className="text-white  text-2xl">
               {/* {<CountUp start={0} end={countUnits}></CountUp>} */}
               {countUnits}
             </span>
-            <span className="text-white font-iranyekanBold text-md">
+            <span className="text-white  text-md">
               واحد سازمانی
             </span>
           </Button>
@@ -267,12 +267,12 @@ function ContractPage() {
             className="flex flex-col items-center justify-center h-24 col-span-1"
             color="danger"
           >
-            <span className="text-white font-iranyekanBold text-2xl">
+            <span className="text-white  text-2xl">
               {countUnits - uniqueUnitValue.length
                 ? countUnits - uniqueUnitValue.length
                 : 0}
             </span>
-            <span className="text-white font-iranyekanBold text-md">
+            <span className="text-white  text-md">
               بدون اقدام
             </span>
           </Button>
@@ -280,10 +280,10 @@ function ContractPage() {
             className="flex flex-col items-center justify-center h-24 col-span-1"
             color="secondary"
           >
-            <span className="text-white font-iranyekanBold text-2xl">
+            <span className="text-white  text-2xl">
               {countWithoutContract}
             </span>
-            <span className="text-white font-iranyekanBold text-md">
+            <span className="text-white  text-md">
               بدون قرارداد
             </span>
           </Button>
@@ -291,17 +291,17 @@ function ContractPage() {
             className="flex flex-col items-center justify-center h-24 col-span-1"
             color="success"
           >
-            <span className="text-white font-iranyekanBold text-2xl">
+            <span className="text-white text-2xl">
               {countIsConfirm}
             </span>
-            <span className="text-white font-iranyekanBold text-md">
+            <span className="text-white text-md">
               قرارداد تایید شده
             </span>
           </Button>
         </div>
         <div className="p-4 bg-slate-200 rounded-lg">
           <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
-            <span className=" font-iranyekanBold">لیست قراردادها</span>
+            <span >لیست قراردادها</span>
 
             <div className="flex-center gap-8">
               <span className="text-[12px]">
@@ -328,7 +328,7 @@ function ContractPage() {
         {showDetailContractItem && (
           <div className="p-4 bg-slate-200 rounded-lg mt-4">
             <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
-              <p className=" flex text-bold font-iranyekanBold">{`جزییات قرارداد شماره ${currenContract.code}`}</p>
+              <p className=" flex text-bold ">{`جزییات قرارداد شماره ${currenContract.code}`}</p>
             </div>
             <div className="grid grid-cols-2 gap-4 h-full">
               <div className="col-span-2">

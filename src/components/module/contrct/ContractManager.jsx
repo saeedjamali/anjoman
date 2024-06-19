@@ -578,10 +578,10 @@ export default function ContractManager({
                     <ModalContent>
                         {(onClose) => (
                             <>
-                                <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
+                                <ModalHeader className="flex flex-col gap-1  text-md">
                                     تایید / رد قرارداد
                                 </ModalHeader>
-                                <ModalBody className="font-iranyekan">
+                                <ModalBody >
                                     {
                                         <form>
                                             <div className="w-full flex flex-col gap-4">
@@ -609,7 +609,7 @@ export default function ContractManager({
                                         </form>
                                     }
                                 </ModalBody>
-                                <ModalFooter className="font-iranyekan">
+                                <ModalFooter >
                                     <Button color="foreground" variant="bordered" onPress={onClose}>
                                         بستن
                                     </Button>
@@ -683,10 +683,10 @@ export default function ContractManager({
                     <ModalContent>
                         {(onClose) => (
                             <>
-                                <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
+                                <ModalHeader className="flex flex-col gap-1  text-md">
                                     حذف قرارداد
                                 </ModalHeader>
-                                <ModalBody className="font-iranyekan">
+                                <ModalBody >
                                     {
                                         <form>
                                             <div className="relative mt-2 flex justify-end col-span-1">
@@ -702,7 +702,7 @@ export default function ContractManager({
                                         </form>
                                     }
                                 </ModalBody>
-                                <ModalFooter className="font-iranyekan">
+                                <ModalFooter >
                                     <Button color="foreground" variant="light" onPress={onClose}>
                                         بستن
                                     </Button>
