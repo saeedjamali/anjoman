@@ -49,12 +49,16 @@ function Sms({ SetAuthTypesForm, role }) {
                 const data = await response.json();
 
                 if (data.status == 201) {
-                  
+
                     if (role.name == 'modir') {
                         router.push("/p-modir");
                         toast.success(data.message);
                     } else if (role.name == 'admin') {
                         router.push("/p-admin");
+                        toast.success(data.message);
+                        // toast.info(" ایجاد شد")
+                    } else if (role.name == 'lecturer') {
+                        router.push("/p-lecturer");
                         toast.success(data.message);
                         // toast.info(" ایجاد شد")
                     }

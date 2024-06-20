@@ -96,10 +96,42 @@ export async function POST(req) {
 
       if (!isRegionExist) {
         return Response.json(
-          { message: "کد با این مشخصات در سال تحصیلی جاری وجود ندارد" },
+          { message: "کد منطقه با این مشخصات در سال تحصیلی جاری وجود ندارد" },
           { status: 422 }
         );
       }
+      const isAdminExist = await adminModel.findOne({ phone });
+      if (isAdminExist) {
+        return Response.json(
+          { message: "کارشناس با این مشخصات وجود دارد" },
+          { status: 422 }
+        );
+      }
+
+      const user = await UserModel.create({
+        phone,
+        password: hashedPassword,
+        role,
+      });
+
+      const adminRegion = await adminModel.create({
+        user: user._id,
+        phone,
+        Region: isRegionExist,
+      });
+
+      // const unit = { ...isUnitExist, isActive: true };
+
+      if (!adminRegion) {
+        return Response.json(
+          { message: "خطا در تعریف کاربری جدید" },
+          { status: 401 }
+        );
+      }
+    }
+
+    if (role == "lecturer") {
+     
       const isAdminExist = await adminModel.findOne({ phone });
       if (isAdminExist) {
         return Response.json(

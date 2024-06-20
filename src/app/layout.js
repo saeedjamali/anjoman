@@ -14,6 +14,9 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl">
+      <head>
+        <link rel="icon" href="/images/favicon.ico" sizes="any" className="w-32 h-32" />
+      </head>
       <body className="bg-white">
         <>
           <NextUIProvider>

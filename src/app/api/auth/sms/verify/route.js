@@ -12,7 +12,7 @@ export async function POST(req) {
     try {
         const { isConnected } = await connectToDB();
         if (!isConnected) {
-            return Response.json({ message: "failed connect to database" , status: 500 });
+            return Response.json({ message: "خطا در اتصال به پایگاه" , status: 500 });
         }
         const otp = await OtpModel.findOne({ phone, code });
 
@@ -21,7 +21,7 @@ export async function POST(req) {
             const now = date.getTime();
 
             if (otp.expTime > now) {
-                return Response.json({ message: "گد صحیح می باشد" ,status: 200 });
+                return Response.json({ message: "کد صحیح می باشد" ,status: 200 });
             } else {
                 return Response.json({ message: "کد منقضی شده است" , status: 410 });
             }

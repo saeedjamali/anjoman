@@ -113,6 +113,12 @@ const valiadtePrsCode = (prsCode) => {
   const pattern = /^(?=.*?[0-9]).{8,8}$/g;
   return pattern.test(prsCode);
 };
+
+const valiadteMeliCode = (meliCode) => {
+  const pattern = /^(?=.*?[0-9]).{10,10}$/g;
+  return pattern.test(meliCode);
+};
+
 export {
   hashPassword,
   generateAccessToken,
@@ -126,5 +132,6 @@ export {
   valiadteSchoolCode,
   validateNoStd,
   valiadtePrsCode,
+  valiadteMeliCode,
   valiadteRegionCode,
 };

@@ -1,5 +1,5 @@
 import { useAppProvider } from '@/components/context/AppProviders';
-import { valiadtePassword, valiadtePhone, valiadteRegionCode, valiadteSchoolCode } from '@/utils/auth';
+import { valiadteMeliCode, valiadtePassword, valiadtePhone, valiadteRegionCode, valiadteSchoolCode } from '@/utils/auth';
 import { authTypes, roles, year } from '@/utils/constants'
 import { Button } from '@nextui-org/react';
 import { Input } from "@nextui-org/react";
@@ -17,6 +17,10 @@ function Register({ SetAuthTypesForm, role }) {
     const toggleVisibility = () => setIsVisible(!isVisible);
 
 
+    //? Identifier
+    //* Modir : school code
+    //* Admin : region code
+    //* Lecturer : meli code
     const { phone,
         setPhone,
         identifier,
@@ -163,6 +167,68 @@ function Register({ SetAuthTypesForm, role }) {
             }
 
         }
+
+
+
+        if (role == roles.LECTURER) {
+            if (!valiadteMeliCode(identifier.trim())) {
+                setIsInvalidIdentifier(true)
+                toast.error("کد ملی باید 10 رقمی باشد.");
+                return false
+            }
+
+            if (!valiadtePhone(phone?.trim())) {
+                toast.error("شماره همراه صحیح نمی باشد.");
+                setWaitForSendOtpCode(false);
+                setIsInvalidPhone(true)
+                return false
+            }
+            if (!valiadtePassword(password?.trim())) {
+                setIsInvalidPassword(true)
+                toast.error("رمز عبور باید 8 رقمی و شامل یک حرف و یک عدد باشد");
+                setWaitForSendOtpCode(false);
+                return false
+            }
+
+
+
+            setWaitForSendOtpCode(true);
+
+          
+            const response = await fetch(`/api/user/${phone}/${role.name}/${identifier}`);
+            const datares = await response.json();
+            if (datares.status == 200) {
+
+                // check in done... --> send OPT
+
+                const res = await fetch("/api/auth/sms/send", {
+                    method: "POST",
+                    header: {
+                        "content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ phone })
+                });
+                const data = await res.json();
+                if (data.status == 200) {
+                    SetAuthTypesForm(authTypes.SMS);
+                    toast.info("کد به شماره همراه ثبت شده ارسال شد.");
+                } else {
+                    toast.error("خطا در ارسال کد")
+                }
+                setWaitForSendOtpCode(false);
+            } else {
+                toast.error(datares.message);
+                setWaitForSendOtpCode(false);
+            }
+
+
+            setWaitForSendOtpCode(false);
+            setIsInvalidPhone(false)
+            setIsInvalidPassword(false)
+            setIsInvalidIdentifier(false)
+
+        }
+
     }
 
     return (
@@ -184,7 +250,7 @@ function Register({ SetAuthTypesForm, role }) {
                                 // placeholder="ترکیب حروف و اعداد"
                                 errorMessage="کد واحد سازمانی 8 رقم می باشد"
                                 type="number"
-                                className="max-w-xs font-iranyekan"
+                                className="max-w-xs "
                                 value={identifier} onChange={() => setIdentifier(event.target.value)} />
                             // <input type="number" placeholder="کد واحد سازمانی" maxLength={8} minLength={8} className="input-text" value={identifier} onChange={(event) => setIdentifier(event.target.value)} />
                         }
@@ -198,12 +264,22 @@ function Register({ SetAuthTypesForm, role }) {
                                 // placeholder="ترکیب حروف و اعداد"
                                 errorMessage="کد منطقه 4 رقم می باشد"
                                 type="number"
-                                className="max-w-xs font-iranyekan"
+                                className="max-w-xs "
                                 value={identifier} onChange={() => setIdentifier(event.target.value)} />
                             // <input type="number" placeholder="کد منطقه" className="input-text" value={identifier} onChange={(event) => setIdentifier(event.target.value)} />
                         }
-                        {role == roles.PARENT &&
-                            <input type="number" placeholder="کد  ملی ولی" className="input-text" value={identifier} onChange={(event) => setIdentifier(event.target.value)} />
+                        {role == roles.LECTURER &&
+                            <Input
+                                label="کد ملی"
+                                inputProps={{ maxLength: 8 }}
+                                isInvalid={isInvalidIdentifier}
+                                size='sm'
+                                // maxLength={11}
+                                // placeholder="ترکیب حروف و اعداد"
+                                errorMessage="کد ملی 10 رقمی"
+                                type="number"
+                                className="max-w-xs "
+                                value={identifier} onChange={() => setIdentifier(event.target.value)} />
                         }
                         {role == roles.SHERKAT &&
                             <input type="number" placeholder="کد شرکت" className="input-text" value={identifier} onChange={(event) => setIdentifier(event.target.value)} />
@@ -221,7 +297,7 @@ function Register({ SetAuthTypesForm, role }) {
                             // placeholder="ترکیب حروف و اعداد"
                             errorMessage="شماره همراه 11 رقمی"
                             type="number"
-                            className="max-w-xs font-iranyekan"
+                            className="max-w-xs "
                             value={phone} onChange={(event) => setPhone(event.target.value)} />
                         {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
                         <Input
@@ -241,10 +317,10 @@ function Register({ SetAuthTypesForm, role }) {
                                 </button>
                             }
                             type={isVisible ? "text" : "password"}
-                            className="max-w-xs font-iranyekan "
+                            className="max-w-xs  "
                             value={password} onChange={(event) => setPassword(event.target.value)}
                         />
-                        <Button isLoading={waitForSendOtpCode} type='submit' className="w-full bg-btn-primary text-white font-iranyekan text-[16px] py-2 rounded-full mt-4 flex-center " onClick={() => handleRegister(event)}>
+                        <Button isLoading={waitForSendOtpCode} type='submit' className="w-full bg-btn-primary text-white text-[16px] py-2 rounded-full mt-4 flex-center " onClick={() => handleRegister(event)}>
                             ارسال کد یکبار مصرف
                         </Button>
                     </form>

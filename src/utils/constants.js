@@ -13,6 +13,7 @@ export const roles = {
   MODIR: { name: "modir", title: "مدیر مدرسه" },
   PARENT: { name: "parent", title: "والدین" },
   SHERKAT: { name: "sherkat", title: "شرکت" },
+  LECTURER: { name: "lecturer", title: "مدرسین" },
 };
 
 export const year = [
