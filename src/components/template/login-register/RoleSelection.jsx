@@ -27,7 +27,7 @@ function RoleSelection({ role, SetRole, SetAuthTypesForm }) {
                 } else if (data.user.role == "admin" && data.user.role == selectedRole.name) {
                     router.push('/p-admin')
                     router.refresh();
-                } else if (data.user.role == "lecturer" && data.user.role == selectedRole.name) { 
+                } else if (data.user.role == "lecturer" && data.user.role == selectedRole.name) {
                     router.push('/p-lecturer')
                     router.refresh();
                 }
@@ -53,7 +53,7 @@ function RoleSelection({ role, SetRole, SetAuthTypesForm }) {
                         break;
                     case roles.ADMIN: SetRole(roles.ADMIN)
                         break;
-                    case roles.PARENT: SetRole(roles.LECTURER)
+                    case roles.LECTURER: SetRole(roles.LECTURER)
                         break;
                     case roles.SHERKAT: SetRole(roles.SHERKAT)
                         break;
@@ -97,8 +97,8 @@ function RoleSelection({ role, SetRole, SetAuthTypesForm }) {
                         </li>
                         <li  >
                             <button className="role-section" onClick={() => {
-                                SetRole(roles.ADMIN)
-                                roleHandler(event, roles.ADMIN)
+                                SetRole(roles.LECTURER)
+                                roleHandler(event, roles.LECTURER)
                             }}>
                                 <Image className="w-16 h-16 my-2" src={"/images/karshenas.png"} width={100} height={100} alt="modir" />
                                 <span className="w-full bg-header rounded-b-lg text-center py-1 px-4 ">کارشناس</span>

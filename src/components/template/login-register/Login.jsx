@@ -24,6 +24,7 @@ function Login({ role, SetAuthTypesForm }) {
     const toggleVisibility = () => setIsVisible(!isVisible);
     const router = useRouter();
 
+    console.log("role-->", role)
     useEffect(() => {
 
 
