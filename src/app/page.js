@@ -70,6 +70,7 @@ export default function Home() {
               خراسان رضوی می باشد.
             </p>
           </div>
+          <span></span>
 
           {/* //? ROLE SELECTION */}
           <div className="absolute md:top-[26%] top-[220px] lg:top-auto 2xl:right-[14%] xl:right-[10%] lg:right-[10%] flex-col-center bg-white rounded-lg shadow-2xl shadow-indigo-300 min-w-80 max-w-96 min-h-96 lg:h-[27rem] z-10">
