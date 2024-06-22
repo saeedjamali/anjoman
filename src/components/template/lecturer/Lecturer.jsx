@@ -150,14 +150,14 @@ function LectureInformation() {
                                 </div>
                                 <div>
                                     {/* <button className='mt-2 bg-red-500 text-white p-2 rounded-md text-[12px]' onClick={() => editHandler(event)} >ویرایش مشخصات</button> */}
-                                    <Button className={`mt-2  bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
+                                    <Button className={`mt-2  bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
                                 </div>
                             </div>
                         }
                         <div className='flex flex-col justify-start mt-4'>
                             {isNewRegister &&
                                 <Card >
-                                    <CardHeader className="flex gap-3">
+                                    <CardHeader className="flex gap-3 bg-blue-500 text-white">
                                         <p className="text-md ">شرایط عمومی</p>
                                     </CardHeader>
                                     <Divider />
@@ -186,8 +186,8 @@ function LectureInformation() {
                             {
                                 isGeneralCondition &&
                                 <Card className='my-4'>
-                                    <CardHeader className="flex gap-3">
-                                        <p className="text-lg ">ثبت مشخصات</p>
+                                    <CardHeader className="flex gap-3 bg-blue-500 text-white">
+                                        <p className="text-lg ">ثبت مشخصات فردی</p>
                                     </CardHeader>
                                     <Divider />
                                     <CardBody className='text-[12px] items-start gap-y-4'>
@@ -214,7 +214,7 @@ function LectureInformation() {
                                         !isPersonalInformation &&
 
                                         <CardFooter className='flex items-end justify-end'>
-                                            <Button className={`mt-2  bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitPersonalInfoation(event)}>تایید مشخصات فردی</Button>
+                                            <Button className={`mt-2  bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitPersonalInfoation(event)}>تایید مشخصات فردی</Button>
 
                                         </CardFooter>
                                     }
@@ -224,7 +224,7 @@ function LectureInformation() {
                             {
                                 isPersonalInformation &&
                                 <Card className='my-4'>
-                                    <CardHeader className="flex gap-3">
+                                    <CardHeader className="flex gap-3 bg-blue-500 text-white">
                                         <p className="text-lg ">بارگذاری مدارک مورد نیاز</p>
                                     </CardHeader>
                                     <Divider />

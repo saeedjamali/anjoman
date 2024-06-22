@@ -96,7 +96,7 @@ function Sms({ SetAuthTypesForm, role }) {
                         {/* <span className='font-iranyekan text-[12px] mt-6'> زمان باقی مانده : </span> */}
                         <Button isLoading={isLoading} type='submit' className="w-full bg-btn-primary text-white font-iranyekan text-[16px] py-2 rounded-full mt-12 flex-center" onClick={event => handleVerifyOtp(event)} >
                             <span className='flex-1'>اعتبارسنجی و ثبت نام</span>
-                            <span className="ml-3 text-[10px]">
+                            <span className="ml-2 text-[10px]">
                                 <CountdownCircleTimer
                                     size={32}
                                     strokeWidth={2}
