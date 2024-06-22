@@ -109,7 +109,10 @@ function Login({ role, SetAuthTypesForm }) {
                     router.push("/p-modir");
                 } else if (role.name == 'admin') {
                     router.push("/p-admin");
-                } else {
+                } else if (role.name == 'lecturer') {
+                    router.push("/p-lecturer");
+                }
+                else {
                     toast.info("صفحه ای برای این عنوان ایجاد نشده است")
                 }
 

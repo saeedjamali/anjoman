@@ -54,6 +54,14 @@ function Sidebar() {
                                         داشبورد
                                     </Link>
                                 }
+                                 {
+                                    user.role == 'lecturer' && <Link className='w-full flex' href={`/p-lecturer`}>
+                                        <span className='pl-2 flex-center'>
+                                            <MdOutlineDashboard />
+                                        </span>
+                                        داشبورد
+                                    </Link>
+                                }
                             </div>
 
                         </li>

@@ -97,8 +97,8 @@ function RoleSelection({ role, SetRole, SetAuthTypesForm }) {
                         </li>
                         <li  >
                             <button className="role-section" onClick={() => {
-                                SetRole(roles.LECTURER)
-                                roleHandler(event, roles.LECTURER)
+                                SetRole(roles.ADMIN)
+                                roleHandler(event, roles.ADMIN)
                             }}>
                                 <Image className="w-16 h-16 my-2" src={"/images/karshenas.png"} width={100} height={100} alt="modir" />
                                 <span className="w-full bg-header rounded-b-lg text-center py-1 px-4 ">کارشناس</span>

@@ -73,6 +73,7 @@ export async function POST(req) {
         phone,
         password: hashedPassword,
         role,
+        identifier
       });
 
       const modir = await modirModel.create({
@@ -112,6 +113,7 @@ export async function POST(req) {
         phone,
         password: hashedPassword,
         role,
+        identifier
       });
 
       const adminRegion = await adminModel.create({
@@ -131,35 +133,24 @@ export async function POST(req) {
     }
 
     if (role == "lecturer") {
-     
-      const isAdminExist = await adminModel.findOne({ phone });
-      if (isAdminExist) {
-        return Response.json(
-          { message: "کارشناس با این مشخصات وجود دارد" },
-          { status: 422 }
-        );
-      }
 
       const user = await UserModel.create({
         phone,
         password: hashedPassword,
         role,
+        identifier
       });
 
-      const adminRegion = await adminModel.create({
-        user: user._id,
-        phone,
-        Region: isRegionExist,
-      });
-
-      // const unit = { ...isUnitExist, isActive: true };
-
-      if (!adminRegion) {
+      if (!user) {
         return Response.json(
           { message: "خطا در تعریف کاربری جدید" },
           { status: 401 }
         );
       }
+
+      // const unit = { ...isUnitExist, isActive: true };
+
+
     }
     const refreshToken = await generateRefreshToken({ phone, role });
 

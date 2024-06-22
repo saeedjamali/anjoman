@@ -1,12 +1,15 @@
 import mongoose from "mongoose";
 import user from "@/models/base/User";
+import { provinceSchema } from "@/models/base/Province";
 import { regionSchema } from "@/models/base/Region";
-import { trueGray } from "tailwindcss/colors";
+import { fieldSchema } from "@/models/base/Field";
+import { degreeSchema } from "@/models/base/Degree";
+
 const schema = mongoose.Schema(
   {
     year: {
       type: String,
-      required: trye,
+      required: true,
     },
     name: {
       type: String,
@@ -29,8 +32,8 @@ const schema = mongoose.Schema(
     },
 
     occuptionState: {
-      //? 0 : شاغل
-      //? 1 : بازنشسته
+      //? 1 : شاغل
+      //? 2 : بازنشسته
       type: Number,
       required: true,
     },
@@ -105,9 +108,16 @@ const schema = mongoose.Schema(
       required: true,
     },
     user: {
-      type: mongoose.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
+    },
+    status: {
+      //? 0 : ثبت نام
+      //? 1 : تایید شده = قبولی در آزمون
+      //? 2 : رد شده
+      type: Number,
+      required: false,
     },
   },
   {

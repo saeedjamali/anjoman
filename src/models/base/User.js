@@ -15,6 +15,10 @@ const schema = new mongoose.Schema({
         type: String,
         default: "USER"
     },
+    identifier: {
+        type: String,
+        required: true
+    },
     refreshToken: {
         type: String
     },

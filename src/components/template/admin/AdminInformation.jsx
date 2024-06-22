@@ -9,11 +9,11 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 
-function ModirInformation({ admin, region }) {
+function AdminInformation({ admin, region }) {
 
 
     const { name, phone, prsCode, meliCode, isActive, level } = admin;
-    const [isShowAdminInformation, setIsModriInformation] = useState(true);
+    const [isShowAdminInformation, setIsShowAdminInformation] = useState(true);
     //  const [regionName, setRegionInp] = useState(name)
     const [levelInp, setLevelInp] = useState(level)
     const [nameInp, setNameInp] = useState(name)
@@ -108,7 +108,7 @@ function ModirInformation({ admin, region }) {
                 theme="light"
             />
             <div className='w-full border-2 border-slate-100 mt-2 '>
-                <div className='flex items-center  bg-slate-100 p-2' onClick={() => setIsModriInformation(prev => !prev)}>
+                <div className='flex items-center  bg-slate-100 p-2' onClick={() => setIsShowAdminInformation(prev => !prev)}>
                     <span className=' w-full flex text-[12px]'>اطلاعات کارشناس</span>
 
                     <span className={isActiveState == 0 ? 'text-orange-500 ' : isActiveState == 1 ? ' text-green-500 ' : 'text-red-500'}>
@@ -168,4 +168,4 @@ function ModirInformation({ admin, region }) {
     )
 }
 
-export default ModirInformation
+export default AdminInformation

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import company from "@/models/company/company";
+
 
 const regionSchema = mongoose.Schema(
   {
@@ -35,7 +35,7 @@ const regionSchema = mongoose.Schema(
     companies: {
       type: [
         {
-          type: mongoose.Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "Company",
         },
       ],

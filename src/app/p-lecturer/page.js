@@ -7,13 +7,15 @@ import { traverse } from "@/utils/convertnumtopersian";
 import Notification from "@/components/template/modir/Notification";
 import AdminInformation from "@/components/template/admin/AdminInformation";
 import { useUserProvider } from "@/components/context/UserProvider";
+import Lecturer from "@/models/lecturer/lecturer";
+import LectureInformation from "@/components/template/lecturer/Lecturer";
 
 //* این صفحه برای مدیریت اطلاعات کارشناسان مناطق/ استان و ستاد طراحی شده است.
-function AdminPage(params) {
+function LecturerPage(params) {
   const currentYear = year.find((y) => y.currentYear);
   const [isClient, setIsClient] = useState(false);
-  const { admin, region } = useUserProvider();
-  
+  const { user } = useUserProvider();
+
   //?  قبلا در کلاینت کامپوننت فچ دیتا داشتیم که منتقل کردم به لاویت و الان در سرور کامپویننت دیتا فچ میشه و ارسال میشه
   //? کد یوس افکت در انتهای این تابع کامنت شد و درست کار میکنه
   if (isClient) {
@@ -30,7 +32,7 @@ function AdminPage(params) {
       <div className="xl:grid xl:grid-cols-2 xl:grid-flow-row auto-rows-[minmax(0,_2fr)] xl:gap-4">
         <div className="xl:col-span-1  xl:col-start-1 ">
           {/* <Suspense fallback={<p>در حال دریافت اطلاعات مدیر</p>}> */}
-          <AdminInformation admin={admin} region={region} />
+          <LectureInformation />
         </div>
         <div className="xl:col-span-1  xl:row-start-1 xl:row-end-3 xl:col-start-2">
           <Notification />
@@ -40,7 +42,7 @@ function AdminPage(params) {
   );
 }
 
-export default AdminPage;
+export default LecturerPage;
 
 // در صورتی که بخواهیم در cs
 // دیتا دریافت کنیم این فچ فعال میشه
