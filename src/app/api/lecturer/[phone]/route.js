@@ -31,7 +31,7 @@ export async function GET(req, { params }) {
         return Response.json({
             message: "برای این شماره همراه این موارد یافت شد",
             status: 200,
-            region: lectureFound,
+             lectureFound,
         });
     } catch (error) {
         console.log("Error ->", error);

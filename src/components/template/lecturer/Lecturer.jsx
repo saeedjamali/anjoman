@@ -5,14 +5,16 @@ import { valiadtePrsCode } from '@/utils/auth';
 import { generalCondition } from '@/utils/constants';
 import { convertTopersian, traverse } from '@/utils/convertnumtopersian';
 import { CheckIcon, NotificationIcon } from '@/utils/icon';
-import { Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Chip, Divider, Image, Input, Link } from '@nextui-org/react';
+import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Image, Input, Link, Radio, RadioGroup } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
 import { ToastContainer, toast } from 'react-toastify';
 import PublicCondition from './PublicCondition';
+import ImageUploader from '@/components/module/uploader/ImageUploader';
 
-
+const maxFileSize = 1000000; //100KB
+const acceptType = "jpg";
 
 function LectureInformation() {
     const { user } = useUserProvider();
@@ -28,18 +30,19 @@ function LectureInformation() {
     const [organ, setOrgan] = useState(0);
     const [isAcademic, setOsAcademic] = useState(null);
     const [typeAcademic, setTypeAcademic] = useState(0);
-    const [introDoc, setIntroDoc] = useState("");
     const [province, setProvince] = useState({});
-    const [Region, setRegion] = useState({});
+    const [region, setRegion] = useState({});
     const [cityName, setCityName] = useState("");
     const [degree, setDegree] = useState(0);
     const [field, setField] = useState({});
-    const [degreeDoc, setDegreeDoc] = useState({});
     const [isCertificateBefore, setIsCertificateBefore] = useState(false);
-    const [certificateDoc, setCertificateDoc] = useState("");
     const [age, setAge] = useState(null);
     const [isAccepted, setIsAccepted] = useState(null);
     const [status, setStatus] = useState(0);
+    const [degreeDoc, setDegreeDoc] = useState([]);
+    const [introDoc, setIntroDoc] = useState([]);
+    const [certificateDoc, setCertificateDoc] = useState([]);
+
 
     //? Status
     const [isNewRegister, setIsNewRegister] = useState(false);
@@ -47,6 +50,14 @@ function LectureInformation() {
     const [isPersonalInformation, setIsPersonalInformation] = useState(false);
     const [isUploadedDocument, setIsUploadedDocument] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+
+    //? Provinces , Region , Field , Degree
+    const [provinces, setProvinces] = useState([]);
+    const [regions, setRegions] = useState([]);
+    const [fields, setFields] = useState([]);
+    const [degrees, setDegrees] = useState([]);
+
 
     useEffect(() => {
 
@@ -59,7 +70,7 @@ function LectureInformation() {
                 const data = await response.json();
                 console.log(data)
                 if (data.status == 200) {
-                    setHistory(lectureFound);
+                    setHistory(data.lectureFound);
                 } else {
                     toast.info(data.message)
                 }
@@ -69,17 +80,88 @@ function LectureInformation() {
         }
 
         getHistory();
-
         setCurrentYearHistory(history.filter(item => item.year == year));
     }, [phone]);
 
 
+    useEffect(() => {
+        getRegions(province);
+        if (!province) {
+            setRegions([])
+
+        }
+    }, [province])
+
+    const getProvinces = async () => {
+        try {
+            const response = await fetch(`/api/base/province/getall`);
+            const data = await response.json();
+
+            if (data.status == 200) {
+                setProvinces(data.provinces.sort((a, b) => a.code - b.code));
+            } else {
+                toast.info(data.message)
+            }
+        } catch (error) {
+            toast.error("خطای ناشناخته")
+        }
+    }
+    const getFields = async () => {
+        try {
+            const response = await fetch(`/api/base/field/getall/`);
+            const data = await response.json();
+            console.log(data)
+            if (data.status == 200) {
+                setFields(data.fields);
+            } else {
+                toast.info(data.message)
+            }
+        } catch (error) {
+            toast.error("خطای ناشناخته")
+        }
+    }
+
+    const getDegrees = async () => {
+        try {
+            const response = await fetch(`/api/base/degree/getall/`);
+            const data = await response.json();
+            console.log(data)
+            if (data.status == 200) {
+                setDegrees(data.degrees);
+            } else {
+                toast.info(data.message)
+            }
+        } catch (error) {
+            toast.error("خطای ناشناخته")
+        }
+    }
+
+    const getRegions = async (provinceCode) => {
+        try {
+            const response = await fetch(`/api/region/province/${provinceCode}`);
+            const data = await response.json();
+
+            if (data.status == 200) {
+                setRegions(data.regions.sort((a, b) => a.regionCode - b.regionCode));
+            } else {
+                console.log(data.message)
+            }
+        } catch (error) {
+            toast.error("خطای ناشناخته")
+        }
+    }
+
     const submitHandler = () => {
+        setIsLoading(true);
         if (currentYearHistory.length != 0) {
             toast.info("شما قبلا ثبت نام نموده اید، از قسمت تاریخچه امکان مشاهده سوابق ثبت نام وجود دارد ")
         }
+        getProvinces();
+        getFields();
+        getDegrees();
         setIsNewRegister(true);
         setIsGeneralCondition(false)
+        setIsLoading(false);
     }
 
     const submitGeneralCondition = () => {
@@ -92,6 +174,36 @@ function LectureInformation() {
     const submitUploadedDocument = () => {
         setIsUploadedDocument(true);
     }
+
+    const submitUpdatedDocument = () => {
+        setIsPersonalInformation(false);
+        setIsUploadedDocument(false)
+    }
+    const onChangeDegreeDoc = (imageList, addUpdateIndex) => {
+        // data for submit
+        if (imageList.length > 1) {
+            toast.info("صرفا امکان بارگذاری یک تصویر وجود دارد");
+        }
+        setDegreeDoc(imageList);
+    };
+
+
+    const onChangeIntroDoc = (imageList, addUpdateIndex) => {
+        // data for submit
+        if (imageList.length > 1) {
+            toast.info("صرفا امکان بارگذاری یک تصویر وجود دارد");
+        }
+        setIntroDoc(imageList);
+    };
+
+    const onChangeCertificateDoc = (imageList, addUpdateIndex) => {
+        // data for submit
+        if (imageList.length > 1) {
+            toast.info("صرفا امکان بارگذاری یک تصویر وجود دارد");
+        }
+        setCertificateDoc(imageList);
+    };
+
 
     return (
         <div >
@@ -150,11 +262,12 @@ function LectureInformation() {
                                 </div>
                                 <div>
                                     {/* <button className='mt-2 bg-red-500 text-white p-2 rounded-md text-[12px]' onClick={() => editHandler(event)} >ویرایش مشخصات</button> */}
-                                    <Button className={`mt-2  bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
+                                    <Button isLoading={isLoading} className={`mt-2  bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
                                 </div>
                             </div>
                         }
                         <div className='flex flex-col justify-start mt-4'>
+                            {/* //? بررسی شرایط عمومی */}
                             {isNewRegister &&
                                 <Card >
                                     <CardHeader className="flex gap-3 bg-blue-500 text-white">
@@ -183,6 +296,7 @@ function LectureInformation() {
 
                             }
 
+                            {/* //? ثبت مشخصات فردی */}
                             {
                                 isGeneralCondition &&
                                 <Card className='my-4'>
@@ -190,22 +304,231 @@ function LectureInformation() {
                                         <p className="text-lg ">ثبت مشخصات فردی</p>
                                     </CardHeader>
                                     <Divider />
-                                    <CardBody className='text-[12px] items-start gap-y-4'>
-                                        <div className='relative mt-2 flex justify-end col-span-1'>
-                                            {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
-                                            <Input
-                                                type="number"
-                                                label="کد ملی"
-                                                labelPlacement={"inside"}
-                                                value={meliCode} onChange={(event) => setMeliCode(event.target.value)} placeholder='کد ملی' ></Input>
+                                    <CardBody >
+                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
+                                            <div className='relative mt-2 flex justify-start col-span-1'>
+                                                {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                                                <Input
+                                                    disabled={isPersonalInformation}
+                                                    type="text"
+                                                    label="نام و نام خانوادگی"
+                                                    labelPlacement={"inside"}
+                                                    value={name} onChange={(event) => setName(event.target.value)} ></Input>
+                                            </div>
+                                            <div className='relative mt-2 flex justify-start col-span-1'>
+                                                {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                                                <Input
+                                                    disabled={isPersonalInformation}
+                                                    type="number"
+                                                    label="کد ملی"
+                                                    labelPlacement={"inside"}
+                                                    value={meliCode} onChange={(event) => setMeliCode(event.target.value)} ></Input>
+                                            </div>
                                         </div>
-                                        <div className='relative mt-2 flex justify-end col-span-1'>
-                                            {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
-                                            <Input
-                                                type="number"
-                                                label="شماره همراه"
-                                                labelPlacement={"inside"}
-                                                value={phone} onChange={(event) => setPhoneInp(event.target.value)} placeholder='شماره تماس' ></Input>
+                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
+                                            <div className='relative mt-2 flex justify-start col-span-1'>
+                                                {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                                                <Input
+                                                    disabled={isPersonalInformation}
+                                                    type="number"
+                                                    label="سن"
+                                                    labelPlacement={"inside"}
+                                                    value={age} onChange={(event) => setAge(event.target.value)} ></Input>
+                                            </div>
+                                        </div>
+                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
+                                            <div className=' relative mt-2 flex justify-start col-span-1 '>
+                                                <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                                                    <RadioGroup
+                                                        isDisabled={isPersonalInformation}
+                                                        className='flex-1 justify-start items-start p-2 text-[14px]'
+                                                        label="وضعیت اشتغال"
+                                                        orientation="horizontal"
+                                                        value={occuptionState}
+                                                        onValueChange={setOccuptionState}
+                                                    >
+                                                        <Radio value="1" size="sm">شاغل</Radio>
+                                                        <Radio value="2" size="sm">بازنشسته</Radio>
+
+
+                                                    </RadioGroup>
+                                                </div>
+                                            </div>
+                                            <div className=' relative mt-2 flex justify-start col-span-1 '>
+                                                <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                                                    <RadioGroup
+                                                        isDisabled={isPersonalInformation}
+                                                        className='flex-1 justify-start items-start p-2 text-[14px]'
+                                                        label="سازمان محل خدمت"
+                                                        orientation="horizontal"
+                                                        value={organ}
+                                                        onValueChange={setOrgan}
+                                                    >
+                                                        <Radio value="1" size="sm">آموزش و پرورش</Radio>
+                                                        <Radio value="2" size="sm">دانشگاه(عضو هیئت علمی می باشم)</Radio>
+                                                        <Radio value="3" size="sm">حوزه علمیه</Radio>
+
+
+                                                    </RadioGroup>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
+                                            {organ == 1 ?
+
+                                                <div className='relative mt-2 flex justify-start col-span-1'>
+                                                    {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                                                    <Input
+                                                        disabled={isPersonalInformation}
+                                                        type="number"
+                                                        label="کد پرسنلی"
+                                                        labelPlacement={"inside"}
+                                                        value={prsCode} onChange={(event) => setPrsCode(event.target.value)} ></Input>
+                                                </div>
+                                                : organ == 2 ?
+                                                    <div className=' relative mt-2 flex justify-start col-span-1 '>
+                                                        <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                                                            <RadioGroup
+                                                                isDisabled={isPersonalInformation}
+                                                                className='flex-1 justify-start items-start p-2 text-[14px]'
+                                                                label="رتبه دانشگاهی"
+                                                                orientation="horizontal"
+                                                                value={typeAcademic}
+                                                                onValueChange={setTypeAcademic}
+                                                            >
+                                                                <Radio value="1" size="sm">استادیار</Radio>
+                                                                <Radio value="2" size="sm">دانشیار</Radio>
+
+                                                            </RadioGroup>
+                                                        </div>
+                                                    </div> : null
+
+                                            }
+                                        </div>
+                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
+                                            <div className='relative mt-2 flex justify-start col-span-1'>
+                                                <Autocomplete
+                                                    isDisabled={isPersonalInformation}
+                                                    labelPlacement={"inline"}
+                                                    backdrop="blur"
+                                                    isRequired
+                                                    size='md'
+                                                    color="default"
+                                                    errorMessage="انتخاب استان"
+                                                    // label="استان"
+                                                    placeholder='استان'
+                                                    className="col-span-1"
+                                                    defaultItems={provinces}
+                                                    selectedKey={province}
+
+                                                    onSelectionChange={async (key) => {
+                                                        setProvince(key);
+
+                                                        // console.log(key)
+
+                                                    }}
+                                                >
+                                                    {(item) => (
+                                                        <AutocompleteItem key={item.code}>
+                                                            {item.name}
+                                                        </AutocompleteItem>
+                                                    )}
+                                                </Autocomplete>
+
+                                            </div>
+                                            <div className='relative mt-2 flex justify-start col-span-1'>
+                                                <Autocomplete
+                                                    isDisabled={isPersonalInformation}
+                                                    labelPlacement={"inline"}
+                                                    backdrop="blur"
+                                                    isRequired
+                                                    size='md'
+                                                    color="default"
+                                                    errorMessage='انتخاب منطقه'
+                                                    placeholder='منطقه'
+                                                    className=" col-span-1"
+                                                    defaultItems={regions}
+                                                    selectedKey={region}
+                                                    onSelectionChange={async (key) => {
+                                                        setRegion(key);
+
+                                                        // console.log(key)
+
+                                                    }}
+                                                >
+                                                    {(item) => (
+                                                        <AutocompleteItem key={item.regionCode}>
+                                                            {item.regionName}
+                                                        </AutocompleteItem>
+                                                    )}
+                                                </Autocomplete>
+
+                                            </div>
+                                        </div>
+                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
+                                            <div className='relative mt-2 flex justify-start items-start text-right col-span-1'>
+                                                <Autocomplete
+                                                isDisabled={isPersonalInformation}
+                                                    labelPlacement={"inline"}
+                                                    backdrop="blur"
+                                                    isRequired
+                                                    size='md'
+                                                    color="default"
+                                                    errorMessage='انتخاب مدرک تحصیلی'
+                                                    placeholder='مدرک تحصیلی'
+                                                    className=" col-span-1"
+                                                    defaultItems={degrees}
+                                                    selectedKey={degree}
+                                                    onSelectionChange={async (key) => {
+                                                        setDegree(key);
+
+                                                        // console.log(key)
+
+                                                    }}
+                                                >
+                                                    {(item) => (
+                                                        <AutocompleteItem key={item.code}>
+                                                            {item.name}
+                                                        </AutocompleteItem>
+                                                    )}
+                                                </Autocomplete>
+
+                                            </div>
+                                            <div className='relative mt-2 flex justify-start items-start text-right col-span-1'>
+                                                <Autocomplete
+                                                isDisabled={isPersonalInformation}
+                                                    labelPlacement={"inline"}
+                                                    backdrop="blur"
+                                                    isRequired
+                                                    size='md'
+                                                    color="default"
+                                                    errorMessage='انتخاب رشته تحصیلی'
+                                                    placeholder='رشته تحصیلی'
+                                                    className=" col-span-1"
+                                                    defaultItems={fields}
+                                                    selectedKey={field}
+                                                    onSelectionChange={async (key) => {
+                                                        setField(key);
+
+                                                        // console.log(key)
+
+                                                    }}
+                                                >
+                                                    {(item) => (
+                                                        <AutocompleteItem key={item.code}>
+                                                            {item.name}
+                                                        </AutocompleteItem>
+                                                    )}
+                                                </Autocomplete>
+
+                                            </div>
+                                        </div>
+
+                                        <div className='relative mt-2  flex justify-start items-start text-right col-span-2'>
+                                            <Checkbox isDisabled={isPersonalInformation} size='sm' isSelected={isCertificateBefore} onValueChange={setIsCertificateBefore} radius="md">دارای گواهی نامه مدرسی آموزش خانواده(در سنوات قبل) می باشم.</Checkbox>
+                                        </div>
+                                        <div className='relative mt-2  flex justify-start items-start text-right col-span-2'>
+                                            <Checkbox isDisabled={isPersonalInformation} size='sm' isSelected={isAccepted} onValueChange={setIsAccepted} radius="md">دارای مدرک دکتری در آموزش و پرورش و یا عضو هیئت علمی در دانشگاه با رتبه استادیار یا دانشیار یا سطح چهار تخصصی حوزه های علمیه می باشم. </Checkbox>
                                         </div>
 
                                     </CardBody>
@@ -220,7 +543,7 @@ function LectureInformation() {
                                     }
                                 </Card>
                             }
-
+                            {/* //? بارگذاری مدارک مورد نیاز */}
                             {
                                 isPersonalInformation &&
                                 <Card className='my-4'>
@@ -229,11 +552,52 @@ function LectureInformation() {
                                     </CardHeader>
                                     <Divider />
                                     <CardBody className='text-[12px] items-start gap-y-4'>
-                                        {
-                                            generalCondition.map(item =>
-                                                <PublicCondition isGeneralCondition={isGeneralCondition} condition={item} />
-                                            )
-                                        }
+                                        <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
+                                            <div className='flex-center text-[14px]'>بارگذاری تصویر مدرک تحصیلی</div>
+                                            <div className="gap-2">
+                                                <ImageUploader
+                                                    imageItems={degreeDoc}
+                                                    onChange={onChangeDegreeDoc}
+                                                    maxNumber={1}
+                                                    acceptType={acceptType}
+                                                    maxFileSize={maxFileSize}
+                                                    user={user}
+
+                                                />
+                                            </div>
+
+                                        </div>
+
+                                        <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
+                                            <div className='flex-center text-[14px]'>بارگذاری معرفی نامه معتبر از دانشگاه یا حوزه علمیه</div>
+                                            <div className="gap-2">
+                                                <ImageUploader
+                                                    imageItems={introDoc}
+                                                    onChange={onChangeIntroDoc}
+                                                    maxNumber={1}
+                                                    acceptType={acceptType}
+                                                    maxFileSize={maxFileSize}
+                                                    user={user}
+
+                                                />
+                                            </div>
+
+                                        </div>
+                                        <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
+                                            <div className='flex-center text-[14px]'>بارگذاری تصویر گواهی نامه مدرسی آموزشی خانواده سنوات قبل</div>
+                                            <div className="gap-2">
+                                                <ImageUploader
+                                                    imageItems={certificateDoc}
+                                                    onChange={onChangeCertificateDoc}
+                                                    maxNumber={1}
+                                                    acceptType={acceptType}
+                                                    maxFileSize={maxFileSize}
+                                                    user={user}
+
+                                                />
+                                            </div>
+
+                                        </div>
 
 
                                     </CardBody>
@@ -242,6 +606,7 @@ function LectureInformation() {
                                         !isUploadedDocument &&
 
                                         <CardFooter className='flex items-end justify-end'>
+                                            <Button className={`mt-2  bg-gray-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitUpdatedDocument(event)}>بازگشت به مرحله قبل</Button>
                                             <Button isLoading={isLoading} className={`mt-2  bg-green-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitUploadedDocument(event)}>تایید نهایی</Button>
 
                                         </CardFooter>

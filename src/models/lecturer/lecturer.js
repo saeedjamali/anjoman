@@ -94,7 +94,7 @@ const schema = mongoose.Schema(
       required: true,
     },
     certificateDoc: {
-      //? بارگذاری تصویر مدرک
+      //? بارگذاری تصویر گواهی نامه
       type: String,
       required: false,
     },

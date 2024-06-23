@@ -109,6 +109,11 @@ const valiadteRegionCode = (regionCode) => {
   return pattern.test(regionCode);
 };
 
+const valiadteProvinceCode = (provinceCode) => {
+  const pattern = /^(?=.*?[0-9]).{2,2}$/g;
+  return pattern.test(provinceCode);
+};
+
 const valiadtePrsCode = (prsCode) => {
   const pattern = /^(?=.*?[0-9]).{8,8}$/g;
   return pattern.test(prsCode);
@@ -134,4 +139,5 @@ export {
   valiadtePrsCode,
   valiadteMeliCode,
   valiadteRegionCode,
+  valiadteProvinceCode
 };

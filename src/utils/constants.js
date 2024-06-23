@@ -57,7 +57,8 @@ export const degree = [
 // ? with web api
 export const province = [
   { code: 10, name: "حوزه ستادي " },
-  { code: 12, name: "تهران" },
+  { code: 11, name: "تهران" },
+  { code: 12, name: "شهرستان های تهران" },
   { code: 15, name: "مرکزی" },
   { code: 16, name: "خراسان رضوی" },
   { code: 17, name: "اصفهان" },

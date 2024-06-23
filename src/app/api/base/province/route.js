@@ -19,6 +19,8 @@ export async function GET(req, { params }) {
       }))
     );
 
+    
+
     return Response.json({
       message: "استان ها با موفقیت ثبت یا بروز شد",
       status: 200,
