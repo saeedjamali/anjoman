@@ -54,9 +54,10 @@ const schema = mongoose.Schema(
       type: Number,
       required: false,
     },
+    //? بارگذاری معرفی نامه
     introDoc: {
-      //? بارگذاری معرفی نامه
-      type: String,
+      type: [String],
+      default: [],
       required: false,
     },
     province: {
@@ -84,18 +85,20 @@ const schema = mongoose.Schema(
       type: fieldSchema,
       required: true,
     },
+    //? بارگذاری تصویر مدرک
     degreeDoc: {
-      //? بارگذاری تصویر مدرک
-      type: String,
+      type: [String],
+      default: [],
       required: true,
     },
     isCertificateBefore: {
       type: Boolean,
       required: true,
     },
+    //? بارگذاری تصویر گواهی نامه
     certificateDoc: {
-      //? بارگذاری تصویر گواهی نامه
-      type: String,
+      type: [String],
+      default: [],
       required: false,
     },
     age: {
@@ -116,6 +119,13 @@ const schema = mongoose.Schema(
       //? 0 : ثبت نام
       //? 1 : تایید شده = قبولی در آزمون
       //? 2 : رد شده
+      type: Number,
+      required: false,
+    },
+    payment: {
+      //? 0 : نامشخص
+      //? 1 : free رایگان
+      //? 2 : payment پولی
       type: Number,
       required: false,
     },

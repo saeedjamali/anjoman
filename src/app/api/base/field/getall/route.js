@@ -10,7 +10,7 @@ export async function GET(req, { params }) {
         }
 
 
-        const fields = await FieldModel.find();
+        const fields = await FieldModel.find({}, "name code");
 
         if (!fields) {
             return Response.json({
