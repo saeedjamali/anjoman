@@ -9,7 +9,7 @@ export async function GET(req, { params }) {
       return Response.json({ message: "خطا در اتصال به پایگاه", status: 500 });
     }
 
-    const provinces = await ProvinceModel.find({}, "name code");
+    const provinces = await ProvinceModel.find({}, "-createdAt -updatedAt");
 
     if (!provinces) {
       return Response.json({

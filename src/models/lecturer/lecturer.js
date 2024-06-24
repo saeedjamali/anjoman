@@ -116,9 +116,9 @@ const schema = mongoose.Schema(
       ref: "User",
     },
     status: {
-      //? 0 : ثبت نام
-      //? 1 : تایید شده = قبولی در آزمون
-      //? 2 : رد شده
+      //? status == 1  ثبت نام شده
+      //? status == 2  قبولی در مضاحبه
+      //? status == 3  رد شده
       type: Number,
       required: false,
     },
@@ -129,6 +129,10 @@ const schema = mongoose.Schema(
       type: Number,
       required: false,
     },
+    comment: {
+      type: String,
+      default: ""
+    }
   },
   {
     timestamps: true,

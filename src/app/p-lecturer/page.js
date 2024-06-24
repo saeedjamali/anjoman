@@ -5,27 +5,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { year } from "@/utils/constants";
 import { traverse } from "@/utils/convertnumtopersian";
 import Notification from "@/components/template/modir/Notification";
-import AdminInformation from "@/components/template/admin/AdminInformation";
 import { useUserProvider } from "@/components/context/UserProvider";
-import Lecturer from "@/models/lecturer/lecturer";
 import LectureInformation from "@/components/template/lecturer/Lecturer";
 
 //* این صفحه برای مدیریت اطلاعات کارشناسان مناطق/ استان و ستاد طراحی شده است.
 function LecturerPage(params) {
-  const currentYear = year.find((y) => y.currentYear);
-  const [isClient, setIsClient] = useState(false);
-  const { user } = useUserProvider();
 
-  //?  قبلا در کلاینت کامپوننت فچ دیتا داشتیم که منتقل کردم به لاویت و الان در سرور کامپویننت دیتا فچ میشه و ارسال میشه
-  //? کد یوس افکت در انتهای این تابع کامنت شد و درست کار میکنه
-  if (isClient) {
-    // Check if document is finally loaded
-    traverse(document.getElementsByTagName("body")[0]);
-    // localizeNumbers(document.getElementsByTagName('body')[0]);
-  }
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+ 
 
   return (
     <div className="w-full h-full ">
@@ -43,33 +29,3 @@ function LecturerPage(params) {
 }
 
 export default LecturerPage;
-
-// در صورتی که بخواهیم در cs
-// دیتا دریافت کنیم این فچ فعال میشه
-// چون در میدلویر کنترل توکن و تولید مجدد اون رو داشتیم اینجا دوباره کاری نکردیم
-// useEffect(() => {
-//   const getUser = async () => {
-
-//     const response = await fetch('/api/auth/me');
-//     const data = await response.json();
-//     let mu = []
-//     if (data.status == 201) {
-//       setUser({ ...data.user });
-//       // const response = await fetch(`/api/modirunit/${data.user._id}/${currentYear.name } `, { cache: 'force-cache' });
-//       const response = await fetch(`/api/modirunit/${data.user._id}`);
-//       const modirUnit = await response.json();
-//       if (modirUnit.status == 200) {
-
-//         setModir(modirUnit.foundedModirUnit[0].Modir)
-//         modirUnit.foundedModirUnit.map(prev => mu.push({ ...prev.Unit, isActive: prev.isActive }))
-//         setUnits(mu);
-//       }
-
-//     } else {
-//       router.push("/")
-//     }
-//   }
-
-//   getUser();
-
-// }, []);

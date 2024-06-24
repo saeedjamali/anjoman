@@ -8,7 +8,7 @@ export async function GET(req, { params }) {
     if (!isConnected) {
       return Response.json({ message: "خطا در اتصال به پایگاه", status: 500 });
     }
-    const degrees = await DegreeModel.find({}, "name code");
+    const degrees = await DegreeModel.find({}, "-createdAt -updatedAt");
 
     if (!degrees) {
       return Response.json({

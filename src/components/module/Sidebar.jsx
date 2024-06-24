@@ -12,6 +12,7 @@ import { GrUserManager } from "react-icons/gr";
 import { MdOutlineDashboard } from "react-icons/md";
 import { PiShirtFoldedLight } from "react-icons/pi";
 import { BsBusFront } from "react-icons/bs";
+import { GiTeacher } from "react-icons/gi";
 function Sidebar() {
     const { showSidebar, setShowSideBar,
         user,
@@ -54,7 +55,7 @@ function Sidebar() {
                                         داشبورد
                                     </Link>
                                 }
-                                 {
+                                {
                                     user.role == 'lecturer' && <Link className='w-full flex' href={`/p-lecturer`}>
                                         <span className='pl-2 flex-center'>
                                             <MdOutlineDashboard />
@@ -113,6 +114,14 @@ function Sidebar() {
                             <SidebarItem title='لباس فرم' subMenu={[{ title: 'تایید قرارداد', url: '/p-admin/contract' }]} >
                                 <span className='pl-2 flex-center'>
                                     <PiShirtFoldedLight />
+                                </span>
+                            </SidebarItem>
+                        }
+                        {
+                            admin?.isActive == 1 && user.role == "admin" && (admin.level == 2 || admin.level == 3 || admin.level == 999) &&
+                            <SidebarItem title='مدرس آموزش خانواده' subMenu={[{ title: 'درخواست ها', url: '/p-admin/lecturer' }]} >
+                                <span className='pl-2 flex-center'>
+                                    <GiTeacher />
                                 </span>
                             </SidebarItem>
                         }

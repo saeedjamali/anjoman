@@ -5,13 +5,15 @@ export async function GET(req, { params }) {
   const filename = params.filename[0];
   const code = params.filename[1];
   let filePath = "";
+  if (!(await authenticateMe())) {
+    return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
+  }
 
   //contract
   filePath = path.join(process.cwd(), `/upload/${code}/`, filename);
- 
-    //formdress
-    // filePath = path.join(process.cwd(), "/upload/formdress/", filename);
- 
+
+  //formdress
+  // filePath = path.join(process.cwd(), "/upload/formdress/", filename);
 
   try {
     const file = fs.readFileSync(filePath);
