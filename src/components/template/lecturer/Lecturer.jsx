@@ -30,6 +30,7 @@ function LectureInformation() {
     const { user } = useUserProvider();
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [payment, setPayment] = useState(0); //? 1 : submit   ---- 2 : payment
+    const [comment, setComment] = useState("");
     const { phone, identifier, isActive, isBan } = user;
     const [history, setHistory] = useState([]);
     const [currentYearHistory, setCurrentYearHistory] = useState(null);
@@ -130,7 +131,7 @@ function LectureInformation() {
         if (history.length != 0) {
 
             setPayment(history.payment)
-            // setYear(history.year)
+            setYear(history.comment)
             setName(history.name)
             setPrsCode(history.prsCode)
             setMeliCode(history.meliCode)
@@ -498,7 +499,7 @@ function LectureInformation() {
                 theme="light"
             />
             <div className='w-full border-2 border-slate-100 mt-2 '>
-                <div className='flex items-center  bg-slate-100 p-2' onClick={() => setIsModriInformation(prev => !prev)}>
+                <div className='flex items-center  bg-slate-100 p-2' >
                     <span className=' w-full flex text-[12px]'>اطلاعات مدرس</span>
 
                     {/* <span className={isActive == 0 ? 'text-orange-500 ' : isActive == 1 ? ' text-green-500 ' : 'text-red-500'}>
@@ -1279,6 +1280,12 @@ function LectureInformation() {
 
                                         </CardFooter>
                                     }
+                                </Card>
+
+                                <Card className='my-4'>
+                                    <CardHeader className={`flex gap-3  text-white text-right ${status == 1 ? ' bg-blue-500 ' : status == 2 ? ' bg-green-500' : status == 3 ? ' bg-red-500' : status == 4 ? ' bg-purple-500' : ' hidden'} `}>
+                                        <p className="text-lg ">{` توضیحات : ${comment} `}</p>
+                                    </CardHeader>
                                 </Card>
 
                             </div>}

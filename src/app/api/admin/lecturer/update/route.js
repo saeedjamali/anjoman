@@ -26,10 +26,9 @@ export async function PUT(req, { params }) {
     const isCertificateBefore = formData.get("isCertificateBefore");
     const age = formData.get("age");
     const isAccepted = formData.get("isAccepted");
+    const comment = formData.get("comment");
     const status = formData.get("status");
     const payment = formData.get("payment");
-
-
 
     const { isConnected, message } = await connectToDB();
     if (!isConnected) {
@@ -54,6 +53,7 @@ export async function PUT(req, { params }) {
         isCertificateBefore,
         age,
         isAccepted,
+        comment,
         status,
         payment,
       }

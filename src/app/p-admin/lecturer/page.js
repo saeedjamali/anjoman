@@ -87,6 +87,7 @@ function LecturerPage() {
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [payment, setPayment] = useState(0); //? 1 : submit   ---- 2 : payment
+  const [comment, setComment] = useState(0); //? 1 : submit   ---- 2 : payment
   const { identifier, isActive, isBan } = user;
   const [history, setHistory] = useState([]);
   const [currentYearHistory, setCurrentYearHistory] = useState(null);
@@ -144,7 +145,7 @@ function LecturerPage() {
   useEffect(() => {
     if (currentLecturer) {
       setPayment(currentLecturer.payment);
-      // setYear(history.year)
+      setComment(currentLecturer.comment);
       setName(currentLecturer.name);
       setPhone(currentLecturer.phone);
       setPrsCode(currentLecturer.prsCode);
@@ -294,7 +295,7 @@ function LecturerPage() {
       setNotCompletePersonalInformation(false);
       // setIsPersonalInformation(true);
       setIsLoading(true);
-
+      console.log("status-->", status);
       try {
         const formData = new FormData();
         if (organ == 2) {
@@ -315,6 +316,7 @@ function LecturerPage() {
         formData.append("isAccepted", isAccepted);
         formData.append("status", status);
         formData.append("payment", payment);
+        formData.append("comment", comment);
         formData.append("province", JSON.stringify(provinceObj));
         formData.append("region", JSON.stringify(regionObj));
         formData.append("degree", JSON.stringify(degreeObj));
@@ -354,14 +356,18 @@ function LecturerPage() {
         organ:
           lc.organ == 1
             ? "آموزش و پرورش"
-            : lc.organ ==2
+            : lc.organ == 2
             ? "دانشگاه"
-            : lc.organ ==3
+            : lc.organ == 3
             ? "حوزه علمیه"
             : "نامشخص",
         isAcademic: lc.isAcademic ? "بله " : "خیر",
         typeAcademic:
-          lc.typeAcademic == 1 ? "استادیار" : lc.typeAcademic ==2 ? "دانشیار" : "نامشخص",
+          lc.typeAcademic == 1
+            ? "استادیار"
+            : lc.typeAcademic == 2
+            ? "دانشیار"
+            : "نامشخص",
         provinceName: lc.provinceName,
         regionName: lc.regionName,
         degree: lc.degree.name,
@@ -372,11 +378,11 @@ function LecturerPage() {
         status:
           lc.status == 1
             ? "ثبت نام شده"
-            :  lc.status ==2
+            : lc.status == 2
             ? "قبولی آزمون"
-            :  lc.status ==3
+            : lc.status == 3
             ? "رد"
-            :  lc.status ==4
+            : lc.status == 4
             ? "در انتظار پرداخت"
             : "نامخشخص",
         payment: lc.payment == 1 ? "رایگان" : "پرداخت",
@@ -474,10 +480,10 @@ function LecturerPage() {
 
         {showDetailLecturer && actionType == 1 && (
           <div div className="p-4 bg-slate-200 rounded-lg mt-4">
-            <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
+            {/* <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
               <p className=" flex text-bold ">{`جزییات ثبت نام ${currentLecturer.name}`}</p>
-            </div>
-            <div className="flex flex-col justify-start mt-4">
+            </div> */}
+            <div className="flex flex-col justify-start ">
               {/* //? ثبت مشخصات فردی */}
 
               <Card className="my-4">
@@ -767,15 +773,15 @@ function LecturerPage() {
 
         {showDetailLecturer && actionType == 2 && (
           <div div className="p-4 bg-slate-200 rounded-lg mt-4">
-            <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
+            {/* <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
               <p className=" flex text-bold ">{`ویرایش ثبت نام ${currentLecturer.name}`}</p>
-            </div>
-            <div className="flex flex-col justify-start mt-4">
+            </div> */}
+            <div className="flex flex-col justify-start ">
               {/* //? ثبت مشخصات فردی */}
 
               <Card className="my-4">
                 <CardHeader className="flex gap-3 bg-blue-500 text-white">
-                  <p className="text-lg ">ویرایش مشخصات فردی</p>
+                  <p className="text-lg ">{`ویرایش ثبت نام ${currentLecturer.name}`}</p>
                 </CardHeader>
                 <Divider />
                 <CardBody>
@@ -1070,6 +1076,20 @@ function LecturerPage() {
                           </Radio>
                         </RadioGroup>
                       </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:gap-4">
+                    <div className="relative mt-2 flex justify-start col-span-2">
+                      {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                      <Input
+                        tabIndex={1}
+                        type="text"
+                        size="md"
+                        label="توضیحات"
+                        labelPlacement={"inside"}
+                        value={comment}
+                        onChange={(event) => setComment(event.target.value)}
+                      ></Input>
                     </div>
                   </div>
                   <div className="relative mt-4  flex justify-start items-start text-right col-span-2">
