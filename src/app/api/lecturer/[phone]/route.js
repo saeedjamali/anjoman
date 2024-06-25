@@ -16,8 +16,8 @@ export async function GET(req, { params }) {
     }
 
     const lectureFound = await lecturerModel.find({
-      phone,
-    });
+      $and: [{ phone },{ isRemoved: false }]
+  });
 
     if (!lectureFound) {
       return Response.json({

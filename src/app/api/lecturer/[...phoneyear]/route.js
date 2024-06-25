@@ -19,7 +19,7 @@ export async function GET(req, { params }) {
 
 
         const lectureFound = await lecturerModel.findOne({
-            $and: [{ phone }, { year }]
+            $and: [{ phone }, { year },{ isRemoved: false }]
         });
 
         if (!lectureFound) {

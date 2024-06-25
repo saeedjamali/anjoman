@@ -35,9 +35,6 @@ export async function POST(req) {
   const status = formData.get("status");
   const payment = formData.get("payment");
 
-  console.log("introDoc", introDoc);
-  console.log("degreeDoc", degreeDoc);
-  console.log("certificateDoc", certificateDoc);
   try {
     //Buffer
     if (
@@ -56,7 +53,7 @@ export async function POST(req) {
     }
 
     const lecturerFound = await lecturerModel.findOne({
-      $and: [{ year }, { user }],
+      $and: [{ year }, { user }, { isRemoved: false }],
     });
     if (lecturerFound) {
       return Response.json({
@@ -82,15 +79,16 @@ export async function POST(req) {
       Region: JSON.parse(Region),
       degree: JSON.parse(degree),
       field: JSON.parse(field),
-      introDoc:[],
-      degreeDoc:[],
-      certificateDoc:[],
+      introDoc: [],
+      degreeDoc: [],
+      certificateDoc: [],
       isCertificateBefore,
       age,
       isAccepted,
       user,
       status,
       payment,
+      isRemove: false,
     });
 
     introDoc?.map(async (img, index) => {

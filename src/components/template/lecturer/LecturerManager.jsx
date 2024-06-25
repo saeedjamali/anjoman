@@ -83,7 +83,8 @@ const statusOptionsPayment = [
 const statusOptions = [
     { name: "ثبت نام شده", uid: 1 },
     { name: "قبولی در مصاحبه", uid: 2 },
-    { name: "رد مصاحبه", uid: 0 },
+    { name: "رد مصاحبه", uid: 3 },
+    { name: "در انتظار پرداخت", uid: 4 },
     { name: "نامشخص", uid: 10 },
 ];
 export function capitalize(str) {
@@ -269,18 +270,19 @@ export default function LecturerManager({ setShowDetailLecturer,
         getLecturer();
     }, []);
 
-    const onDeleteContractHandler = async (currentItem, lecturerList) => {
+    const onDeleteLecturerItem = async (currentItem, lecturerList) => {
         setIsLoadingForModalbtn(true)
 
         setCurrentLecturer(currentItem)
         try {
-            const response = await fetch(`/api/admin/contract/removecontract/${currentItem._id}`, {
+            const response = await fetch(`/api/admin/lecturer/remove/${currentItem._id}`, {
                 method: 'DELETE',
             })
             const data = await response.json();
             if (data.status == 201) {
                 toast.info(data.message)
                 const removeFilter = lecturerList.filter((item) => item._id != currentLecturer._id)
+
                 setLecturerList(removeFilter);
             } else {
                 toast.error(data.message)
@@ -288,64 +290,10 @@ export default function LecturerManager({ setShowDetailLecturer,
             setIsLoadingForModalbtn(false)
             // router.push("/p-modir/uniform/contract")
         } catch (error) {
-            console.log("error from remove contract Handler --->", error)
+            console.log("error from remove lecturer Handler --->", error)
             setIsLoadingForModalbtn(false)
         }
         onClose();
-    }
-    const onSubmitContractHandler = async (currentLecturer, isConfirm, quantity) => {
-        if (isConfirm == 1) {
-            setIsLoadingForModalbtn(true)
-        }
-        if (isConfirm == 2) {
-            setIsLoadingForDenyModalbtn(true)
-        }
-        try {
-            const response = await fetch("/api/admin/contract/putsubmit", {
-                method: "PUT",
-                headers: {
-                    "content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    limited, description, isConfirm, quantity,
-                    code: currentLecturer.code,
-                    companycode: currentLecturer?.company?.code,
-                    unitcode: currentLecturer.unitcode,
-                    year: currentLecturer.year
-                })
-            });
-            const data = await response.json();
-            if (data.status == 201) {
-                const newContractlist = lecturerList.map(cl => {
-
-                    if (cl.code == currentLecturer.code) {
-
-                        return {
-                            ...cl,
-                            limited, description, isConfirm: isConfirm == 1 || isConfirm == 4 ? 1 : 2
-                        }
-                    }
-                    else
-                        return cl
-                })
-
-                setLecturerList(newContractlist);
-                toast.success(data.message);
-                location.reload()
-            } else {
-                toast.error(data.message);
-            }
-            setIsLoadingForModalbtn(false)
-            setIsLoadingForDenyModalbtn(false)
-
-        } catch (error) {
-            console.log("error in put contract in admin panel-->", error)
-            setIsLoadingForModalbtn(false)
-            setIsLoadingForDenyModalbtn(false)
-            toast.error("خطا ناشناخته");
-        }
-        onClose();
-        // console.log("ready to send --->", schools)
     }
     //!!!!!!!!!!!!!
     const renderCell = React.useCallback((lecturer, columnKey) => {
@@ -382,7 +330,7 @@ export default function LecturerManager({ setShowDetailLecturer,
             case "status":
                 return (
                     <Chip className="capitalize" color={statusColorMapForStatus[lecturer.status]} size="sm" variant="flat">
-                        {cellValue == 1 ? 'ثبت نام شده ' : cellValue == 2 ? 'قبولی در مصاحبه' : cellValue == 3 ? 'رد شده' : 'نامشخص'}
+                        {cellValue == 1 ? 'ثبت نام شده ' : cellValue == 2 ? 'قبولی در مصاحبه' : cellValue == 3 ? 'رد شده' : cellValue == 4 ? 'در انتظار پرداخت' : 'نامشخص'}
                     </Chip>
                 );
             case "payment":
@@ -416,10 +364,6 @@ export default function LecturerManager({ setShowDetailLecturer,
                                         setCurrentLecturer(currentItem)
                                         setShowDetailLecturer(prev => !prev)
                                         setActionType(2)
-                                        // setAction(2)
-                                        // setLimited(currentItem.limited)
-                                        // setDescription(currentItem.description)
-                                        // onOpen();
 
 
                                     }} />
@@ -430,11 +374,8 @@ export default function LecturerManager({ setShowDetailLecturer,
                                     <DeleteIcon className="text-red-500" onClick={(e) => {
                                         e.preventDefault();
                                         setCurrentLecturer(currentItem)
-                                        // setActionType(3)
-                                        // setAction(3)
-                                        // setLimited(currentItem.limited)
-                                        // setDescription(currentItem.description)
-                                        // onOpen();
+                                        setActionType(3)
+                                        onOpen();
 
 
                                     }} />
@@ -661,161 +602,47 @@ export default function LecturerManager({ setShowDetailLecturer,
             </Table>
 
 
-            {action == 2 ?
-                <Modal
-                    backdrop="opaque"
-                    isOpen={isOpen}
-                    onOpenChange={onOpenChange}
-                    radius="lg"
-                    classNames={{
-                        body: "py-6 bg-white",
-                        backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-                        base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                        header: " border-[#292f46]  bg-primary_color text-white",
-                        footer: " border-[#292f46] bg-white",
-                        closeButton: "hover:bg-white/5 active:bg-white/10",
-                    }}
-                >
-                    <ModalContent>
-                        {(onClose) => (
-                            <>
-                                <ModalHeader className="flex flex-col gap-1  text-md">
-                                    تایید / رد قرارداد
-                                </ModalHeader>
-                                <ModalBody >
-                                    {
-                                        <form>
-                                            <div className="w-full flex flex-col gap-4">
 
-                                                <div className="flex flex-col w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
-                                                    <Input type="Number" size="sm" label="محدودیت (تعداد)" value={limited} onChange={(e) => setLimited(e.target.value)} />
-                                                    <Textarea
-                                                        value={description}
-                                                        onChange={(e) => setDescription(e.target.value)}
-                                                        label="توضیحات (قابل مشاهده برای کاربر)"
-                                                        variant="flat"
-                                                        labelPlacement="inside"
-                                                        size="sm"
+            <Modal
+                backdrop="opaque"
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                radius="lg"
+                classNames={{
+                    body: "py-6 bg-white",
+                    backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                    base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
+                    header: " border-[#292f46]  bg-red-600 text-white",
+                    footer: " border-[#292f46] bg-white",
+                    closeButton: "hover:bg-white/5 active:bg-white/10",
+                }}
+            >
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1  text-md">
+                                حذف ثبت نام
+                            </ModalHeader>
+                            <ModalBody className="text-black">
+                                {`از حذف ثبت نام ${currentLecturer.name} اطمینان دارید؟`}
 
-                                                        classNames={{
-                                                            base: "sm",
-                                                            input: "resize-y min-h-[40px] sm",
+                            </ModalBody>
+                            <ModalFooter >
+                                <Button color="foreground" variant="bordered" onPress={onClose}>
+                                    بستن
+                                </Button>
+                                <Button isLoading={isLoadingForDenyModalbtn} color="danger" variant="shadow" onClick={() => onDeleteLecturerItem(currentLecturer, lecturerList)}>
 
-                                                        }}
-                                                    />
-                                                </div>
+                                    حذف
+                                </Button>
 
-                                            </div>
-
-                                        </form>
-                                    }
-                                </ModalBody>
-                                <ModalFooter >
-                                    <Button color="foreground" variant="bordered" onPress={onClose}>
-                                        بستن
-                                    </Button>
-                                    <Button isLoading={isLoadingForDenyModalbtn} color="danger" variant="shadow" onPress={() => {
-                                        if (currentLecturer.description == description && currentLecturer.limited == limited) {
-                                            toast.info("اطلاعات جدیدی ثبت نشده است")
-                                            return false
-                                        }
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal >
 
 
-
-                                        if (currentLecturer.isConfirm == 1) {
-                                            currentLecturer.Pricelists.map(pr => quantity += pr.quantity)
-                                            setIsConfirm(3);
-                                            onSubmitContractHandler(currentLecturer, 3, quantity) //? قراردادهایی که قبلا تایید و مجدد بررسی و لغو میشود
-                                            return
-                                        }
-                                        setIsConfirm(2)
-                                        onSubmitContractHandler(currentLecturer, 2)
-
-                                    }}>
-
-                                        رد
-                                    </Button>
-                                    {currentLecturer.isConfirm != 10 &&
-                                        <Button isLoading={isLoadingForModalbtn} className="text-white" color="success" variant="shadow" onPress={() => {
-                                            if (currentLecturer.description == description && currentLecturer.limited == limited) {
-                                                toast.info("اطلاعات جدیدی ثبت نشده است")
-                                                return false
-                                            }
-
-                                            setIsConfirm(1)
-                                            currentLecturer.Pricelists.map(pr => quantity += pr.quantity)
-                                            if (currentLecturer.isConfirm == 1 && (currentLecturer.description != description || currentLecturer.limited != limited)) {
-                                                //? قبلا تایید شده است ولی در تایید جدید یکی از مقادیر محدودیت یا توضیحات نیاز به تغییر دارد
-                                                onSubmitContractHandler(currentLecturer, 4, quantity)
-                                                return
-                                            }
-
-                                            if (currentLecturer.isConfirm == 1) {
-                                                toast.info("این قرارداد قبلا بررسی و تایید شده است")
-                                                return
-                                            }
-
-                                            onSubmitContractHandler(currentLecturer, 1, quantity)
-
-                                        }}>
-
-                                            تایید
-                                        </Button>}
-                                </ModalFooter>
-                            </>
-                        )}
-                    </ModalContent>
-                </Modal >
-                :
-                <Modal
-                    backdrop="opaque"
-                    isOpen={isOpen}
-                    onOpenChange={onOpenChange}
-                    radius="lg"
-                    classNames={{
-                        body: "py-6 bg-white",
-                        backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-                        base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                        header: " border-[#292f46]  bg-red-900 text-white",
-                        footer: " border-[#292f46] bg-white",
-                        closeButton: "hover:bg-white/5 active:bg-white/10",
-                    }}
-                >
-                    <ModalContent>
-                        {(onClose) => (
-                            <>
-                                <ModalHeader className="flex flex-col gap-1  text-md">
-                                    حذف قرارداد
-                                </ModalHeader>
-                                <ModalBody >
-                                    {
-                                        <form>
-                                            <div className="relative mt-2 flex justify-end col-span-1">
-                                                <div className="flex flex-col  w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
-                                                    <div className="flex gap-2 text-black">
-                                                        <p>
-                                                            {`از حذف قرارداد با واحد سازمانی ${currentLecturer.unitname} اطمینان دارید؟`}
-                                                        </p>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </form>
-                                    }
-                                </ModalBody>
-                                <ModalFooter >
-                                    <Button color="foreground" variant="light" onPress={onClose}>
-                                        بستن
-                                    </Button>
-                                    <Button className="bg-red-700 text-white" variant="light" isLoading={isLoadingForModalbtn} onPress={() => onDeleteContractHandler(currentLecturer, lecturerList)}>
-                                        حذف
-                                    </Button>
-                                </ModalFooter>
-                            </>
-                        )}
-                    </ModalContent>
-                </Modal >
-            }
 
 
         </>

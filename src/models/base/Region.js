@@ -40,9 +40,6 @@ const regionSchema = mongoose.Schema(
         },
       ],
     },
-  },
-  {
-    timestamps: true,
   }
 );
 

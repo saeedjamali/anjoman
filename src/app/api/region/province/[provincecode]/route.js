@@ -32,7 +32,7 @@ export async function GET(req, { params }) {
                 status: 401,
             });
         }
-        console.log("foundedRegion-->", foundedRegion)
+        // console.log("foundedRegion-->", foundedRegion)
 
         return Response.json({
             message: "کد منطقه یافت شد",

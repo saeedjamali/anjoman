@@ -8,7 +8,6 @@ import Notification from "@/components/template/modir/Notification";
 import { useUserProvider } from "@/components/context/UserProvider";
 import LectureInformation from "@/components/template/lecturer/Lecturer";
 
-//* این صفحه برای مدیریت اطلاعات کارشناسان مناطق/ استان و ستاد طراحی شده است.
 function LecturerPage(params) {
 
  

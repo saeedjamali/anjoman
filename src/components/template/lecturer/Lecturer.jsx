@@ -29,7 +29,7 @@ const acceptType = "jpg";
 function LectureInformation() {
     const { user } = useUserProvider();
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-    const [action, setAction] = useState(0); //? 1 : submit   ---- 2 : payment
+    const [payment, setPayment] = useState(0); //? 1 : submit   ---- 2 : payment
     const { phone, identifier, isActive, isBan } = user;
     const [history, setHistory] = useState([]);
     const [currentYearHistory, setCurrentYearHistory] = useState(null);
@@ -71,6 +71,9 @@ function LectureInformation() {
     const [error, setError] = useState([]);
     const [beforeRegistered, setBeforeRegistered] = useState(false);
     const [seeHistory, setSeeHistory] = useState(false);
+    const [actionType, setActionType] = useState(0)
+    const [isLoadingForModalbtn, setIsLoadingForModalbtn] = useState(false)
+    //? 1: register without payment    2:register and payment     3: remove     4: payment 
 
     //? Provinces , Region , Field , Degree
     const [provinces, setProvinces] = useState([]);
@@ -122,13 +125,11 @@ function LectureInformation() {
     }, [province])
 
 
-    console.log("provinceObj--->", provinceObj)
-    console.log("province--->", provinces)
     useEffect(() => {
 
         if (history.length != 0) {
 
-            setAction(history.payment)
+            setPayment(history.payment)
             // setYear(history.year)
             setName(history.name)
             setPrsCode(history.prsCode)
@@ -262,7 +263,7 @@ function LectureInformation() {
 
 
         if (age < 30) {
-            str.push('حداقل شرط سنی رعایت نشده است')
+            str.push('حداقل شرط سنی(30) رعایت نشده است')
             setNotCompletePersonalInformatio(true)
         }
 
@@ -287,6 +288,13 @@ function LectureInformation() {
             str.push('رشته تحصيلي مشخص شود')
             setNotCompletePersonalInformatio(true)
         }
+        console.log("Alarmm degree:", degree, "  organ:", organ, "   isAccepted:", isAccepted)
+        if (isAccepted && !((organ == 2) ||
+            (organ == 3 && degree == 4) ||
+            (organ == 1 && degree == 2))) {
+            str.push('مدرک و سازمان مجدد بررسی شود')
+            setNotCompletePersonalInformatio(true)
+        }
         setError(str)
         if (str.length == 0) {
             setNotCompletePersonalInformatio(false)
@@ -297,7 +305,7 @@ function LectureInformation() {
         // }
     }
 
-    const submitDocument = () => {
+    const submitDocument = (type) => {
         // console.log("hhooooo", degreeDoc)
         // console.log("hhooooo", introDoc)
         // console.log("hhooooo", certificateDoc)
@@ -312,11 +320,15 @@ function LectureInformation() {
             str.push('تصوير گواهي مدرسي سنوات قبل بارگذاري نشده است')
         }
         setError(str);
-        if (str.length == 0 && (isAccepted || isCertificateBefore)) {
-            setAction(1);
+        if (str.length == 0 && (isAccepted || isCertificateBefore) && type == 1) {
+            setActionType(1); // For modal
+            setPayment(1);    // free
+            setStatus(1)
             onOpen()
-        } else if (str.length == 0 && !isAccepted && !isCertificateBefore) {
-            setAction(2)
+        } else if (str.length == 0 && !isAccepted && !isCertificateBefore && type == 2) {
+            setActionType(2)
+            setPayment(2);  // Payment
+            setStatus(4)  // wiating for payment
             onOpen()
         }
         // هsetIsUploadedDocument(true);
@@ -392,8 +404,8 @@ function LectureInformation() {
             formData.append("age", age);
             formData.append("isAccepted", isAccepted);
             formData.append("user", user._id);
-            formData.append("status", 1);
-            formData.append("payment", action);
+            formData.append("status", status);
+            formData.append("payment", payment);
             formData.append("province", JSON.stringify(provinceObj));
             formData.append("region", JSON.stringify(regionObj));
             formData.append("degree", JSON.stringify(degreeObj));
@@ -409,18 +421,67 @@ function LectureInformation() {
             if (data.status == 201) {
                 toast.success(data.message);
                 onClose();
-                location.reload();
+                if (status == 1) {
+                    location.reload();
+                } else if (status == 4) {
+                    toast.success("هدایت به درگاه پرداخت")
+                    moveToPayment();
+                }
             } else {
                 toast.info(data.message);
             }
+            setIsLoading(false);
+            onClose();
 
 
         } catch (error) {
             console.log("error in catch add lecturer -> ", error);
             toast.error("خطای ناشناخته");
+            setIsLoading(false);
+            onClose();
         }
-        setIsLoading(false);
+
     }
+
+    const submitPayment = () => {
+        // toast.info("در حال انتقال به درگاه پرداخت")
+        setActionType(4)
+        onOpen()
+    }
+
+    const submitRemoveDocument = () => {
+        setActionType(3)
+        onOpen()
+        // toast.error("لغو ثبت نام")
+    }
+
+
+    const moveToPayment = () => { toast.info("در حال پیاده سازی") }
+    const removeRegister = async () => {
+        setIsLoadingForModalbtn(true);
+        try {
+            const response = await fetch(`/api/lecturer/remove/${history._id}`, {
+                method: 'DELETE',
+            })
+            const data = await response.json();
+            if (data.status == 201) {
+                toast.info(data.message)
+                location.reload()
+            } else {
+                toast.error(data.message)
+            }
+            setIsLoadingForModalbtn(false)
+            // router.push("/p-modir/uniform/contract")
+        } catch (error) {
+            console.log("error from remove lecturer Handler --->", error)
+            setIsLoadingForModalbtn(false)
+        }
+        onClose();
+
+    }
+
+
+
     return (
         <div >
             <ToastContainer
@@ -474,12 +535,13 @@ function LectureInformation() {
                         {!isNewRegister &&
                             <div className='flex items-center justify-end mt-4'>
                                 <div className='flex-1'>
-                                    <span className='text-[14px] p-2'>وضعیت : </span>
+                                    {/* <span className='text-[14px] p-2'></span> */}
                                     {
 
                                         //? status == 1  ثبت نام شده
                                         //? status == 2  قبولی در مضاحبه
                                         //? status == 3  رد شده
+                                        //? status == 4  در انتظار پرداخت
                                         beforeRegistered ? (
                                             history.status == 1 ?
                                                 <Chip color='primary'>
@@ -491,10 +553,12 @@ function LectureInformation() {
                                                     </Chip> : history.status == 3 ?
                                                         <Chip color='danger'>
                                                             <span className='font-iranyekan text-[12px] text-white'>{`رد مصاحبه`}</span>
-                                                        </Chip> :
-                                                        <Chip color='warning'>
-                                                            <span className='font-iranyekan text-[12px] text-white'>{`نامشخص`}</span>
-                                                        </Chip>
+                                                        </Chip> : history.status == 4 ?
+                                                            <Chip color='warning'>
+                                                                <span className='font-iranyekan text-[12px] text-white'>{`در انتظار پرداخت`}</span>
+                                                            </Chip> : <Chip color='warning'>
+                                                                <span className='font-iranyekan text-[12px] text-white'>{`نامشخص`}</span>
+                                                            </Chip>
                                         ) :
 
                                             <Chip color='primary'>
@@ -505,7 +569,7 @@ function LectureInformation() {
                                 <div>
                                     {/* <button className='mt-2 bg-red-500 text-white p-2 rounded-md text-[12px]' onClick={() => editHandler(event)} >ویرایش مشخصات</button> */}
                                     {beforeRegistered ?
-                                        <Button className={`mt-2  bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>مشاهده سابقه</Button>
+                                        <Button className={`mt-2  bg-green-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>مشاهده سابقه</Button>
                                         :
                                         <Button className={`mt-2  bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
                                     }
@@ -904,9 +968,9 @@ function LectureInformation() {
                                                     <Button className={`mt-2  bg-gray-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitUpdatedDocument(event)}>بازگشت به مرحله قبل</Button>
                                                     {
                                                         (isCertificateBefore || isAccepted) ?
-                                                            <Button className={`mt-2  bg-green-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitDocument(1)}>ذخیره و ارسال</Button>
+                                                            <Button className={`mt-2  bg-green-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitDocument(1)}>تایید</Button>
                                                             :
-                                                            <Button className={`mt-2  bg-green-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitDocument(2)}>انتقال به درگاه پرداخت</Button>
+                                                            <Button className={`mt-2  bg-green-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitDocument(2)}>تایید و پرداخت</Button>
                                                     }
 
                                                 </div>
@@ -1135,7 +1199,7 @@ function LectureInformation() {
 
                                 </Card>
 
-                                {/* //? بارگذاری مدارک مورد نیاز */}
+                                {/* //?  مدارک مورد نیاز */}
 
                                 <Card className='my-4'>
                                     <CardHeader className="flex gap-3 bg-blue-500 text-white">
@@ -1201,7 +1265,20 @@ function LectureInformation() {
 
                                     </CardBody>
                                     <Divider />
+                                    {history.status == 4 &&
+                                        <CardFooter className='flex items-center justify-end'>
 
+                                            <div className='items-end justify-end'>
+                                                <Button className={`mt-2  bg-red-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
+
+
+                                                <Button className={`mt-2  bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitPayment()}>انتقال به درگاه پرداخت</Button>
+
+
+                                            </div>
+
+                                        </CardFooter>
+                                    }
                                 </Card>
 
                             </div>}
@@ -1211,7 +1288,7 @@ function LectureInformation() {
             </div >
             {
                 //? 1 : submit  2: payment
-                action == 1 ?
+                actionType == 1 ?
                     <Modal
                         backdrop="opaque"
                         isOpen={isOpen}
@@ -1252,43 +1329,118 @@ function LectureInformation() {
                             )}
                         </ModalContent>
                     </Modal>
-                    :
-                    <Modal
-                        backdrop="opaque"
-                        isOpen={isOpen}
-                        onOpenChange={onOpenChange}
-                        radius="lg"
-                        classNames={{
-                            body: "py-6 bg-white",
-                            backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-                            base: "border-[#292f46] bg-slate-500 text-black",
-                            header: " border-[#292f46] text-white  bg-primary_color ",
-                            footer: " border-[#292f46] bg-white",
-                            closeButton: "hover:bg-white/5 active:bg-white/10 ",
-                        }}
-                    >
-                        <ModalContent>
-                            {(onClose) => (
-                                <>
-                                    <ModalHeader className="flex flex-col justify-between items-start ">
-                                        انتقال به درگاه پرداخت
-                                    </ModalHeader>
-                                    <ModalBody >
-                                        مبلغ قابل پرداخت : 250 هزار تومان
+                    : actionType == 2 ?
+                        <Modal
+                            backdrop="opaque"
+                            isOpen={isOpen}
+                            onOpenChange={onOpenChange}
+                            radius="lg"
+                            classNames={{
+                                body: "py-6 bg-white",
+                                backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                                base: "border-[#292f46] bg-slate-500 text-black",
+                                header: " border-[#292f46] text-white  bg-primary_color ",
+                                footer: " border-[#292f46] bg-white",
+                                closeButton: "hover:bg-white/5 active:bg-white/10 ",
+                            }}
+                        >
+                            <ModalContent>
+                                {(onClose) => (
+                                    <>
+                                        <ModalHeader className="flex flex-col justify-between items-start ">
+                                            انتقال به درگاه پرداخت
+                                        </ModalHeader>
+                                        <ModalBody >
+                                            مبلغ قابل پرداخت : 250 هزار تومان
 
-                                    </ModalBody>
-                                    <ModalFooter >
-                                        <Button color="foreground" variant="light" onPress={onClose}>
-                                            بستن
-                                        </Button>
-                                        <Button color="primary" variant="light" onPress={onClose}>
-                                            پرداخت
-                                        </Button>
-                                    </ModalFooter>
-                                </>
-                            )}
-                        </ModalContent>
-                    </Modal>
+                                        </ModalBody>
+                                        <ModalFooter >
+                                            <Button color="foreground" variant="light" onPress={onClose}>
+                                                بستن
+                                            </Button>
+                                            <Button isLoading={isLoading} onClick={registerLecturer} color="primary" variant="light" >
+                                                پرداخت
+                                            </Button>
+                                        </ModalFooter>
+                                    </>
+                                )}
+                            </ModalContent>
+                        </Modal> :
+
+                        actionType == 4 ?
+                            <Modal
+                                backdrop="opaque"
+                                isOpen={isOpen}
+                                onOpenChange={onOpenChange}
+                                radius="lg"
+                                classNames={{
+                                    body: "py-6 bg-white",
+                                    backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                                    base: "border-[#292f46] bg-slate-500 text-black",
+                                    header: " border-[#292f46] text-white  bg-primary_color ",
+                                    footer: " border-[#292f46] bg-white",
+                                    closeButton: "hover:bg-white/5 active:bg-white/10 ",
+                                }}
+                            >
+                                <ModalContent>
+                                    {(onClose) => (
+                                        <>
+                                            <ModalHeader className="flex flex-col justify-between items-start ">
+                                                انتقال به درگاه پرداخت
+                                            </ModalHeader>
+                                            <ModalBody >
+                                                مبلغ قابل پرداخت : 250 هزار تومان
+
+                                            </ModalBody>
+                                            <ModalFooter >
+                                                <Button color="foreground" variant="light" onPress={onClose}>
+                                                    بستن
+                                                </Button>
+                                                <Button isLoading={isLoading} onClick={moveToPayment} color="primary" variant="light" onPress={onClose}>
+                                                    انتقال به درگاه پرداخت
+                                                </Button>
+                                            </ModalFooter>
+                                        </>
+                                    )}
+                                </ModalContent>
+                            </Modal>
+                            : actionType == 3 ?
+                                <Modal
+                                    backdrop="opaque"
+                                    isOpen={isOpen}
+                                    onOpenChange={onOpenChange}
+                                    radius="lg"
+                                    classNames={{
+                                        body: "py-6 bg-white",
+                                        backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                                        base: "border-[#292f46] bg-slate-500 text-black",
+                                        header: " border-[#292f46] text-white  bg-red-500 ",
+                                        footer: " border-[#292f46] bg-white",
+                                        closeButton: "hover:bg-white/5 active:bg-white/10 ",
+                                    }}
+                                >
+                                    <ModalContent>
+                                        {(onClose) => (
+                                            <>
+                                                <ModalHeader className="flex flex-col justify-between items-start ">
+                                                    لغو ثبت نام
+                                                </ModalHeader>
+                                                <ModalBody >
+                                                    با این اقدام ثبت نام جاری شما حذف خواهد شد؟
+
+                                                </ModalBody>
+                                                <ModalFooter >
+                                                    <Button color="foreground" variant="light" onPress={onClose}>
+                                                        بستن
+                                                    </Button>
+                                                    <Button isLoading={isLoadingForModalbtn} onClick={() => removeRegister()} color="danger" variant="light" >
+                                                        تایید
+                                                    </Button>
+                                                </ModalFooter>
+                                            </>
+                                        )}
+                                    </ModalContent>
+                                </Modal> : null
             }
 
 
