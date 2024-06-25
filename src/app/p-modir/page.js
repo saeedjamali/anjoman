@@ -114,7 +114,7 @@ function ModirPage(params) {
           <Notification />
         </div>
         <Button
-          className="fixed  bottom-16 left-8 font-iranyekan p-2 text-white  z-20"
+          className="fixed  bottom-16 left-8  p-2 text-white  z-20"
           // onClick={() => addModirUnitHandler(event)}
           onPress={onOpen}
           color=""
@@ -137,10 +137,10 @@ function ModirPage(params) {
               <ModalContent>
                 {(onClose) => (
                   <>
-                    <ModalHeader className="flex flex-col gap-1 font-iranyekan text-md">
+                    <ModalHeader className="flex flex-col gap-1 text-md">
                       افزودن واحد سازمانی جدید
                     </ModalHeader>
-                    <ModalBody className="font-iranyekan">
+                    <ModalBody >
                       {modir.isActive != 1 && (
                         <p>
                           صرفا در صورتی امکان افزودن واحد سازمانی جدید را دارید
@@ -164,7 +164,7 @@ function ModirPage(params) {
                         </form>
                       )}
                     </ModalBody>
-                    <ModalFooter className="font-iranyekan">
+                    <ModalFooter >
                       <Button
                         color="foreground"
                         variant="light"

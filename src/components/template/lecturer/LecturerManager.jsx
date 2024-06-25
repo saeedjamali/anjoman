@@ -241,7 +241,6 @@ export default function LecturerManager({ setShowDetailLecturer,
                 if (data.status == 201) {
                     toast.success(data.message);
                     const newlist = [...data.lecturerList];
-                    console.log("Data lecturer --->", newlist)
                     // setLecturerListt(newlist);
                     const viewLecturerList = newlist.map((cl) => {
                         return {
@@ -253,7 +252,6 @@ export default function LecturerManager({ setShowDetailLecturer,
                             createdAt: new Date(cl.createdAt).toLocaleString("fa-IR"),
                         };
                     });
-                    console.log("Data lecturer --->", viewLecturerList)
                     setLecturerList([...viewLecturerList]);
                     setLecturerlistLen(viewLecturerList.length)
                 } else {

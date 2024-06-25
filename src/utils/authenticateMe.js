@@ -136,8 +136,6 @@ const authAdmin = async () => {
       },
       "phone role isActive level _id"
     );
-
-    // console.log("admiiiiiiin", admin);
   }
   if (!user) {
     return false;
@@ -217,7 +215,6 @@ const authManagerApi = async () => {
     if (!admin) {
       return false;
     }
-    // console.log("admiiiiiiin", admin);
   }
   if (!user) {
     return false;
@@ -272,8 +269,7 @@ const authAdminApi = async () => {
     }
 
     const admin = await adminModel.findOne({
-      $and: [{ user: user._id }, { isActive: 1 }]
-      
+      $and: [{ user: user._id }, { isActive: 1 }],
     });
     if (!admin) {
       return false;
@@ -294,13 +290,12 @@ const authAdminApi = async () => {
       "phone role isActive level _id"
     );
     const admin = await adminModel.findOne({
-      $and: [{ user: user._id }, { isActive: 1 }]
+      $and: [{ user: user._id }, { isActive: 1 }],
       // $or: [{ level: 1 }, { level: 2 }],
     });
     if (!admin) {
       return false;
     }
-    // console.log("admiiiiiiin", admin);
   }
   if (!user) {
     return false;
@@ -379,7 +374,6 @@ const authProvinceAdminApi = async () => {
     if (!admin) {
       return false;
     }
-    // console.log("admiiiiiiin", admin);
   }
   if (!user) {
     return false;
@@ -387,7 +381,6 @@ const authProvinceAdminApi = async () => {
 
   return user;
 };
-
 
 const authenticateLecturer = async () => {
   await connectToDB();
@@ -456,4 +449,10 @@ const authenticateLecturer = async () => {
 
   return user;
 };
-export { authenticateMe, authAdmin, authAdminApi, authManagerApi,authenticateLecturer };
+export {
+  authenticateMe,
+  authAdmin,
+  authAdminApi,
+  authManagerApi,
+  authenticateLecturer,
+};

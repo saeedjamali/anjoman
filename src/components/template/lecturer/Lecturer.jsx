@@ -209,7 +209,7 @@ function LectureInformation() {
                 data.regions.push({ regionCode: 1, regionName: 'مشهد مقدس', provinceCode: 16, provinceName: 'خراسان رضوی' })
                 setRegions(data.regions.sort((a, b) => a.regionCode - b.regionCode));
             } else {
-                console.log(data.message)
+                // toast.error(data.message)
             }
         } catch (error) {
 
@@ -289,7 +289,6 @@ function LectureInformation() {
             str.push('رشته تحصيلي مشخص شود')
             setNotCompletePersonalInformatio(true)
         }
-        console.log("Alarmm degree:", degree, "  organ:", organ, "   isAccepted:", isAccepted)
         if (isAccepted && !((organ == 2) ||
             (organ == 3 && degree == 4) ||
             (organ == 1 && degree == 2))) {
@@ -307,9 +306,7 @@ function LectureInformation() {
     }
 
     const submitDocument = (type) => {
-        // console.log("hhooooo", degreeDoc)
-        // console.log("hhooooo", introDoc)
-        // console.log("hhooooo", certificateDoc)
+    
         let str = [];
         if (degreeDoc.length == 0) {
             str.push('تصوير مربوط به مدرك تحصيلي بارگذاري نشده است')
@@ -486,7 +483,7 @@ function LectureInformation() {
     return (
         <div >
             <ToastContainer
-                bodyClassName={() => " flex-center text-sm font-white font-iranyekan p-3"}
+                bodyClassName={() => " flex-center text-sm font-white  p-3"}
                 position="top-left"
                 rtl={true}
                 autoClose={5000}
@@ -546,24 +543,24 @@ function LectureInformation() {
                                         beforeRegistered ? (
                                             history.status == 1 ?
                                                 <Chip color='primary'>
-                                                    <span className='font-iranyekan text-[12px] text-white'>{`ثبت نام فعال برای سال تحصیلی ${year} `}</span>
+                                                    <span className='text-[12px] text-white'>{`ثبت نام فعال برای سال تحصیلی ${history.year} `}</span>
                                                 </Chip> :
                                                 history.status == 2 ?
                                                     <Chip color='success'>
-                                                        <span className='font-iranyekan text-[12px] text-white'>{`قبولی در مصاحبه`}</span>
+                                                        <span className=' text-[12px] text-white'>{`قبولی در مصاحبه`}</span>
                                                     </Chip> : history.status == 3 ?
                                                         <Chip color='danger'>
-                                                            <span className='font-iranyekan text-[12px] text-white'>{`رد مصاحبه`}</span>
+                                                            <span className=' text-[12px] text-white'>{`رد مصاحبه`}</span>
                                                         </Chip> : history.status == 4 ?
                                                             <Chip color='warning'>
-                                                                <span className='font-iranyekan text-[12px] text-white'>{`در انتظار پرداخت`}</span>
+                                                                <span className=' text-[12px] text-white'>{`در انتظار پرداخت`}</span>
                                                             </Chip> : <Chip color='warning'>
-                                                                <span className='font-iranyekan text-[12px] text-white'>{`نامشخص`}</span>
+                                                                <span className=' text-[12px] text-white'>{`نامشخص`}</span>
                                                             </Chip>
                                         ) :
 
                                             <Chip color='primary'>
-                                                <span className='font-iranyekan text-[12px] text-white'>{`ثبت نام فعال برای سال تحصیلی ${year} ندارید`}</span>
+                                                <span className=' text-[12px] text-white'>{`ثبت نام فعال برای سال تحصیلی ${year} ندارید`}</span>
                                             </Chip>
                                     }
                                 </div>
@@ -1284,7 +1281,7 @@ function LectureInformation() {
 
                                 <Card className='my-4'>
                                     <CardHeader className={`flex gap-3  text-white text-right ${status == 1 ? ' bg-blue-500 ' : status == 2 ? ' bg-green-500' : status == 3 ? ' bg-red-500' : status == 4 ? ' bg-purple-500' : ' hidden'} `}>
-                                        <p className="text-lg ">{` توضیحات : ${comment} `}</p>
+                                        <p className="text-lg ">{` توضیحات : ${history.comment} `}</p>
                                     </CardHeader>
                                 </Card>
 

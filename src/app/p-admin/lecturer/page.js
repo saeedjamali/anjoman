@@ -180,7 +180,7 @@ function LecturerPage() {
       if (data.status == 200) {
         setProvinces(data.provinces.sort((a, b) => a.code - b.code));
       } else {
-        toast.info(data.message);
+        // toast.info(data.message);
       }
     } catch (error) {
       toast.error("خطای ناشناخته");
@@ -230,7 +230,7 @@ function LecturerPage() {
         });
         setRegions(data.regions.sort((a, b) => a.regionCode - b.regionCode));
       } else {
-        console.log(data.message);
+        // toast.error(data.message)
       }
     } catch (error) {
       toast.error("خطای ناشناخته");
@@ -295,7 +295,6 @@ function LecturerPage() {
       setNotCompletePersonalInformation(false);
       // setIsPersonalInformation(true);
       setIsLoading(true);
-      console.log("status-->", status);
       try {
         const formData = new FormData();
         if (organ == 2) {
@@ -343,7 +342,6 @@ function LecturerPage() {
   };
   //? rep number == isConfirm ==> 0 : currently , 1: confirm ,2:canceled , 10: no contract
   const exportToExcel = (data) => {
-    console.log("lecturerList-->", lecturerList);
     let resultData = [];
     resultData = lecturerList.map((lc) => {
       return {

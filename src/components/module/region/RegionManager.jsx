@@ -539,7 +539,7 @@ export default function RegionManager({ selectedKeys, setSelectedKeys }) {
                                             `}
                                         </p>
                                     </ModalBody>
-                                    <ModalFooter className="font-iranyekan">
+                                    <ModalFooter >
                                         <Button
                                             color="foreground"
                                             variant="light"
@@ -566,7 +566,7 @@ export default function RegionManager({ selectedKeys, setSelectedKeys }) {
                                     <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
                                         ویرایش منطقه
                                     </ModalHeader>
-                                    <ModalBody className="font-iranyekan">
+                                    <ModalBody >
                                         {
                                             <form>
                                                 <div className="relative mt-2 flex justify-end col-span-1">
@@ -590,7 +590,7 @@ export default function RegionManager({ selectedKeys, setSelectedKeys }) {
                                         }
 
                                     </ModalBody>
-                                    <ModalFooter className="font-iranyekan">
+                                    <ModalFooter >
                                         <Button
                                             color="foreground"
                                             variant="light"

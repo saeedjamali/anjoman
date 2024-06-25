@@ -20,6 +20,7 @@ import {
     Button,
     useDisclosure,
 } from "@nextui-org/react";
+import Image from 'next/image';
 
 
 function SwiperText({ data }) {
@@ -96,7 +97,7 @@ function SwiperText({ data }) {
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col justify-between items-start ">
-                                <span className='text-[16px] font-iranyekan'>
+                                <span className='text-[16px] '>
                                     {title}
                                 </span>
                                 <span className='text-[8px] font-iranSans'>
@@ -108,7 +109,13 @@ function SwiperText({ data }) {
                                 <p>
                                     {body}
                                 </p>
+                                <div className='w-full flex-center '>
+                                    {image ?
+                                        <Image className="w-[100%] h-96 my-2" src={image} width={500} height={500} alt="info" />
+                                        : null
 
+                                    }
+                                </div>
 
                             </ModalBody>
                             <ModalFooter >

@@ -89,7 +89,7 @@ function ResetPass({ role, SetAuthTypesForm }) {
                                 </button>
                             }
                             type={isVisible ? "text" : "password"}
-                            className="max-w-xs mt-4 font-iranyekan "
+                            className="max-w-xs mt-4  "
                             value={password} onChange={(event) => setPassword(event.target.value)}
                         />
                         <Input
@@ -107,10 +107,10 @@ function ResetPass({ role, SetAuthTypesForm }) {
                                 </button>
                             }
                             type={isVisibleRepeat ? "text" : "password"}
-                            className="max-w-xs mt-4 font-iranyekan "
+                            className="max-w-xs mt-4  "
                             value={passwordRepeat} onChange={(event) => setPasswordRepeat(event.target.value)}
                         />
-                        <Button isLoading={isLoading} type='submit' color="primary" className="w-full text-white font-iranyekan  py-2 rounded-full mt-12" onClick={() => handleResetPassword()}>تایید</Button>
+                        <Button isLoading={isLoading} type='submit' color="primary" className="w-full text-white   py-2 rounded-full mt-12" onClick={() => handleResetPassword()}>تایید</Button>
                     </form>
                 </div>
             </div>

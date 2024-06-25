@@ -565,7 +565,8 @@ export default function PriceListManager({ selectedKeys,
                                             `}
                                         </p>
                                     </ModalBody>
-                                    <ModalFooter className="font-iranyekan">
+                                    <ModalFooter
+                                    >
                                         <Button
                                             color="foreground"
                                             variant="light"
@@ -592,7 +593,8 @@ export default function PriceListManager({ selectedKeys,
                                     <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
                                         ویرایش اطلاعات محصول
                                     </ModalHeader>
-                                    <ModalBody className="font-iranyekan">
+                                    <ModalBody
+                                    >
                                         {
                                             <form>
                                                 <div className="relative mt-2 flex justify-end col-span-1">
@@ -660,7 +662,8 @@ export default function PriceListManager({ selectedKeys,
                                         }
 
                                     </ModalBody>
-                                    <ModalFooter className="font-iranyekan">
+                                    <ModalFooter
+                                    >
                                         <Button
                                             color="foreground"
                                             variant="light"

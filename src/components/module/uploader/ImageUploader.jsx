@@ -112,23 +112,23 @@ function ImageUploader({ imageItems, onChange, maxNumber, acceptType, maxFileSiz
                                     {errors && (
                                         <div>
                                             {errors.maxNumber && (
-                                                <span className="text-red-500 font-iranyekan text-[14px]">
+                                                <span className="text-red-500 text-[14px]">
                                                     امکان بارگذاری حداکثر{" "}
                                                     {maxNumber} تصویر وجود دارد
                                                 </span>
                                             )}
                                             {errors.acceptType && (
-                                                <span className="text-red-500 font-iranyekan text-[14px]">
+                                                <span className="text-red-500 text-[14px]">
                                                     نوع فایل مجاز Jpg می باشد
                                                 </span>
                                             )}
                                             {errors.maxFileSize && (
-                                                <span className="text-red-500 font-iranyekan text-[14px]">
+                                                <span className="text-red-500 text-[14px]">
                                                     حداکثر حجم فایل {maxFileSize / 1000}{" "}
                                                     کیلوبایت می باشد
                                                 </span>
                                             )}
-                                            {/* {errors.resolution && <span className='text-red-500 font-iranyekan text-[14px]'>Selected file is not match your desired resolution</span>} */}
+                                            {/* {errors.resolution && <span className='text-red-500 text-[14px]'>Selected file is not match your desired resolution</span>} */}
                                         </div>
                                     )}
                                     {/* <button
@@ -180,7 +180,7 @@ function ImageUploader({ imageItems, onChange, maxNumber, acceptType, maxFileSiz
                                                     </div>
 
                                                     {!result &&
-                                                        <div className=" font-iranyekan text-[12px]  w-full absolute right-1 top-1 ">
+                                                        <div className=" text-[12px]  w-full absolute right-1 top-1 ">
                                                             <button
                                                                 className="bg-green-300 rounded-md p-[4px] text-white font-bold text-md"
                                                                 onClick={() => onImageUpdate(index)}

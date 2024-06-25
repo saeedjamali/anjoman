@@ -22,7 +22,7 @@ function Navbar() {
                 <button className='text-[1.2rem] cursor-pointer' onClick={() => setShowSideBar(prev => !prev)}>
                     {showSidebar ? <RiMenuFoldLine /> : <RiMenuUnfoldLine />}
                 </button>
-                <span className='mr-4 font-iranyekan text-[12px]'>{modir?.name || admin?.name} خوش آمدید</span>
+                <span className='mr-4 text-[12px]'>{modir?.name || admin?.name} خوش آمدید</span>
             </div>
             <button className='ml-4 p-2 cursor-pointer' onClick={logoutHandler}>
                 <RiLogoutCircleLine />

@@ -7,7 +7,6 @@ export async function POST(req) {
     const body = await req.json();
     const { phone, code } = body;
 
-    console.log("code ->", code);
     // Validation (You) ✅
 
     try {

@@ -13,7 +13,6 @@ import { ToastContainer, toast } from "react-toastify";
 
 async function LecturerLayout({ children }) {
   const userIsExists = await authenticateLecturer(); //? in user table
-  console.log("userIsExists-->", userIsExists)
 
   if (!userIsExists) {
     redirect("/");
@@ -29,7 +28,8 @@ async function LecturerLayout({ children }) {
         </div>
         <div className="w-full h-screen flex flex-col p-2 ">
           <Navbar />
-          <div className="flex-1 h-screen overflow-auto border-2 border-header p-2 font-iranyekan">
+          <div className="flex-1 h-screen overflow-auto border-2 border-header p-2 
+          ">
             {children}
           </div>
           <Footer />

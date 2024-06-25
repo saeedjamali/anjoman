@@ -41,7 +41,7 @@ async function AdminLayout({ children }) {
         </div>
         <div className="w-full h-screen flex flex-col p-2 ">
           <Navbar />
-          <div className="flex-1 h-screen overflow-auto border-2 border-header p-2 font-iranyekan">
+          <div className="flex-1 h-screen overflow-auto border-2 border-header p-2 ">
             {children}
           </div>
           <Footer />

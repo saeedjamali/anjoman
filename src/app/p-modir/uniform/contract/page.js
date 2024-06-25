@@ -379,7 +379,6 @@ function page() {
 
       if (data.status == 201) {
         setFetchCompany(data.findCompany.companies);
-        console.log("Fetch Company--->", fetchCompany);
       } else {
         // toast.info(data.message);
         setFetchCompany([]);
@@ -436,7 +435,7 @@ function page() {
     <>
       <ToastContainer
         bodyClassName={() =>
-          " flex-center text-sm font-white font-iranyekan p-3"
+          " flex-center text-sm font-white p-3"
         }
         position="top-left"
         rtl={true}
@@ -463,7 +462,7 @@ function page() {
           </span>
           <div className="flex-center">
             <Button
-              className="bg-red-500 text-white font-iranyekan text-[14px]"
+              className="bg-red-500 text-white text-[14px]"
               endContent={<FaMinus />}
               onClick={() => {
                 setShowDetailContractItem(false);
@@ -475,7 +474,7 @@ function page() {
               <span className="hidden md:flex">فاقد قرارداد</span>
             </Button>
             <Button
-              className="bg-blue-500 text-white font-iranyekan text-[14px] mr-4"
+              className="bg-blue-500 text-white text-[14px] mr-4"
               endContent={<PlusIcon />}
               onClick={() => {
                 setShowDetailContractItem(false);
@@ -990,7 +989,7 @@ function page() {
                           اخطار!
                         </span>
                         &nbsp;&nbsp;
-                        <span className="text-[12px]  font-iranyekan ">
+                        <span className="text-[12px]  ">
                           هرگونه هدایت دانش آموز خارج از چارچوب تعیین شده
                           مسئولیت هایی را برای مدیران در پی خواهد داشت.
                         </span>
@@ -1243,7 +1242,7 @@ function page() {
               <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
                 تعیین موقعیت توزیع بر روی نقشه
               </ModalHeader>
-              <ModalBody className="font-iranyekan">
+              <ModalBody >
                 {
                   <div>
                     <form>
@@ -1285,7 +1284,7 @@ function page() {
                   </div>
                 }
               </ModalBody>
-              <ModalFooter className="font-iranyekan">
+              <ModalFooter >
                 <Button color="foreground" variant="light" onPress={onClose}>
                   بستن
                 </Button>

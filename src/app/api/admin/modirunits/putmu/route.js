@@ -54,7 +54,6 @@ export async function POST(req) {
           { _id: item },
           { isActive: action, "Unit.isConfirm": action }
         );
-        console.log("Api MU---->", updateUnit);
         await modirModel.findOneAndUpdate(
           { _id: updateUnit.Modir },
           { isActive: action }

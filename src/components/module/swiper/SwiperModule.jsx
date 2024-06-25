@@ -18,8 +18,9 @@ import {
     ModalBody,
     ModalFooter,
     Button,
-    useDisclosure,
+    useDisclosure
 } from "@nextui-org/react";
+import Image from 'next/image';
 
 
 
@@ -35,7 +36,6 @@ function SwiperModule({ data }) {
         setBody(body);
         setImage(image)
         onOpen()
-        console.log("Title==>", title)
     }
     return (
 
@@ -104,7 +104,7 @@ function SwiperModule({ data }) {
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col justify-between items-start ">
-                                <span className='text-[16px] font-iranyekan'>
+                                <span className='text-[16px] '>
                                     {title}
                                 </span>
                                 <span className='text-[8px]'>
@@ -116,8 +116,13 @@ function SwiperModule({ data }) {
                                 <p>
                                     {body}
                                 </p>
+                                <div className='w-full flex-center '>
+                                    {image ?
+                                        <Image className="w-[100%] h-96 my-2" src={image} width={500} height={500} alt="info" />
+                                        : null
 
-
+                                    }
+                                </div>
                             </ModalBody>
                             <ModalFooter >
                                 <Button color="foreground" variant="light" onPress={onClose}>

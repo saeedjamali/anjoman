@@ -19,7 +19,7 @@ function Map({ setLng, setLat, lat, lng, setAddress }) {
     // key={new Date().getTime()}
     const mapCenter = [lat, lng];
     return (
-        <div className='w-full h-64 rounded-md font-iranyekan'>
+        <div className='w-full h-64 rounded-md'>
             <MapContainer center={mapCenter} zoom={13} scrollWheelZoom={false} style={{
                 height: "100%", width: "100%", borderRadius: "8px", zIndex:
                     1

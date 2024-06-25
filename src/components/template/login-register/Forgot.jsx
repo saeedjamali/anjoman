@@ -57,8 +57,8 @@ function Forgot({ SetAuthTypesForm, role }) {
                         <span className="font-shabnam text-header-font-color md:mb-12 flex-center mt-8 w-full text-center">{`کد ارسالی به شماره همراه خود را در این قسمت وارد کنید`}</span>
                         <input type="number" placeholder="کد اعتبارسنجی" className="input-text  text-center" value={otp} onChange={(event) => setOtp(event.target.value)} />
 
-                        {/* <span className='font-iranyekan text-[12px] mt-6'> زمان باقی مانده : </span> */}
-                        <Button isLoading={isLoading} type='submit' className="w-full bg-btn-primary text-white font-iranyekan text-[16px] py-2 rounded-full mt-12 flex-center" onClick={event => handleVerifyOtp(event)} >
+                        {/* <span className='text-[12px] mt-6'> زمان باقی مانده : </span> */}
+                        <Button isLoading={isLoading} type='submit' className="w-full bg-btn-primary text-white text-[16px] py-2 rounded-full mt-12 flex-center" onClick={event => handleVerifyOtp(event)} >
                             <span className='flex-1'>اعتبارسنجی و تغییر رمز</span>
                             <span className="ml-3 text-[10px]">
                                 <CountdownCircleTimer

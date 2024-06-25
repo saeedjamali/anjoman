@@ -43,7 +43,6 @@ export async function GET(req, { params }) {
       lecturerList = await lecturerModel.find({
         $and: [{ year }, { isRemoved: false }],
       });
-      console.log("lecturerList--->", lecturerList);
     }
 
     if (lecturerList.length != 0) {

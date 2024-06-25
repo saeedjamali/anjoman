@@ -95,7 +95,7 @@ function AdminInformation({ admin, region }) {
     return (
         <div >
             <ToastContainer
-                bodyClassName={() => " flex-center text-sm font-white font-iranyekan p-3"}
+                bodyClassName={() => " flex-center text-sm font-wh p-3"}
                 position="top-left"
                 rtl={true}
                 autoClose={5000}
@@ -151,9 +151,9 @@ function AdminInformation({ admin, region }) {
 
                             <div className='flex items-center justify-end mt-4'>
                                 <div className='flex-1'>
-                                    {isActiveState == 1 && <span className='font-iranyekan text-[12px] text-green-500'>وضعیت : تایید شده</span>}
-                                    {isActiveState == 0 && <span className='font-iranyekan text-[12px] text-orange-500'>وضعیت  : درحال بررسی</span>}
-                                    {isActiveState == 2 && <span className='font-iranyekan text-[12px] text-red-500'>وضعیت  : رد شده</span>}
+                                    {isActiveState == 1 && <span className=' text-[12px] text-green-500'>وضعیت : تایید شده</span>}
+                                    {isActiveState == 0 && <span className=' text-[12px] text-orange-500'>وضعیت  : درحال بررسی</span>}
+                                    {isActiveState == 2 && <span className=' text-[12px] text-red-500'>وضعیت  : رد شده</span>}
                                 </div>
                                 <div>
                                     <button className='mt-2 bg-red-500 text-white p-2 rounded-md text-[12px]' onClick={() => editHandler(event)} >ویرایش مشخصات</button>

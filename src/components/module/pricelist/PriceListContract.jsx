@@ -279,7 +279,7 @@ export default function PriceListContract({ selectedYear, selectedUnit, selected
                                         </form>
                                     }
                                 </ModalBody>
-                                <ModalFooter className="font-iranyekan">
+                                <ModalFooter >
                                     <Button
                                         color="foreground"
                                         variant="light"

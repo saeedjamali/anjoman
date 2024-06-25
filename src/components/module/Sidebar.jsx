@@ -31,10 +31,10 @@ function Sidebar() {
         <div className={`w-full absolute top-0 right-0   md:relative  h-screen md:w-64 lg:w-80 p-2 ${showSidebar && ' hidden '} z-50`} >
             <div div className='w-full h-full bg-header overflow-hidden z-10' >
                 <div className='h-14 flex-center'>
-                    <span className='font-iranyekan text-[12px] text-center'>اداره کل آموزش و پرورش خراسان رضوی</span>
+                    <span className=' text-[12px] text-center'>اداره کل آموزش و پرورش خراسان رضوی</span>
                 </div>
                 <div className='h-full overflow-y-auto scroll-smooth'>
-                    <ul className='p-2 font-iranyekan text-[14px] w-full'>
+                    <ul className='p-2  text-[14px] w-full'>
 
                         <li className='sidebar_item'>
                             <div className='flex items-center' >

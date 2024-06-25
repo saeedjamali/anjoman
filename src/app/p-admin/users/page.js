@@ -10,7 +10,7 @@ function UserPage() {
     <div className="w-full h-screen">
       <ToastContainer
         bodyClassName={() =>
-          " flex-center text-sm font-white font-iranyekan p-3"
+          " flex-center text-sm font-white p-3"
         }
         position="top-left"
         rtl={true}

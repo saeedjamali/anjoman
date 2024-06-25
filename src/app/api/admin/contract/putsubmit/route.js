@@ -42,7 +42,6 @@ export async function PUT(req) {
             const updateContract = await contractModel.updateMany({ $and: [{ 'Unit.schoolCode': unitcode }, { year }] }, { limited })
         }
         if (isConfirm == 3) {
-            console.log("isConfirm-->", isConfirm, ":", quantity)
             const foundCompany = await companyModel.findOneAndUpdate(
                 {
                     code: companycode,

@@ -24,7 +24,6 @@ function Login({ role, SetAuthTypesForm }) {
     const toggleVisibility = () => setIsVisible(!isVisible);
     const router = useRouter();
 
-    console.log("role-->", role)
     useEffect(() => {
 
 
@@ -150,7 +149,7 @@ function Login({ role, SetAuthTypesForm }) {
                             errorMessage="شماره همراه 11 رقمی"
                             type="text"
                             name="UserName"
-                            className="max-w-xs font-iranyekan"
+                            className="max-w-xs "
                             value={phone} onChange={(event) => setPhone(event.target.value)} />
                         {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
                         <Input
@@ -171,11 +170,11 @@ function Login({ role, SetAuthTypesForm }) {
                             }
                             type={isVisible ? "text" : "password"}
                             name="Password"
-                            className="max-w-xs mt-4 font-iranyekan "
+                            className="max-w-xs mt-4  "
                             value={password} onChange={(event) => setPassword(event.target.value)}
                         />
                         <div className='relative flex items-center justify-center  mt-8 gap-x-2'>
-                            <Button type='submit' isLoading={isLoadingLogin} tabIndex={1} className="w-full bg-btn-primary text-white font-iranyekan  py-2 rounded-full" onClick={() => loginHandler(event)}>ورود</Button>
+                            <Button type='submit' isLoading={isLoadingLogin} tabIndex={1} className="w-full bg-btn-primary text-white   py-2 rounded-full" onClick={() => loginHandler(event)}>ورود</Button>
                             <Tooltip
                                 // color="danger"
                                 content="فراموشی رمز عبور "
