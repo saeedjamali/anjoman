@@ -166,7 +166,7 @@ function LecturerPage() {
       setAge(currentLecturer.age);
       setIsAccepted(currentLecturer.isAccepted);
       setStatus(currentLecturer.status);
-      setDegreeDoc(currentLecturer.degreeDoc);
+      setDegreeDoc(currentLecturer?.degreeDoc);
       setIntroDoc(currentLecturer.introDoc);
       setCertificateDoc(currentLecturer.certificateDoc);
     }
