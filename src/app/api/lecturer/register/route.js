@@ -42,7 +42,7 @@ export async function POST(req) {
       !name ||
       !phone ||
       !meliCode ||
-      degreeDoc.length == 0 ||
+      // degreeDoc.length == 0 ||
       age < 30 ||
       payment == 0
     ) {

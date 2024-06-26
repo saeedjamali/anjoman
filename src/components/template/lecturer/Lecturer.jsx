@@ -148,7 +148,7 @@ function LectureInformation() {
             setAge(history.age)
             setIsAccepted(history.isAccepted)
             setStatus(history.status)
-            setDegreeDoc(history.degreeDoc)
+            // setDegreeDoc(history.degreeDoc)
             setIntroDoc(history.introDoc)
             setCertificateDoc(history.certificateDoc);
 
@@ -306,11 +306,11 @@ function LectureInformation() {
     }
 
     const submitDocument = (type) => {
-    
+
         let str = [];
-        if (degreeDoc.length == 0) {
-            str.push('تصوير مربوط به مدرك تحصيلي بارگذاري نشده است')
-        }
+        // if (degreeDoc.length == 0) {
+        //     str.push('تصوير مربوط به مدرك تحصيلي بارگذاري نشده است')
+        // }
         if (introDoc?.length == 0 && (organ == 2 || organ == 3)) {
             str.push('تصوير معرفي نامه بارگذاري نشده است')
         }
@@ -339,13 +339,13 @@ function LectureInformation() {
         setIsPersonalInformation(false);
         setIsUploadedDocument(false)
     }
-    const onChangeDegreeDoc = (imageList, addUpdateIndex) => {
-        // data for submit
-        if (imageList.length > 1) {
-            toast.info("صرفا امکان بارگذاری یک تصویر وجود دارد");
-        }
-        setDegreeDoc(imageList);
-    };
+    // const onChangeDegreeDoc = (imageList, addUpdateIndex) => {
+    //     // data for submit
+    //     if (imageList.length > 1) {
+    //         toast.info("صرفا امکان بارگذاری یک تصویر وجود دارد");
+    //     }
+    //     setDegreeDoc(imageList);
+    // };
 
 
     const onChangeIntroDoc = (imageList, addUpdateIndex) => {
@@ -377,9 +377,9 @@ function LectureInformation() {
                     formData.append("introDoc", image.file);
                 }
             }
-            for (const image of degreeDoc) {
-                formData.append("degreeDoc", image.file);
-            }
+            // for (const image of degreeDoc) {
+            //     formData.append("degreeDoc", image.file);
+            // }
             if (certificateDoc) {
                 for (const image of certificateDoc) {
                     formData.append("certificateDoc", image.file);
@@ -895,7 +895,7 @@ function LectureInformation() {
                                         </CardHeader>
                                         <Divider />
                                         <CardBody className='text-[12px] items-start gap-y-4'>
-                                            <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
+                                            {/* <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
                                                 <div className='flex-center text-[14px]'>بارگذاری تصویر مدرک تحصیلی</div>
                                                 <div className="gap-2">
                                                     <ImageUploader
@@ -909,7 +909,13 @@ function LectureInformation() {
                                                     />
                                                 </div>
 
-                                            </div>
+                                            </div> */}
+                                            {!(organ == 2 || organ == 3 || isCertificateBefore) &&
+                                                <div className='w-full flex-center'>
+                                                    با توجه به بند های انتخاب شده نیازی به بارگذاری مدرک نیست
+                                                </div>
+                                            }
+
 
                                             {(organ == 2 || organ == 3) &&
                                                 <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
@@ -1205,7 +1211,7 @@ function LectureInformation() {
                                     </CardHeader>
                                     <Divider />
                                     <CardBody className='text-[12px] items-start gap-y-4'>
-                                        <div className='w-full  relative mt-2 flex justify-between item-start col-span-2'>
+                                        {/* <div className='w-full  relative mt-2 flex justify-between item-start col-span-2'>
                                             <div className='flex items-center justify-start text-[14px] text-right'> تصویر مدرک تحصیلی</div>
                                             <div className="gap-2  ">
                                                 {history.degreeDoc?.map(
@@ -1220,7 +1226,12 @@ function LectureInformation() {
                                                 )}
                                             </div>
 
-                                        </div>
+                                        </div> */}
+                                        {!(history.organ == 2 || history.organ == 3 || history.isCertificateBefore) &&
+                                            <div className='w-full flex-center'>
+                                                با توجه به بند های انتخاب شده مدرکی بارگذاری نشده است
+                                            </div>
+                                        }
 
                                         {(history.organ == 2 || history.organ == 3) &&
                                             <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
