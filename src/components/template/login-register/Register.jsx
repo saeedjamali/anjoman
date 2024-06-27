@@ -194,7 +194,7 @@ function Register({ SetAuthTypesForm, role }) {
 
             setWaitForSendOtpCode(true);
 
-          
+
             const response = await fetch(`/api/user/${phone}/${role.name}/${identifier}`);
             const datares = await response.json();
             if (datares.status == 200) {
@@ -301,8 +301,8 @@ function Register({ SetAuthTypesForm, role }) {
                             value={phone} onChange={(event) => setPhone(event.target.value)} />
                         {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
                         <Input
-                            label="رمز عبور"
-
+                            label="رمز عبور انتخابی"
+                            description="این رمز برای ورود های بعدی استفاده خواهد شد"
                             isInvalid={isInvalidPassword}
                             size='sm'
                             // placeholder="ترکیب حروف و اعداد"
