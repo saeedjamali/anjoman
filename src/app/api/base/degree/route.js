@@ -6,6 +6,7 @@ export async function GET(req, { params }) {
   try {
     const { isConnected, message } = await connectToDB();
     if (!isConnected) {
+      console.log(message);
       return Response.json({ message: "خطا در اتصال به پایگاه", status: 500 });
     }
 
