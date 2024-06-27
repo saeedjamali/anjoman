@@ -17,7 +17,11 @@ function page() {
 
         const veifyPayment = async () => {
             try {
-                const response = await fetch("https://sadad.shaparak.ir/api/v0/Advice/Verify");
+                const response = await fetch("/api/lecturer/payment", {
+                    method: "POST",
+                    header: { "Content-Type": "multipart/form-data" },
+                    body: {},
+                });
                 const data = await response.json();
                 console.log("data--->", data)
             } catch (error) {
