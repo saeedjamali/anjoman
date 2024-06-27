@@ -18,6 +18,7 @@ services:
       - 80:80
     volumes:
       - ./nginx-default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/ssl/peyvand.razaviedu.ir/:/etc/ssl/peyvand.razaviedu.ir/
 
   # portainer
   
