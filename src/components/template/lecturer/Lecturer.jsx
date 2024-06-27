@@ -131,7 +131,8 @@ function LectureInformation() {
         if (history.length != 0) {
 
             setPayment(history.payment)
-            setYear(history.comment)
+            setComment(history.comment)
+            setYear(history.year)
             setName(history.name)
             setPrsCode(history.prsCode)
             setMeliCode(history.meliCode)
