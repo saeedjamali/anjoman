@@ -423,8 +423,9 @@ function LectureInformation() {
                 if (status == 1) {
                     location.reload();
                 } else if (status == 4) {
-                    toast.success("هدایت به درگاه پرداخت")
-                    moveToPayment();
+                     location.reload();
+                    // toast.success("هدایت به درگاه پرداخت")
+                    // moveToPayment();
                 }
             } else {
                 toast.info(data.message);
@@ -455,7 +456,9 @@ function LectureInformation() {
     }
 
 
-    const moveToPayment = () => { toast.info("در حال پیاده سازی") }
+    const moveToPayment = () => { 
+        toast.info("در حال پیاده سازی") }
+
     const removeRegister = async () => {
         setIsLoadingForModalbtn(true);
         try {
@@ -532,8 +535,8 @@ function LectureInformation() {
                         </div>
 
                         {!isNewRegister &&
-                            <div className='flex items-center justify-end mt-4'>
-                                <div className='flex-1'>
+                            <div className='flex flex-col gap-y-4 md:gap-y-0 md:flex-row items-center justify-end mt-4'>
+                                <div className='flex-1 '>
                                     {/* <span className='text-[14px] p-2'></span> */}
                                     {
 
@@ -565,8 +568,24 @@ function LectureInformation() {
                                             </Chip>
                                     }
                                 </div>
-                                <div>
+                                <div className='flex items-end justify-end'>
                                     {/* <button className='mt-2 bg-red-500 text-white p-2 rounded-md text-[12px]' onClick={() => editHandler(event)} >ویرایش مشخصات</button> */}
+
+                                    {
+                                        beforeRegistered && history.status == 4 &&
+
+
+                                        <div className='items-end justify-end'>
+                                            <Button className={`mt-2  bg-red-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
+
+
+                                            <Button className={`mt-2  bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitPayment()}>انتقال به درگاه پرداخت</Button>
+
+
+                                        </div>
+
+
+                                    }
                                     {beforeRegistered ?
                                         <Button className={`mt-2  bg-green-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>مشاهده سابقه</Button>
                                         :
@@ -1275,20 +1294,7 @@ function LectureInformation() {
 
                                     </CardBody>
                                     <Divider />
-                                    {history.status == 4 &&
-                                        <CardFooter className='flex items-center justify-end'>
 
-                                            <div className='items-end justify-end'>
-                                                <Button className={`mt-2  bg-red-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
-
-
-                                                <Button className={`mt-2  bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitPayment()}>انتقال به درگاه پرداخت</Button>
-
-
-                                            </div>
-
-                                        </CardFooter>
-                                    }
                                 </Card>
 
                                 <Card className='my-4'>
@@ -1366,16 +1372,21 @@ function LectureInformation() {
                                         <ModalHeader className="flex flex-col justify-between items-start ">
                                             انتقال به درگاه پرداخت
                                         </ModalHeader>
-                                        <ModalBody >
-                                            مبلغ قابل پرداخت : 250 هزار تومان
+                                        <ModalBody>
+                                            <p className='justify-stretch items-baseline text-justify'>
+                                                ضمن تشکر از همراهی شما همکار گرامی ، یادآور می شود اطلاعات پس از تایید نهایی قابل ویرایش نخواهد بود،لطفا پیش از تایید دقت لازم بعمل آورید
+                                            </p>
+                                            <p className="text-blue-500">
+                                                مبلغ قابل پرداخت : 250 هزار تومان
 
+                                            </p>
                                         </ModalBody>
                                         <ModalFooter >
                                             <Button color="foreground" variant="light" onPress={onClose}>
                                                 بستن
                                             </Button>
                                             <Button isLoading={isLoading} onClick={registerLecturer} color="primary" variant="light" >
-                                                پرداخت
+                                                تایید نهایی و پرداخت
                                             </Button>
                                         </ModalFooter>
                                     </>
