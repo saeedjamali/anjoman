@@ -159,7 +159,7 @@ function LectureInformation() {
 
     const getProvinces = async () => {
         try {
-            const response = await fetch(`/api/base/province/getall`);
+            const response = await fetch(`/api/base/province/getall/${6598}`);
             const data = await response.json();
 
             if (data.status == 200) {
@@ -173,7 +173,7 @@ function LectureInformation() {
     }
     const getFields = async () => {
         try {
-            const response = await fetch(`/api/base/field/getall/`);
+            const response = await fetch(`/api/base/field/getall/${6598}`);
             const data = await response.json();
 
             if (data.status == 200) {
@@ -188,7 +188,7 @@ function LectureInformation() {
 
     const getDegrees = async () => {
         try {
-            const response = await fetch(`/api/base/degree/getall/`);
+            const response = await fetch(`/api/base/degree/getall/${6598}`);
             const data = await response.json();
 
             if (data.status == 200) {
