@@ -1038,7 +1038,7 @@ function LectureInformation() {
                                                     type="number"
                                                     label="کد ملی"
                                                     labelPlacement={"inside"}
-                                                    value={meliCode}  ></Input>
+                                                    value={history.meliCode}  ></Input>
                                             </div>
                                         </div>
                                         <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
@@ -1051,7 +1051,7 @@ function LectureInformation() {
                                                     label="سال تحصیلی"
                                                     size='md'
                                                     labelPlacement={"inside"}
-                                                    value={year} ></Input>
+                                                    value={history.year} ></Input>
                                             </div>
                                             <div className='relative mt-2 flex justify-start col-span-1'>
                                                 {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
