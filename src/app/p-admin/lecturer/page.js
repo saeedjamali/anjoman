@@ -166,7 +166,7 @@ function LecturerPage() {
       setAge(currentLecturer.age);
       setIsAccepted(currentLecturer.isAccepted);
       setStatus(currentLecturer.status);
-      setDegreeDoc(currentLecturer.degreeDoc);
+      setDegreeDoc(currentLecturer?.degreeDoc);
       setIntroDoc(currentLecturer.introDoc);
       setCertificateDoc(currentLecturer.certificateDoc);
     }
@@ -230,7 +230,7 @@ function LecturerPage() {
         });
         setRegions(data.regions.sort((a, b) => a.regionCode - b.regionCode));
       } else {
-        // toast.error(data.message)
+        // toast.error(data.message);
       }
     } catch (error) {
       toast.error("خطای ناشناخته");
@@ -708,7 +708,17 @@ function LecturerPage() {
                 </CardHeader>
                 <Divider />
                 <CardBody className="text-[12px] items-start gap-y-4">
-                  <div className="w-full  relative mt-2 flex justify-between item-start col-span-2">
+                  {!(
+                    currentLecturer.organ == 2 ||
+                    currentLecturer.organ == 3 ||
+                    currentLecturer.isCertificateBefore
+                  ) && (
+                    <div className="w-full flex-center">
+                      با توجه به بند های انتخاب شده مدرکی بارگذاری نشده است
+                    </div>
+                  )}
+
+                  {/* <div className="w-full  relative mt-2 flex justify-between item-start col-span-2">
                     <div className="flex items-center justify-start text-[14px] text-right">
                       {" "}
                       تصویر مدرک تحصیلی
@@ -723,7 +733,7 @@ function LecturerPage() {
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </div> */}
 
                   {(currentLecturer.organ == 2 ||
                     currentLecturer.organ == 3) && (
