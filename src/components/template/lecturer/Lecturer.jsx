@@ -12,6 +12,11 @@ import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io
 import { ToastContainer, toast } from 'react-toastify';
 import PublicCondition from './PublicCondition';
 import ImageUploader from '@/components/module/uploader/ImageUploader';
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import "react-multi-date-picker/styles/colors/teal.css"
+import transition from "react-element-popper/animations/transition";
 import {
     Modal,
     ModalContent,
@@ -43,6 +48,7 @@ function LectureInformation() {
     const [organ, setOrgan] = useState(0);
     const [isAcademic, setIsAcademic] = useState(false);
     const [typeAcademic, setTypeAcademic] = useState(0);
+    const [govermental, setGovermental] = useState(0);
     const [province, setProvince] = useState(null);
     const [region, setRegion] = useState(null);
     const [degree, setDegree] = useState(0);
@@ -55,6 +61,7 @@ function LectureInformation() {
     const [cityName, setCityName] = useState("");
     const [isCertificateBefore, setIsCertificateBefore] = useState(false);
     const [age, setAge] = useState(0);
+    const [ageText, setAgeText] = useState("");
     const [isAccepted, setIsAccepted] = useState(null);
     const [status, setStatus] = useState(0);
     const [degreeDoc, setDegreeDoc] = useState([]);
@@ -140,6 +147,7 @@ function LectureInformation() {
             setOrgan(history.organ)
             setIsAcademic(history.isAcademic)
             setTypeAcademic(history.typeAcademic)
+            setGovermental(history.govermental)
 
             setProvinceObj(history.province)
             setRegionObj(history.Region)
@@ -258,16 +266,21 @@ function LectureInformation() {
             setNotCompletePersonalInformatio(true)
         }
 
+        if (organ == 2 && !govermental) {
+            str.push('نوع دانشگاه مشخص شود');
+            setNotCompletePersonalInformatio(true)
+        }
+
         if (!age) {
-            str.push('سن وارد شود');
+            str.push('تاریخ تولد وارد شود');
             setNotCompletePersonalInformatio(true)
         }
 
 
-        if (age < 30) {
-            str.push('حداقل شرط سنی(30) رعایت نشده است')
-            setNotCompletePersonalInformatio(true)
-        }
+        // if (age < 30) {
+        //     str.push('حداقل شرط سنی(30) رعایت نشده است')
+        //     setNotCompletePersonalInformatio(true)
+        // }
 
         if (occuptionState == 0) {
             str.push('وضعیت اشتغال مشخص شود')
@@ -399,6 +412,7 @@ function LectureInformation() {
             formData.append("organ", organ);
             formData.append("isAcademic", isAcademic);
             formData.append("typeAcademic", typeAcademic);
+            formData.append("govermental", govermental);
             formData.append("isCertificateBefore", isCertificateBefore);
             formData.append("age", age);
             formData.append("isAccepted", isAccepted);
@@ -423,7 +437,7 @@ function LectureInformation() {
                 if (status == 1) {
                     location.reload();
                 } else if (status == 4) {
-                     location.reload();
+                    location.reload();
                     // toast.success("هدایت به درگاه پرداخت")
                     // moveToPayment();
                 }
@@ -456,8 +470,9 @@ function LectureInformation() {
     }
 
 
-    const moveToPayment = () => { 
-        toast.info("در حال پیاده سازی") }
+    const moveToPayment = () => {
+        toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
+    }
 
     const removeRegister = async () => {
         setIsLoadingForModalbtn(true);
@@ -482,6 +497,20 @@ function LectureInformation() {
 
     }
 
+    function handleChange(value) {
+        //تغییرات روی تاریخ رو اینجا اعمال کنید'
+        const date = new DateObject(value);
+        console.log("data is --->", date?.format?.("D MMMM YYYY"))
+
+        if (value) {
+            console.log("data --->", "hhhhhhhhddf")
+            setAge(date.format());
+            setAgeText(date?.format?.("D MMMM YYYY"));
+        } else {
+            setAge("")
+            setAgeText("")
+        }
+    }
 
 
     return (
@@ -579,7 +608,7 @@ function LectureInformation() {
                                             <Button className={`mt-2  bg-red-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
 
 
-                                            <Button className={`mt-2  bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitPayment()}>انتقال به درگاه پرداخت</Button>
+                                            <Button className={`mt-2  bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => moveToPayment()}>انتقال به درگاه پرداخت</Button>
 
 
                                         </div>
@@ -629,35 +658,11 @@ function LectureInformation() {
                                 {
                                     isGeneralCondition &&
                                     <Card className='my-4'>
-                                        <CardHeader className="flex gap-3 bg-blue-500 text-white">
+                                        <CardHeader className="flex gap-3 bg-blue-500 text-white z-20">
                                             <p className="text-lg ">ثبت مشخصات فردی</p>
                                         </CardHeader>
                                         <Divider />
                                         <CardBody >
-                                            <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
-                                                <div className='relative mt-2 flex justify-start col-span-1'>
-                                                    {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
-                                                    <Input
-                                                        tabIndex={1}
-                                                        disabled={isPersonalInformation}
-                                                        type="text"
-                                                        size='md'
-                                                        label="نام و نام خانوادگی"
-                                                        labelPlacement={"inside"}
-                                                        value={name} onChange={(event) => setName(event.target.value)} ></Input>
-                                                </div>
-                                                <div className='relative mt-2 flex justify-start col-span-1'>
-                                                    {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
-                                                    <Input
-                                                        tabIndex={2}
-                                                        disabled={true}
-                                                        size='md'
-                                                        type="number"
-                                                        label="کد ملی"
-                                                        labelPlacement={"inside"}
-                                                        value={meliCode} onChange={(event) => setMeliCode(event.target.value)} ></Input>
-                                                </div>
-                                            </div>
                                             <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
                                                 <div className='relative mt-2 flex justify-start col-span-1'>
                                                     {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
@@ -669,9 +674,74 @@ function LectureInformation() {
                                                         size='md'
                                                         labelPlacement={"inside"}
                                                         value={year} ></Input>
+
                                                 </div>
                                                 <div className='relative mt-2 flex justify-start col-span-1'>
+
+                                                    <Input
+
+                                                        disabled={true}
+                                                        size='md'
+                                                        type="number"
+                                                        label="کد ملی"
+                                                        labelPlacement={"inside"}
+                                                        value={meliCode} onChange={(event) => setMeliCode(event.target.value)} ></Input>
+                                                </div>
+                                            </div>
+                                            <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
+                                                <div className='relative mt-2 flex justify-start col-span-1'>
+
+                                                    <Input
+                                                        tabIndex={1}
+                                                        disabled={isPersonalInformation}
+                                                        type="text"
+                                                        size='md'
+                                                        label="نام و نام خانوادگی"
+                                                        labelPlacement={"inside"}
+                                                        value={name} onChange={(event) => setName(event.target.value)} ></Input>
+                                                </div>
+                                                <div className='z-30 relative mt-2 flex flex-col justify-start items-center col-span-1 bg-gray-100 rounded-md  '>
                                                     {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                                                    <div className='flex items-center justify-start w-full'>
+                                                        <span className='mr-2 mt-2 text-[14px] text-gray-600 '>تاریخ تولد</span>
+                                                        <span className='mr-2 mt-2 text-[10px] text-gray-400'>(متولدین قبل 13730701)</span>
+                                                    </div>
+                                                    <div tabIndex={2}>
+                                                        <DatePicker
+
+                                                            type='false'
+                                                            dateSeparator="-"
+                                                            title='انتخاب کنید'
+                                                            zIndex={100}
+                                                            style={{
+                                                                backgroundColor: "aliceblue",
+                                                                height: "24px",
+                                                                borderRadius: "8px",
+                                                                fontSize: "14px",
+                                                                padding: "3px 10px"
+                                                            }}
+                                                            // containerStyle={{
+                                                            //     width: "70%"
+                                                            // }}
+                                                            className="teal rmdp-prime"
+                                                            fixMainPosition="bottom"
+                                                            maxDate={"1373/07/01"}
+                                                            minDate={"1320/07/01"}
+                                                            currentDate={"1373/07/01"}
+                                                            showOtherDays
+                                                            calendar={persian}
+                                                            locale={persian_fa}
+                                                            calendarPosition="bottom-right"
+                                                            value={age || "1373/07/01"}
+                                                            onChange={handleChange}
+
+
+                                                        />
+                                                        <span className='mr-2 text-[10px]'>
+                                                            {ageText}
+                                                        </span>
+                                                    </div>
+                                                    {/*                                                   
                                                     <Input
                                                         tabIndex={3}
                                                         disabled={isPersonalInformation}
@@ -680,13 +750,14 @@ function LectureInformation() {
                                                         size='md'
                                                         labelPlacement={"inside"}
                                                         value={age} onChange={(event) => setAge(event.target.value)} ></Input>
+                                                         */}
                                                 </div>
                                             </div>
                                             <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
                                                 <div className=' relative mt-2 flex justify-start col-span-1 '>
                                                     <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
                                                         <RadioGroup
-                                                            tabIndex={4}
+                                                            tabIndex={3}
                                                             isDisabled={isPersonalInformation}
                                                             className='flex justify-between items-start p-2 text-[14px]'
                                                             label="وضعیت اشتغال"
@@ -714,7 +785,7 @@ function LectureInformation() {
                                                             onValueChange={setOrgan}
                                                         >
                                                             <Radio value="1" size="sm">آموزش و پرورش</Radio>
-                                                            <Radio value="2" size="sm">دانشگاه(عضو هیئت علمی می باشم)</Radio>
+                                                            <Radio value="2" size="sm">عضو هیات علمی دانشگاه</Radio>
                                                             <Radio value="3" size="sm">حوزه علمیه</Radio>
 
 
@@ -722,13 +793,13 @@ function LectureInformation() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
-                                                {organ == 1 ?
 
+                                            {organ == 1 ?
+                                                <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
                                                     <div className='relative mt-2 flex justify-start col-span-1'>
                                                         {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
                                                         <Input
-                                                            tabIndex={6}
+                                                            tabIndex={4}
                                                             disabled={isPersonalInformation}
                                                             type="number"
                                                             size='md'
@@ -736,11 +807,14 @@ function LectureInformation() {
                                                             labelPlacement={"inside"}
                                                             value={prsCode} onChange={(event) => setPrsCode(event.target.value)} ></Input>
                                                     </div>
-                                                    : organ == 2 ?
+                                                </div>
+                                                : organ == 2 ?
+                                                    <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
+
                                                         <div className=' relative mt-2 flex justify-start col-span-1 '>
                                                             <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
                                                                 <RadioGroup
-                                                                    tabIndex={7}
+                                                                    tabIndex={5}
                                                                     isDisabled={isPersonalInformation}
                                                                     className='flex-1 justify-start items-start p-2 text-[14px]'
                                                                     label="رتبه دانشگاهی"
@@ -753,14 +827,34 @@ function LectureInformation() {
 
                                                                 </RadioGroup>
                                                             </div>
-                                                        </div> : null
+                                                        </div>
+                                                        <div className=' relative mt-2 flex justify-start col-span-1 '>
 
-                                                }
-                                            </div>
+                                                            <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                                                                <RadioGroup
+                                                                    tabIndex={6}
+                                                                    isDisabled={isPersonalInformation}
+                                                                    className='flex-1 justify-start items-start p-2 text-[14px]'
+                                                                    label="نوع دانشگاه"
+                                                                    orientation="horizontal"
+                                                                    value={govermental}
+                                                                    onValueChange={setGovermental}
+                                                                >
+                                                                    <Radio value="1" size="sm">دولتی</Radio>
+                                                                    <Radio value="2" size="sm">غیردولتی</Radio>
+
+                                                                </RadioGroup>
+                                                            </div>
+                                                        </div>
+
+                                                    </div> : null
+
+                                            }
+
                                             <div className='grid grid-cols-1 md:grid-cols-2 mt-2  md:gap-4'>
                                                 <div className='relative mt-2 flex justify-start col-span-1'>
                                                     <Autocomplete
-                                                        tabIndex={8}
+                                                        tabIndex={7}
                                                         isDisabled={isPersonalInformation}
                                                         labelPlacement={"inline"}
                                                         backdrop="blur"
@@ -790,7 +884,7 @@ function LectureInformation() {
                                                 </div>
                                                 <div className='relative mt-2 flex justify-start col-span-1'>
                                                     <Autocomplete
-                                                        tabIndex={9}
+                                                        tabIndex={8}
                                                         isDisabled={isPersonalInformation}
                                                         labelPlacement={"inline"}
                                                         backdrop="blur"
@@ -821,7 +915,7 @@ function LectureInformation() {
                                             <div className='grid grid-cols-1 md:grid-cols-2 md:gap-4'>
                                                 <div className='relative mt-2 flex justify-start items-start text-right col-span-1'>
                                                     <Autocomplete
-                                                        tabIndex={10}
+                                                        tabIndex={0}
                                                         isDisabled={isPersonalInformation}
                                                         labelPlacement={"inline"}
                                                         backdrop="blur"
@@ -850,7 +944,7 @@ function LectureInformation() {
                                                 </div>
                                                 <div className='relative mt-2 flex justify-start items-start text-right col-span-1'>
                                                     <Autocomplete
-                                                        tabIndex={11}
+                                                        tabIndex={10}
                                                         isDisabled={isPersonalInformation}
                                                         labelPlacement={"inline"}
                                                         backdrop="blur"
@@ -880,10 +974,10 @@ function LectureInformation() {
                                             </div>
 
                                             <div className='relative mt-2  flex justify-start items-start text-right col-span-2'>
-                                                <Checkbox tabIndex={12} isDisabled={isPersonalInformation} size='sm' isSelected={isCertificateBefore} onValueChange={setIsCertificateBefore} radius="md">دارای گواهی نامه مدرسی آموزش خانواده(در سنوات قبل) می باشم.</Checkbox>
+                                                <Checkbox tabIndex={11} isDisabled={isPersonalInformation} size='sm' isSelected={isCertificateBefore} onValueChange={setIsCertificateBefore} radius="md">دارای گواهی نامه مدرسی آموزش خانواده(در سنوات قبل) می باشم.</Checkbox>
                                             </div>
                                             <div className='relative mt-2  flex justify-start items-start text-right col-span-2'>
-                                                <Checkbox tabIndex={13} isDisabled={isPersonalInformation} size='sm' isSelected={isAccepted} onValueChange={setIsAccepted} radius="md">دارای مدرک دکتری در آموزش و پرورش و یا عضو هیئت علمی در دانشگاه با رتبه استادیار یا دانشیار یا سطح چهار تخصصی حوزه های علمیه می باشم. </Checkbox>
+                                                <Checkbox tabIndex={12} isDisabled={isPersonalInformation} size='sm' isSelected={isAccepted} onValueChange={setIsAccepted} radius="md">دارای مدرک دکتری در آموزش و پرورش و یا عضو هیئت علمی در دانشگاه با رتبه استادیار یا دانشیار یا سطح چهار تخصصی حوزه های علمیه می باشم. </Checkbox>
                                             </div>
 
                                         </CardBody>
@@ -994,7 +1088,7 @@ function LectureInformation() {
                                                         (isCertificateBefore || isAccepted) ?
                                                             <Button className={`mt-2  bg-green-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitDocument(1)}>تایید</Button>
                                                             :
-                                                            <Button className={`mt-2  bg-green-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitDocument(2)}>تایید و پرداخت</Button>
+                                                            <Button className={`mt-2  bg-green-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitDocument(2)}>تایید</Button>
                                                     }
 
                                                 </div>
@@ -1039,7 +1133,30 @@ function LectureInformation() {
                                     <CardBody >
                                         <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
                                             <div className='relative mt-2 flex justify-start col-span-1'>
+                                                <Input
+
+                                                    disabled={true}
+                                                    type="text"
+                                                    label="سال تحصیلی"
+                                                    size='md'
+                                                    labelPlacement={"inside"}
+                                                    value={history.year} ></Input>
+
+                                            </div>
+                                            <div className='relative mt-2 flex justify-start col-span-1'>
                                                 {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                                                <Input
+
+                                                    disabled={true}
+                                                    size='md'
+                                                    type="number"
+                                                    label="کد ملی"
+                                                    labelPlacement={"inside"}
+                                                    value={history.meliCode}  ></Input>
+                                            </div>
+                                        </div>
+                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
+                                            <div className='relative mt-2 flex justify-start col-span-1'>
                                                 <Input
                                                     tabIndex={1}
                                                     disabled={true}
@@ -1054,32 +1171,8 @@ function LectureInformation() {
                                                 <Input
                                                     tabIndex={2}
                                                     disabled={true}
-                                                    size='md'
-                                                    type="number"
-                                                    label="کد ملی"
-                                                    labelPlacement={"inside"}
-                                                    value={history.meliCode}  ></Input>
-                                            </div>
-                                        </div>
-                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
-                                            <div className='relative mt-2 flex justify-start col-span-1'>
-                                                {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
-                                                <Input
-
-                                                    disabled={true}
                                                     type="text"
-                                                    label="سال تحصیلی"
-                                                    size='md'
-                                                    labelPlacement={"inside"}
-                                                    value={history.year} ></Input>
-                                            </div>
-                                            <div className='relative mt-2 flex justify-start col-span-1'>
-                                                {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
-                                                <Input
-                                                    tabIndex={3}
-                                                    disabled={true}
-                                                    type="number"
-                                                    label="سن"
+                                                    label="تاریخ تولد"
                                                     size='md'
                                                     labelPlacement={"inside"}
                                                     value={history.age}  ></Input>
@@ -1089,7 +1182,7 @@ function LectureInformation() {
                                             <div className=' relative mt-2 flex justify-start col-span-1 '>
                                                 <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
                                                     <RadioGroup
-                                                        tabIndex={4}
+                                                        tabIndex={3}
                                                         isDisabled={true}
                                                         className='flex justify-between items-start p-2 text-[14px]'
                                                         label="وضعیت اشتغال"
@@ -1125,9 +1218,9 @@ function LectureInformation() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
-                                            {organ == 1 ?
 
+                                        {organ == 1 ?
+                                            <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
                                                 <div className='relative mt-2 flex justify-start col-span-1'>
                                                     {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
                                                     <Input
@@ -1139,7 +1232,9 @@ function LectureInformation() {
                                                         labelPlacement={"inside"}
                                                         value={history.prsCode}  ></Input>
                                                 </div>
-                                                : organ == 2 ?
+                                            </div>
+                                            : organ == 2 ?
+                                                <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
                                                     <div className=' relative mt-2 flex justify-start col-span-1 '>
                                                         <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
                                                             <RadioGroup
@@ -1156,10 +1251,28 @@ function LectureInformation() {
 
                                                             </RadioGroup>
                                                         </div>
-                                                    </div> : null
+                                                    </div>
+                                                    <div className=' relative mt-2 flex justify-start col-span-1 '>
+                                                        <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                                                            <RadioGroup
+                                                                tabIndex={7}
+                                                                isDisabled={true}
+                                                                className='flex-1 justify-start items-start p-2 text-[14px]'
+                                                                label="رتبه دانشگاهی"
+                                                                orientation="horizontal"
+                                                                value={history.govermental + ''}
 
-                                            }
-                                        </div>
+                                                            >
+                                                                <Radio value="1" size="sm">دولتی</Radio>
+                                                                <Radio value="2" size="sm">غیردولتی</Radio>
+
+                                                            </RadioGroup>
+                                                        </div>
+                                                    </div>
+                                                </div> : null
+
+                                        }
+
                                         <div className='grid grid-cols-1 md:grid-cols-2 mt-2  md:gap-4'>
                                             <div className='relative mt-2 flex justify-start col-span-1'>
 
@@ -1377,7 +1490,7 @@ function LectureInformation() {
                                                 ضمن تشکر از همراهی شما همکار گرامی ، یادآور می شود اطلاعات پس از تایید نهایی قابل ویرایش نخواهد بود،لطفا پیش از تایید دقت لازم بعمل آورید
                                             </p>
                                             <p className="text-blue-500">
-                                                مبلغ قابل پرداخت : 250 هزار تومان
+                                                پس از پرداخت مبلغ ثبت نام شما نهایی خواهد شد
 
                                             </p>
                                         </ModalBody>
@@ -1386,7 +1499,7 @@ function LectureInformation() {
                                                 بستن
                                             </Button>
                                             <Button isLoading={isLoading} onClick={registerLecturer} color="primary" variant="light" >
-                                                تایید نهایی و پرداخت
+                                                تایید نهایی
                                             </Button>
                                         </ModalFooter>
                                     </>

@@ -19,6 +19,7 @@ export async function PUT(req, { params }) {
     const organ = formData.get("organ");
     const isAcademic = formData.get("isAcademic");
     const typeAcademic = formData.get("typeAcademic");
+    const govermental = formData.get("govermental");
     const province = JSON.parse(formData.get("province"));
     const Region = JSON.parse(formData.get("region"));
     const degree = JSON.parse(formData.get("degree"));
@@ -46,6 +47,7 @@ export async function PUT(req, { params }) {
         organ,
         isAcademic,
         typeAcademic,
+        govermental,
         province,
         Region,
         degree,

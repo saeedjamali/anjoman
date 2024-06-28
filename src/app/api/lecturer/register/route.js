@@ -21,6 +21,7 @@ export async function POST(req) {
   const organ = formData.get("organ");
   const isAcademic = formData.get("isAcademic");
   const typeAcademic = formData.get("typeAcademic");
+  const govermental = formData.get("govermental");
   const province = formData.get("province");
   const Region = formData.get("region");
   const degree = formData.get("degree");
@@ -75,6 +76,7 @@ export async function POST(req) {
       organ,
       isAcademic,
       typeAcademic,
+      govermental,
       province: JSON.parse(province),
       Region: JSON.parse(Region),
       degree: JSON.parse(degree),

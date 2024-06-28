@@ -54,6 +54,13 @@ const schema = mongoose.Schema(
       type: Number,
       required: false,
     },
+    
+    govermental: {
+      //? 1 : دولتی
+      //? 2 : غیردولتی
+      type: Number,
+      required: false,
+    },
     //? بارگذاری معرفی نامه
     introDoc: {
       type: [String],
@@ -102,7 +109,7 @@ const schema = mongoose.Schema(
       required: false,
     },
     age: {
-      type: Number,
+      type: String,
       required: true,
     },
     isAccepted: {

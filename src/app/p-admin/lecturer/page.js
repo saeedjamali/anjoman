@@ -6,6 +6,12 @@ import React, { useEffect, useState } from "react";
 import { year } from "@/utils/constants";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import "react-multi-date-picker/styles/colors/teal.css";
+import transition from "react-element-popper/animations/transition";
+
 import {
   Autocomplete,
   AutocompleteItem,
@@ -100,6 +106,7 @@ function LecturerPage() {
   const [organ, setOrgan] = useState(0);
   const [isAcademic, setIsAcademic] = useState(false);
   const [typeAcademic, setTypeAcademic] = useState(0);
+  const [govermental, setGovermental] = useState(0);
   const [province, setProvince] = useState(null);
   const [region, setRegion] = useState(null);
   const [degree, setDegree] = useState(0);
@@ -112,6 +119,7 @@ function LecturerPage() {
   const [cityName, setCityName] = useState("");
   const [isCertificateBefore, setIsCertificateBefore] = useState(false);
   const [age, setAge] = useState(0);
+  const [ageText, setAgeText] = useState("");
   const [isAccepted, setIsAccepted] = useState(null);
   const [status, setStatus] = useState(0);
   const [degreeDoc, setDegreeDoc] = useState([]);
@@ -154,6 +162,7 @@ function LecturerPage() {
       setOrgan(currentLecturer.organ);
       setIsAcademic(currentLecturer.isAcademic);
       setTypeAcademic(currentLecturer.typeAcademic);
+      setGovermental(currentLecturer.govermental);
       setProvince(currentLecturer.province?.code);
       setRegion(currentLecturer.Region?.regionCode);
       setDegree(currentLecturer.degree?.code);
@@ -259,15 +268,19 @@ function LecturerPage() {
       setNotCompletePersonalInformation(true);
     }
 
+    if (organ == 2 && !govermental) {
+      str.push("نوع دانشگاه مشخص شود");
+      setNotCompletePersonalInformation(true);
+    }
     if (!age) {
-      str.push("سن وارد شود");
+      str.push("تاريخ تولد وارد شود");
       setNotCompletePersonalInformation(true);
     }
 
-    if (age < 30) {
-      str.push("حداقل شرط سنی رعایت نشده است");
-      setNotCompletePersonalInformation(true);
-    }
+    // if (age < 30) {
+    //   str.push("حداقل شرط سنی رعایت نشده است");
+    //   setNotCompletePersonalInformation(true);
+    // }
 
     if (occuptionState == 0) {
       str.push("وضعیت اشتغال مشخص شود");
@@ -310,6 +323,7 @@ function LecturerPage() {
         formData.append("organ", organ);
         formData.append("isAcademic", isAcademic);
         formData.append("typeAcademic", typeAcademic);
+        formData.append("govermental", govermental);
         formData.append("isCertificateBefore", isCertificateBefore);
         formData.append("age", age);
         formData.append("isAccepted", isAccepted);
@@ -366,6 +380,12 @@ function LecturerPage() {
             : lc.typeAcademic == 2
             ? "دانشیار"
             : "نامشخص",
+        govermental:
+          lc.govermental == 1
+            ? "دولتی"
+            : lc.typeAcademic == 2
+            ? "غیردولتی"
+            : "نامشخص",
         provinceName: lc.provinceName,
         regionName: lc.regionName,
         degree: lc.degree.name,
@@ -402,12 +422,13 @@ function LecturerPage() {
         "سازمان",
         "تحصیلات تکمیلی",
         "رتبه دانشگاهی",
+        "نوع دانشگاه",
         " استان",
         "منطقه/شهرستان ",
         "مدرک",
         "رشته تحصیلی",
         "گواهی مدرسی از قبل دارد؟ ",
-        "سن",
+        "تاريخ تولد",
         "تایید ارگان/سازمان توسط کاربر",
         "وضعیت",
         "پرداخت",
@@ -433,6 +454,22 @@ function LecturerPage() {
 
     saveAs(blob, "data.xlsx");
   };
+
+  function handleChange(value) {
+    //تغییرات روی تاریخ رو اینجا اعمال کنید'
+    const date = new DateObject(value);
+    console.log("data is --->", date?.format?.("D MMMM YYYY"));
+
+    if (value) {
+      console.log("data --->", "hhhhhhhhddf");
+      setAge(date.format());
+      setAgeText(date?.format?.("D MMMM YYYY"));
+    } else {
+      setAge("");
+      setAgeText("");
+    }
+  }
+
   return (
     <>
       <ToastContainer
@@ -496,13 +533,12 @@ function LecturerPage() {
                     <div className="relative mt-2 flex justify-start col-span-1">
                       {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
                       <Input
-                        tabIndex={1}
                         disabled={true}
                         type="text"
+                        label="سال تحصیلی"
                         size="md"
-                        label="نام و نام خانوادگی"
                         labelPlacement={"inside"}
-                        value={currentLecturer.name}
+                        value={currentLecturer.year}
                       ></Input>
                     </div>
                     <div className="relative mt-2 flex justify-start col-span-1">
@@ -522,16 +558,30 @@ function LecturerPage() {
                     <div className="relative mt-2 flex justify-start col-span-1">
                       {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
                       <Input
+                        tabIndex={1}
                         disabled={true}
                         type="text"
-                        label="سال تحصیلی"
                         size="md"
+                        label="نام و نام خانوادگی"
                         labelPlacement={"inside"}
-                        value={currentLecturer.year}
+                        value={currentLecturer.name}
                       ></Input>
                     </div>
+
                     <div className="relative mt-2 flex justify-start col-span-1">
                       {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                      <Input
+                        tabIndex={3}
+                        disabled={true}
+                        type="text"
+                        label="تاريخ تولد"
+                        size="md"
+                        labelPlacement={"inside"}
+                        value={currentLecturer.age}
+                      ></Input>
+                    </div>
+                    {/* <div className="relative mt-2 flex justify-start col-span-1">
+                      
                       <Input
                         tabIndex={3}
                         disabled={true}
@@ -541,7 +591,7 @@ function LecturerPage() {
                         labelPlacement={"inside"}
                         value={currentLecturer.age}
                       ></Input>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                     <div className=" relative mt-2 flex justify-start col-span-1 ">
@@ -586,8 +636,8 @@ function LecturerPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
-                    {currentLecturer.organ == 1 ? (
+                  {currentLecturer.organ == 1 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                       <div className="relative mt-2 flex justify-start col-span-1">
                         {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
                         <Input
@@ -600,7 +650,9 @@ function LecturerPage() {
                           value={currentLecturer.prsCode}
                         ></Input>
                       </div>
-                    ) : currentLecturer.organ == 2 ? (
+                    </div>
+                  ) : currentLecturer.organ == 2 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                       <div className=" relative mt-2 flex justify-start col-span-1 ">
                         <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
                           <RadioGroup
@@ -620,8 +672,27 @@ function LecturerPage() {
                           </RadioGroup>
                         </div>
                       </div>
-                    ) : null}
-                  </div>
+                      <div className=" relative mt-2 flex justify-start col-span-1 ">
+                        <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                          <RadioGroup
+                            tabIndex={7}
+                            isDisabled={true}
+                            className="flex-1 justify-start items-start p-2 text-[14px]"
+                            label="نوع دانشگاه"
+                            orientation="horizontal"
+                            value={currentLecturer.govermental + ""}
+                          >
+                            <Radio value="1" size="sm">
+                              دولتي
+                            </Radio>
+                            <Radio value="2" size="sm">
+                              غيردولتي
+                            </Radio>
+                          </RadioGroup>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
                   <div className="grid grid-cols-1 md:grid-cols-2 mt-2  md:gap-4">
                     <div className="relative mt-2 flex justify-start col-span-1">
                       <Input
@@ -795,16 +866,15 @@ function LecturerPage() {
                 <CardBody>
                   <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                     <div className="relative mt-2 flex justify-start col-span-1">
-                      {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
-                      <Input
-                        tabIndex={1}
+                    <Input
+                        disabled={true}
                         type="text"
+                        label="سال تحصیلی"
                         size="md"
-                        label="نام و نام خانوادگی"
                         labelPlacement={"inside"}
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
+                        value={year}
                       ></Input>
+                     
                     </div>
                     <div className="relative mt-2 flex justify-start col-span-1">
                       {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
@@ -821,27 +891,57 @@ function LecturerPage() {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                     <div className="relative mt-2 flex justify-start col-span-1">
-                      {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                     
                       <Input
-                        disabled={true}
+                        tabIndex={1}
                         type="text"
-                        label="سال تحصیلی"
                         size="md"
+                        label="نام و نام خانوادگی"
                         labelPlacement={"inside"}
-                        value={year}
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
                       ></Input>
                     </div>
-                    <div className="relative mt-2 flex justify-start col-span-1">
+                    <div className="z-30 relative mt-2 flex flex-col justify-start items-center col-span-1 bg-gray-100 rounded-md  ">
                       {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
-                      <Input
-                        tabIndex={3}
-                        type="number"
-                        label="سن"
-                        size="md"
-                        labelPlacement={"inside"}
-                        value={age}
-                        onChange={(event) => setAge(event.target.value)}
-                      ></Input>
+                      <div className="flex items-center justify-start w-full">
+                        <span className="mr-2 mt-2 text-[14px] text-gray-600 ">
+                          تاریخ تولد
+                        </span>
+                        <span className="mr-2 mt-2 text-[10px] text-gray-400">
+                          (متولدین قبل 13730701)
+                        </span>
+                      </div>
+                      <div tabIndex={3}>
+                        <DatePicker
+                          type="false"
+                          dateSeparator="-"
+                          title="انتخاب کنید"
+                          zIndex={100}
+                          style={{
+                            backgroundColor: "aliceblue",
+                            height: "24px",
+                            borderRadius: "8px",
+                            fontSize: "14px",
+                            padding: "3px 10px",
+                          }}
+                          // containerStyle={{
+                          //     width: "70%"
+                          // }}
+                          className="teal rmdp-prime"
+                          fixMainPosition="bottom"
+                          maxDate={"1373/07/01"}
+                          minDate={"1320/07/01"}
+                          currentDate={"1373/07/01"}
+                          showOtherDays
+                          calendar={persian}
+                          locale={persian_fa}
+                          calendarPosition="bottom-right"
+                          value={age || "1373/07/01"}
+                          onChange={handleChange}
+                        />
+                        <span className="mr-2 text-[10px]">{ageText}</span>
+                      </div>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
@@ -887,8 +987,8 @@ function LecturerPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
-                    {organ == 1 ? (
+                  {organ == 1 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                       <div className="relative mt-2 flex justify-start col-span-1">
                         {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
                         <Input
@@ -901,7 +1001,9 @@ function LecturerPage() {
                           onChange={(event) => setPrsCode(event.target.value)}
                         ></Input>
                       </div>
-                    ) : organ == 2 ? (
+                    </div>
+                  ) : organ == 2 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                       <div className=" relative mt-2 flex justify-start col-span-1 ">
                         <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
                           <RadioGroup
@@ -921,8 +1023,27 @@ function LecturerPage() {
                           </RadioGroup>
                         </div>
                       </div>
-                    ) : null}
-                  </div>
+                      <div className=" relative mt-2 flex justify-start col-span-1 ">
+                        <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                          <RadioGroup
+                            tabIndex={7}
+                            className="flex-1 justify-start items-start p-2 text-[14px]"
+                            label="رتبه دانشگاهی"
+                            orientation="horizontal"
+                            value={govermental + ""}
+                            onValueChange={setGovermental}
+                          >
+                            <Radio value="1" size="sm">
+                              دولتي
+                            </Radio>
+                            <Radio value="2" size="sm">
+                              غيردولتي
+                            </Radio>
+                          </RadioGroup>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
                   <div className="grid grid-cols-1 md:grid-cols-2 mt-2  md:gap-4">
                     <div className="relative mt-2 flex justify-start col-span-1">
                       <Autocomplete
