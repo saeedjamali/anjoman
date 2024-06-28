@@ -95,8 +95,7 @@ export async function POST(req) {
 
     introDoc?.map(async (img, index) => {
       const buffer = Buffer.from(await img.arrayBuffer());
-      const filename =
-        Date.now() + "" + getRndInteger(10000, 100000) + img.name;
+      const filename = phone + "" + Date.now() + "" + img.name;
       const imgPath = path.join(
         process.cwd(),
         "upload/lecturer/intro/" + filename
@@ -116,8 +115,7 @@ export async function POST(req) {
 
     certificateDoc?.map(async (img, index) => {
       const buffer = Buffer.from(await img.arrayBuffer());
-      const filename =
-        Date.now() + "" + getRndInteger(10000, 100000) + img.name;
+      const filename = phone + "" + Date.now() + "" + img.name;
       const imgPath = path.join(
         process.cwd(),
         "upload/lecturer/certificate/" + filename
@@ -137,8 +135,7 @@ export async function POST(req) {
 
     degreeDoc?.map(async (img, index) => {
       const buffer = Buffer.from(await img.arrayBuffer());
-      const filename =
-        Date.now() + "" + getRndInteger(10000, 100000) + img.name;
+      const filename = phone + "" + Date.now() + "" + img.name;
       const imgPath = path.join(
         process.cwd(),
         "upload/lecturer/degree/" + filename
