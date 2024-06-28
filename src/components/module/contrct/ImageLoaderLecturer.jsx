@@ -28,13 +28,13 @@ function ImageLoaderLecturer({ imageUrl, code }) {
         <div>
             <div
                 // key={index}
-                className="relative flex items-center justify-start "
+                className="relative flex items-center justify-start w-16 h-16 "
             >
                 <img
                     src={image}
                     alt=""
                     width="100"
-                    height="48"
+                    height="100"
                     className="w-16 h-16 rounded-md"
                 />
                 <Link
