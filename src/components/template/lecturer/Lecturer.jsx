@@ -28,7 +28,7 @@ import {
 import ImageLoader from '@/components/module/contrct/ImageLoader';
 import ImageLoaderLecturer from '@/components/module/contrct/ImageLoaderLecturer';
 
-const maxFileSize = 200000; //100KB
+const maxFileSize = 300000; //100KB
 const acceptType = "jpg";
 
 function LectureInformation() {
@@ -530,7 +530,7 @@ function LectureInformation() {
             />
             <div className='w-full border-2 border-slate-100 mt-2 '>
                 <div className='flex items-center  bg-slate-100 p-2' >
-                    <span className=' w-full flex text-[12px]'>اطلاعات مدرس</span>
+                    <span className=' w-full flex text-[12px]'>اطلاعات متقاضی</span>
 
                     {/* <span className={isActive == 0 ? 'text-orange-500 ' : isActive == 1 ? ' text-green-500 ' : 'text-red-500'}>
                         {!isShowAdminInformation ?
