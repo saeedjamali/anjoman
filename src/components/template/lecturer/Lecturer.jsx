@@ -1033,7 +1033,7 @@ function LectureInformation() {
 
                                             {(organ == 2 || organ == 3) &&
                                                 <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
-                                                    <div className='flex-center text-[14px]'>بارگذاری معرفی نامه معتبر از دانشگاه یا حوزه علمیه</div>
+                                                    <div className='flex-center text-[14px] items-center justify-start text-right'>بارگذاری معرفی نامه معتبر از دانشگاه یا حوزه علمیه</div>
                                                     <div className="gap-2">
                                                         <ImageUploader
                                                             imageItems={introDoc}
@@ -1051,7 +1051,7 @@ function LectureInformation() {
                                             {
                                                 isCertificateBefore &&
                                                 <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
-                                                    <div className='flex-center text-[14px]'>بارگذاری تصویر گواهی نامه مدرسی آموزشی خانواده سنوات قبل</div>
+                                                    <div className='flex-center text-[14px] items-center justify-start text-right'>بارگذاری تصویر گواهی نامه مدرسی آموزشی خانواده سنوات قبل</div>
                                                     <div className="gap-2">
                                                         <ImageUploader
                                                             imageItems={certificateDoc}
