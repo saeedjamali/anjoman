@@ -48,18 +48,18 @@ function Forgot({ SetAuthTypesForm, role }) {
     }
     return (
         <div className='h-full'>
-            <div className="min-w-64 md:w-80 flex flex-col h-96">
+            <div className="min-w-64 w-80 flex flex-col h-96">
                 <span className="bg-btn-secondary m-2 rounded-full w-6 h-6 cursor-pointer flex-center" onClick={() => SetAuthTypesForm(authTypes.LOGIN)}>
                     <IoMdArrowRoundForward />
                 </span>
                 <div className="w-full flex-1 flex flex-col "  >
                     <form className="w-full flex-1 flex-col-center " onSubmit={(event) => handleVerifyOtp(event)} >
-                        <span className="font-shabnam text-header-font-color md:mb-12 flex-center mt-8 w-full text-center">{`کد ارسالی به شماره همراه خود را در این قسمت وارد کنید`}</span>
+                        <span className="font-shabnam text-header-font-color lg:mb-12 flex-center mt-8 w-full text-center">{`کد ارسالی به شماره همراه خود را در این قسمت وارد کنید`}</span>
                         <input type="number" placeholder="کد اعتبارسنجی" className="input-text  text-center" value={otp} onChange={(event) => setOtp(event.target.value)} />
 
                         {/* <span className='text-[12px] mt-6'> زمان باقی مانده : </span> */}
                         <Button isLoading={isLoading} type='submit' className="w-full bg-btn-primary text-white text-[16px] py-2 rounded-full mt-12 flex-center" onClick={event => handleVerifyOtp(event)} >
-                            <span className='flex-1'>اعتبارسنجی و تغییر رمز</span>
+                            <span className='flex-1 text-[14px]'>اعتبارسنجی و تغییر رمز</span>
                             <span className="ml-3 text-[10px]">
                                 <CountdownCircleTimer
                                     size={32}

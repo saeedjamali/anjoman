@@ -83,8 +83,8 @@ function Sms({ SetAuthTypesForm, role }) {
         }
     }
     return (
-        <div className='h-full'>
-            <div className="min-w-64 md:w-80 flex flex-col h-96">
+        <div >
+            <div className="min-w-64 w-80 flex flex-col h-96">
                 <span className="bg-btn-secondary m-2 rounded-full w-6 h-6 cursor-pointer flex-center" onClick={() => SetAuthTypesForm(authTypes.REGISTER)}>
                     <IoMdArrowRoundForward />
                 </span>
@@ -95,7 +95,7 @@ function Sms({ SetAuthTypesForm, role }) {
 
                         {/* <span className=' text-[12px] mt-6'> زمان باقی مانده : </span> */}
                         <Button isLoading={isLoading} type='submit' className="w-full bg-btn-primary text-white  text-[16px] py-2 rounded-full mt-12 flex-center" onClick={event => handleVerifyOtp(event)} >
-                            <span className='flex-1'>اعتبارسنجی و ثبت نام</span>
+                            <span className='flex-1 text-[14px]'>اعتبارسنجی و ثبت نام</span>
                             <span className="ml-2 text-[10px]">
                                 <CountdownCircleTimer
                                     size={32}

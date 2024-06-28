@@ -28,7 +28,7 @@ import {
 import ImageLoader from '@/components/module/contrct/ImageLoader';
 import ImageLoaderLecturer from '@/components/module/contrct/ImageLoaderLecturer';
 
-const maxFileSize = 1000000; //100KB
+const maxFileSize = 200000; //100KB
 const acceptType = "jpg";
 
 function LectureInformation() {
@@ -915,7 +915,7 @@ function LectureInformation() {
                                             <div className='grid grid-cols-1 md:grid-cols-2 md:gap-4'>
                                                 <div className='relative mt-2 flex justify-start items-start text-right col-span-1'>
                                                     <Autocomplete
-                                                        tabIndex={0}
+                                                        tabIndex={9}
                                                         isDisabled={isPersonalInformation}
                                                         labelPlacement={"inline"}
                                                         backdrop="blur"

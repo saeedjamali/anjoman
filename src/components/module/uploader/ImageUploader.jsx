@@ -167,20 +167,20 @@ function ImageUploader({ imageItems, onChange, maxNumber, acceptType, maxFileSiz
                                             imageList.map((image, index) => (
                                                 <div
                                                     key={index}
-                                                    className="relative flex items-center "
+                                                    className="relative flex items-center w-16 h-16 "
                                                 >
                                                     <div className="flex-1 ">
                                                         <img
                                                             src={image.data_url}
                                                             alt=""
                                                             width="100"
-                                                            height="48"
+                                                            height="100"
                                                             className="w-16 h-16 rounded-md"
                                                         />
                                                     </div>
 
                                                     {!result &&
-                                                        <div className=" text-[12px]  w-full absolute right-1 top-1 ">
+                                                        <div className=" text-[12px]  w-16 absolute  top-1 flex items-center justify-center">
                                                             <button
                                                                 className="bg-green-300 rounded-md p-[4px] text-white font-bold text-md"
                                                                 onClick={() => onImageUpdate(index)}

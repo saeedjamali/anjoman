@@ -233,7 +233,7 @@ function Register({ SetAuthTypesForm, role }) {
 
     return (
         <div>
-            <div className="min-w-64 md:w-80 flex flex-col h-96">
+            <div className="min-w-64 w-80 flex flex-col h-96">
                 <span className="bg-btn-secondary m-2 rounded-full w-6 h-6 cursor-pointer flex-center " onClick={() => SetAuthTypesForm(authTypes.LOGIN)}>
                     <IoMdArrowRoundForward />
                 </span>
