@@ -64,7 +64,7 @@ function ResetPass({ role, SetAuthTypesForm }) {
     return (
 
         <div>
-            <div className="min-w-64 lg:w-80 h-96">
+            <div className="min-w-64 w-80 h-96">
                 <span className="bg-btn-secondary m-2 rounded-full w-6 h-6 cursor-pointer flex-center" >
                     <IoMdArrowRoundForward onClick={() => SetAuthTypesForm(authTypes.ROLES)} />
                 </span>

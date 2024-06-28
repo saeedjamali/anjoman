@@ -90,7 +90,7 @@ function Sms({ SetAuthTypesForm, role }) {
                 </span>
                 <div className="w-full flex-1 flex flex-col "  >
                     <form className="w-full flex-1 flex-col-center " onSubmit={(event) => handleVerifyOtp(event)} >
-                        <span className=" text-header-font-color md:mb-12 flex-center mt-4 w-full text-center text-[14px]">{`کد ارسالی به شماره همراه خود را در این قسمت وارد کنید`}</span>
+                        <span className=" text-header-font-color mb-8 mt-4 lg:mb-12 flex-center w-full text-center text-[14px]">{`کد ارسالی به شماره همراه خود را در این قسمت وارد کنید`}</span>
                         <input type="number" placeholder="کد اعتبارسنجی" className="input-text  text-center" value={otp} onChange={(event) => setOtp(event.target.value)} />
 
                         {/* <span className=' text-[12px] mt-6'> زمان باقی مانده : </span> */}
