@@ -1198,11 +1198,11 @@ function LectureInformation() {
                                                 </div>
                                             </div>
                                             <div className=' relative mt-2 flex justify-start col-span-1 '>
-                                                <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                                                <div className="bg-stone-100 rounded-lg w-full items-start justify-start text-right">
                                                     <RadioGroup
                                                         tabIndex={5}
                                                         isDisabled={true}
-                                                        className='flex-1 justify-start items-start p-2 text-[14px]'
+                                                        className='flex-1 justify-start items-start p-2 text-[14px] text-right'
                                                         label="سازمان محل خدمت"
 
                                                         orientation="horizontal"
@@ -1210,7 +1210,7 @@ function LectureInformation() {
 
                                                     >
                                                         <Radio value="1" size="sm">آموزش و پرورش</Radio>
-                                                        <Radio value="2" size="sm">دانشگاه(عضو هیئت علمی می باشم)</Radio>
+                                                        <Radio value="2" size="sm">عضو هیات علمی دانشگاه</Radio>
                                                         <Radio value="3" size="sm">حوزه علمیه</Radio>
 
 
