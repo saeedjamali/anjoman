@@ -17,7 +17,7 @@ function Navbar() {
         toast.success("خارج شدید")
     }
     return (
-        <div className='w-full h-12  flex-center bg-header text-header-font-color'>
+        <div className='w-full h-12  flex-center bg-header text-header-font-color rounded-t-md'>
             <div className='px-4 py-2  flex-1 flex items-center justify-start'>
                 <button className='text-[1.2rem] cursor-pointer' onClick={() => setShowSideBar(prev => !prev)}>
                     {showSidebar ? <RiMenuFoldLine /> : <RiMenuUnfoldLine />}

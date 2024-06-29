@@ -8,7 +8,7 @@ function Footer() {
     const { showSidebar, setShowSideBar, modir, admin } = useUserProvider();
     const currentYear = year.find(y => y.currentYear);
     return (
-        <div className='w-full h-10 bg-footer flex-center text-header-font-color'>
+        <div className='w-full h-10 bg-footer flex-center text-header-font-color rounded-b-md'>
             <div className='px-4 py-2  flex-1 flex items-center justify-start'>
                 <span className='text-[1.2rem] cursor-pointer'><MdCastForEducation /></span>
                 <div className='mr-4 font-iranyekanBold text-[12px] text-center flex items-center justify-between w-full'>
