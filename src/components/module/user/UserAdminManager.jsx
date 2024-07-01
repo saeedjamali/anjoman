@@ -263,7 +263,9 @@ export default function UserAdminManager({ selectedKeys,
             case "role":
                 return (
                     <Chip className="capitalize" color={statusColorMap[user.role]} size="sm" variant="flat">
-                        {cellValue == "modir" ? 'مدیر واحد سازمانی ' : cellValue == "admin" ? 'کارشناس' : 'نامشخص'}
+                        {cellValue == "modir" ? 'مدیر واحد سازمانی ' : cellValue == "admin" ? 'کارشناس' : cellValue == "lecturer" ? "مدرس دوره" : 'نامشخص'}
+
+
                     </Chip>
                 );
             case "isActive":

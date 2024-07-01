@@ -44,6 +44,7 @@ const statusColorMap = {
 const statusColorRoleMap = {
     "modir": "success",
     "admin": "secondary",
+    "lecturer": "primary",
 
 };
 
@@ -263,7 +264,7 @@ export default function UserManager({ selectedKeys,
             case "role":
                 return (
                     <Chip className="capitalize" color={statusColorMap[user.role]} size="sm" variant="flat">
-                        {cellValue == "modir" ? 'مدیر واحد سازمانی ' : cellValue == "admin" ? 'کارشناس' : 'نامشخص'}
+                        {cellValue == "modir" ? 'مدیر واحد سازمانی ' : cellValue == "admin" ? 'کارشناس' : cellValue == "lecturer" ? "مدرس دوره" : 'نامشخص'}
                     </Chip>
                 );
             case "isActive":
@@ -558,7 +559,7 @@ export default function UserManager({ selectedKeys,
                                                 <div className="flex flex-col  w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
                                                     <div className="flex gap-2">
                                                         <Input type="text" label="کاربری" value={phone} disabled />
-                                                        <Input type="text" label="نقش" value={role} onChange={() => setRole(event.target.value)} />
+                                                        <Input type="text" label="نقش" value={role == 'modir' ? 'مدیر واحد سازمانی' : role == 'admin' ? 'کارشناس' : role == 'lecture' ? 'مدرس دوره' : 'نامشخص'} disabled onChange={() => setRole(event.target.value)} />
                                                     </div>
                                                     <div className="flex gap-2">
                                                         {/* <Input type="text" label="وضعیت فعالیت (0-1-2)" value={isActive} onChange={() => setIsActive(event.target.value)} /> */}
