@@ -1,35 +1,58 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image, Button } from "@nextui-org/react";
+import { useAppProvider } from '@/components/context/AppProviders';
 
 function page() {
 
 
-    const [resCode, setResCode] = useState();
-    const [amount, setAmount] = useState();
-    const [description, setDescription] = useState();
-    const [retrivalRefNo, setRetrivalRefNo] = useState();
-    const [orderId, setOrderId] = useState();
-    const [systemTraceNo, setSystemTraceNo] = useState();
-    console.log("data--->", "asdasdasd")
-    useEffect(() => {
+    const [merchantId, setMerchantId] = useState("000000140332725");
+    const [terminalId, setTerminalId] = useState("24073676");
 
-        const veifyPayment = async () => {
-            try {
-                const response = await fetch("/api/lecturer/payment", {
-                    method: "POST",
-                    header: { "Content-Type": "multipart/form-data" },
-                    body: {},
-                });
-                const data = await response.json();
-                console.log("data--->", data)
-            } catch (error) {
-                toast.error("خطا در فراخوانی اطلاعات")
-            }
+    const [merchantKey, setMerchantKey] = useState("KTje3RNIhbijwGG2p69YQraFN5errUTV");
+    const [amount, setAmount] = useState(10000);
+    const [orderId, setOrderId] = useState(354567814598661);
+    const { setToken, setSignData } = useAppProvider();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch("/api/lecturer/payment", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    amount,
+                    orderId: orderId,
+                    LocalDateTime: new Date().toISOString(),
+                    MultiIdentityData: {
+                        MultiIdentityRows: [
+                            {
+                                IbanNumber: "IR940100004060031203656180",
+                                Amount: 10000,
+                                PaymentIdentity: "365030160127560001401591600106",
+                            },
+                        ],
+                    },
+                    MerchantId: merchantId,
+                    TerminalId: terminalId,
+                    merchantKey,
+                }),
+            });
+
+            const data = await response.json();
+            console.log(data);
+            const token = data.data.Token;
+            const signData = data.signData;
+            setToken(token);
+            setSignData(signData);
+            window.location.href = `https://sadad.shaparak.ir/Purchase?token=${token}`;
+        } catch (error) {
+            console.error(error);
         }
-        veifyPayment();
-    }, [])
+    };
     return (
         <div className='w-full h-screen flex-center'>
 
@@ -85,6 +108,7 @@ function page() {
                 </CardBody>
                 <Divider />
                 <CardFooter className='flex items-end justify-center'>
+                    <Button className="bg-green-600" onClick={handleSubmit}>پرداخت</Button>
                     <Link
                         href="https://peyvand.razaviedu.ir/p-lecturer"
                     >

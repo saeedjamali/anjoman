@@ -11,17 +11,24 @@ function AppProvider({ children }) {
     const [password, setPassword] = useState("");
     const currentYear = year.find((y) => y.currentYear);
     // const [isShowSignInForm, setIsShowSignInForm] = useState("Hello");
-
+    const [token, setToken] = useState("");
+    const [signData, setSignData] = useState("");
+    console.log("App Provider token--->", token)
+    console.log("App Provider signData--->", signData)
     return (
         <>
             <AppContext.Provider value={{
+                token,
+                signData,
+                setToken,
+                setSignData,
                 phone,
                 setPhone,
                 identifier,
                 setIdentifier,
                 password,
                 setPassword,
-                year:currentYear.name
+                year: currentYear.name
             }}>{children}</AppContext.Provider>
         </>
     )
