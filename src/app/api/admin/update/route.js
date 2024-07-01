@@ -1,12 +1,12 @@
 import connectToDB from "@/utils/db";
 import adminModel from "@/models/admin/adminRegion";
 import userModel from "@/models/base/User";
-import { authAdminApi } from "@/utils/authenticateMe";
+import { authAdminInactiveApi } from "@/utils/authenticateMe";
 
 export async function PUT(req) {
   const body = await req.json();
   const { user, name, meliCode, prsCode } = body;
-  if (!(await authAdminApi())) {
+  if (!(await authAdminInactiveApi())) {
     return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
   }
   try {
