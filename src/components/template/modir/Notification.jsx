@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react'
-import { IoIosArrowDropdownCircle } from 'react-icons/io';
+import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io';
 import {
 
   Card,
@@ -23,7 +23,12 @@ function Notification() {
       <div className='w-full border-2 border-slate-100 mt-2  rounded-md'>
         <div className='flex items-center  bg-slate-100 p-2' onClick={() => setIsShowNotification(prev => !prev)}>
           <span className=' w-full flex text-[12px]'>تابلو اعلانات</span>
-          <IoIosArrowDropdownCircle />
+          <span className={'text-gray-700'}>
+            {!isShowNotification ?
+              <IoIosArrowDropdownCircle /> : <IoIosArrowDropupCircle />
+            }
+          </span>
+          {/* <IoIosArrowDropdownCircle className='text-blue-800' /> */}
         </div>
         {isShowNotification &&
           <div className='w-full p-2 h-96 bg-slate-200 items-start justify-center'>

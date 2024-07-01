@@ -107,7 +107,7 @@ function AdminInformation({ admin, region }) {
                 pauseOnHover
                 theme="light"
             />
-            <div className='w-full border-2 border-slate-100 mt-2 '>
+            <div className='w-full border-2 border-slate-100 mt-2 rounded-md'>
                 <div className='flex items-center  bg-slate-100 p-2' onClick={() => setIsShowAdminInformation(prev => !prev)}>
                     <span className=' w-full flex text-[12px]'>اطلاعات کارشناس</span>
 
