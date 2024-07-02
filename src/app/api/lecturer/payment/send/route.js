@@ -1,21 +1,16 @@
+import crypto from "crypto";
+import { cookies } from 'next/headers';
 
-
-// const request = require("request");
-
-import { useAppProvider } from "@/components/context/AppProviders";
-import crypto from 'crypto';
 export async function POST(req) {
-    // console.log("Bodyy--->")
-    const body = await req.json();
     try {
-        let {
+        const {
             amount,
             orderId,
             MultiIdentityData,
             MerchantId,
             TerminalId,
             merchantKey,
-        } = body;
+        } = await req.json();
 
         const LocalDateTime = new Date().toISOString();
         const signData = `${TerminalId};${orderId};${amount}`;
@@ -39,27 +34,26 @@ export async function POST(req) {
                     Amount: amount,
                     OrderId: orderId,
                     LocalDateTime,
-                    ReturnUrl: "https://peyvand.razaviedu.ir/p-lecturer/payment/verify",
-                    // ReturnUrl: "http://localhost:3000/api/lecturer/verify",
+                    ReturnUrl: `http://localhost:3000/p-lecturer/verify`,
                     SignData: encryptedSignData,
                     MultiIdentityData,
                 }),
             }
         );
 
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-
         const data = await response.json();
-        return Response.json(
-            { message: "پرداخت با موفقیت ارسال شد :))", status: 200, data, signData: encryptedSignData }
-        );
+        const token = data.Token;
 
+        cookies().set('paymentData', String(token), {
+            httpOnly: true,
+            secure: true,
+            maxAge: 60 * 60,
+            path: '/'
+        });
+
+        return Response.json(data);
     } catch (error) {
         console.error(error);
-        return Response.json(
-            { message: "خطا در پرداخت :))", status: 500 }
-        );
+        return Response.json({ error: error.message }, { status: 500 });
     }
 }
