@@ -12,13 +12,13 @@ function page() {
 
     const [merchantKey, setMerchantKey] = useState("KTje3RNIhbijwGG2p69YQraFN5errUTV");
     const [amount, setAmount] = useState(10000);
-    const [orderId, setOrderId] = useState(354567814598661);
+    const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("/api/lecturer/payment", {
+            const response = await fetch("/api/lecturer/payment/send", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

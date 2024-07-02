@@ -4,17 +4,19 @@ import { useRouter } from 'next/router';
 import { useAppProvider } from '@/components/context/AppProviders';
 
 
-const Verify = () => {
-    // const router = useRouter();
-    console.log("Hello verify")
+const verify = () => {
+    const router = useRouter();
+
+    // console.log("Hello verify--->", router.query)
+
     const { token, signData } = useAppProvider();
     useEffect(() => {
         const verifyPayment = async () => {
             try {
                 // const { token } = router.query;
-                
+
                 if (token) {
-                    const response = await fetch('/api/lecturer/verify', {
+                    const response = await fetch('/api/lecturer/payment/verify', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -41,4 +43,4 @@ const Verify = () => {
     return <div>Verifying payment...</div>;
 };
 
-export default Verify;
+export default verify;

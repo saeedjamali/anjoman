@@ -13,8 +13,8 @@ function AppProvider({ children }) {
     // const [isShowSignInForm, setIsShowSignInForm] = useState("Hello");
     const [token, setToken] = useState("");
     const [signData, setSignData] = useState("");
-    console.log("App Provider token--->", token)
-    console.log("App Provider signData--->", signData)
+    // console.log("App Provider token--->", token)
+    // console.log("App Provider signData--->", signData)
     return (
         <>
             <AppContext.Provider value={{

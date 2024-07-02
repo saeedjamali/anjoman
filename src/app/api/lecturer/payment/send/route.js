@@ -39,7 +39,8 @@ export async function POST(req) {
                     Amount: amount,
                     OrderId: orderId,
                     LocalDateTime,
-                    ReturnUrl: "https://peyvand.razaviedu.ir/p-lecturer/verify",
+                    ReturnUrl: "https://peyvand.razaviedu.ir/p-lecturer/payment/verify",
+                    // ReturnUrl: "http://localhost:3000/api/lecturer/verify",
                     SignData: encryptedSignData,
                     MultiIdentityData,
                 }),
@@ -51,7 +52,6 @@ export async function POST(req) {
         }
 
         const data = await response.json();
-        console.log("data from token--->", data)
         return Response.json(
             { message: "پرداخت با موفقیت ارسال شد :))", status: 200, data, signData: encryptedSignData }
         );
