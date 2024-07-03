@@ -7,7 +7,7 @@ const { pathToRegexp } = require("path-to-regexp");
 export async function middleware(request) {
     // return NextResponse.next();
 
-    // console.log("middlewawre 1----->")
+    //  console.log("middlewawre 1----->",request.nextUrl)
     let accessToken = request.cookies.get('token')?.value;
     let refreshToken = request.cookies.get('refresh-token')?.value;
     const refreshTokenPayload = await verifyRefreshToken(refreshToken);
@@ -59,3 +59,9 @@ export const config = {
 //   paths.forEach((path) => {
 //     console.log({ path, test: matcher.test(path) });
 //   });
+
+// if (request.nextUrl.pathname.startsWith('/p-lecturer/verify')) {
+//     // console.log("Hiiiii")    
+//     return NextResponse.redirect(new URL('https://amar.razaviedu.ir/account/login', request.url))
+    
+// }

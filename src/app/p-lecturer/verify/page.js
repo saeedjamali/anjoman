@@ -23,7 +23,7 @@ const Verify = () => {
             alert('Payment failed');
           }
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
 
