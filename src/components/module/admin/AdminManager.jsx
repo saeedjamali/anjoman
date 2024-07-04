@@ -116,9 +116,9 @@ export default function AdminManager({ selectedKeys,
     const filteredItems = React.useMemo(() => {
         let filterAdmin = [...admins];
         if (hasSearchFilter) {
-            filterAdmin = filterModir.filter((admin) =>
+            filterAdmin = filterAdmin.filter((admin) =>
                 admin?.phone?.toLowerCase().includes(filterValue.toLowerCase()) ||
-                admin?.prsCode == filterValue ||
+                admin?.prsCode?.toLowerCase().includes(filterValue.toLowerCase()) == filterValue ||
                 admin?.meliCode == filterValue,
             );
         }

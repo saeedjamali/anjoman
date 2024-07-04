@@ -37,7 +37,7 @@ export default function Home() {
         pauseOnHover
         theme="light"
       />
-      <div className="w-full md:h-screen   bg-white lg:flex lg:flex-row-reverse relative">
+      <div className="w-full md:h-screen bg-white lg:flex lg:flex-row-reverse relative">
 
         <div className="order-2 lg:order-1 w-full h-64 md:h-2/5 lg:h-screen lg:w-[60%] xl:w-[70%] bg-gradient-to-b from-primary_color via-primary_color to-secondary_color flex-center  rounded-b-2xl lg:rounded-bl-none lg:rounded-r-2xl ">
           <div className="w-3/5 h-full flex-col-center top-1/4  lg:top-0 space-y-8 mt-8 lg:mt-0 ">
@@ -52,7 +52,7 @@ export default function Home() {
               />
             </div>
             {/* //? Title */}
-            <p className="absolute top-[104px] md:top-[15%] lg:top-[8%] lg:flex font-iranNastaliq  text-3xl lg:text-4xl text-white shadow-md">
+            <p className="absolute top-[104px] md:top-[15%]  lg:top-[8%] lg:flex font-iranNastaliq  text-3xl lg:text-4xl text-white shadow-md px-12 py-2 rounded-md ">
               انجمن اولیا کارآمد ، مدرسه سرآمد
             </p>
             {/* absolute top-[calc(50%+390px)] */}

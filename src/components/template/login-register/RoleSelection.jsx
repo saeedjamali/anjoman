@@ -67,7 +67,7 @@ function RoleSelection({ role, SetRole, SetAuthTypesForm }) {
     return (
         <div>
             <div className="min-w-64 w-80  flex-col-center h-96" >
-                <span className="text-xl shadow-lg text-header-font-color mt-8  my-4 lg:mb-8 lg:my-0 lg:mt-8 flex-center font-iranSans ">انتخاب نقش</span>
+                <span className="text-[16px] shadow-lg shadow-indigo-200 text-header-font-color mt-8  my-4 lg:mb-8 lg:my-0 lg:mt-8 flex-center font-iranSans px-4 py-2 rounded-md">انتخاب نقش</span>
                 <div className="flex-1" >
                     <ul className="grid grid-cols-2 font-iranyekanMedium text-sm my-4 gap-8">
                         <li  >
