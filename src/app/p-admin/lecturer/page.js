@@ -458,10 +458,10 @@ function LecturerPage() {
   function handleChange(value) {
     //تغییرات روی تاریخ رو اینجا اعمال کنید'
     const date = new DateObject(value);
-    console.log("data is --->", date?.format?.("D MMMM YYYY"));
+    // console.log("data is --->", date?.format?.("D MMMM YYYY"));
 
     if (value) {
-      console.log("data --->", "hhhhhhhhddf");
+      // console.log("data --->", "hhhhhhhhddf");
       setAge(date.format());
       setAgeText(date?.format?.("D MMMM YYYY"));
     } else {

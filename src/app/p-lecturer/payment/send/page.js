@@ -43,7 +43,7 @@ function page() {
             });
 
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             const token = data.Token;
             const signData = data.signData;
             setToken(token);

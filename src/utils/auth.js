@@ -35,7 +35,7 @@ const verifyAccessToken = async (jwtToken) => {
     return jwtData;
     // jwtData.uid => `your-data`
   } catch (error) {
-    console.log("Jwt Error --->", error);
+    // console.log("Jwt Error --->", error);
     // JWT validation failed or token is invalid
   }
 

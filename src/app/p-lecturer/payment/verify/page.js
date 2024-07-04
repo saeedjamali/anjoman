@@ -17,7 +17,7 @@ const Verify = () => {
         });
 
         const data = await response.json();
-        console.log("Verify data:", data);
+        // console.log("Verify data:", data);
         if (data.ResCode === 0) {
           alert('Payment successful');
         } else {

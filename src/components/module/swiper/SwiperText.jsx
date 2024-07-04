@@ -36,7 +36,7 @@ function SwiperText({ data }) {
         setBody(body);
         setImage(image)
         onOpen()
-        console.log("Title==>", title)
+        // console.log("Title==>", title)
     }
     return (
 
