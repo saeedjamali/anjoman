@@ -13,7 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 async function LecturerLayout({ children }) {
   const userIsExists = await authenticateLecturer(); //? in user table
-
+  
   if (!userIsExists) {
     redirect("/");
   }

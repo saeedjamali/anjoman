@@ -34,7 +34,7 @@ export async function POST(req) {
                     Amount: amount,
                     OrderId: orderId,
                     LocalDateTime,
-                    ReturnUrl: `https://peyvand.razaviedu.ir/p-lecturer/payment/verify`,
+                    ReturnUrl: `/api/lecturer/payment/verify`,
                     SignData: encryptedSignData,
                     MultiIdentityData,
                 }),
@@ -53,7 +53,7 @@ export async function POST(req) {
 
         return Response.json(data);
     } catch (error) {
-        console.error(error);
+        console.error("Error in send APi", error);
         return Response.json({ error: error.message }, { status: 500 });
     }
 }

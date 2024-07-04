@@ -1,12 +1,11 @@
 import { cookies } from 'next/headers';
 import crypto from "crypto";
 import { NextResponse } from 'next/server';
-import { redirect } from 'next/navigation';
+import { permanentRedirect, redirect } from 'next/navigation';
 
 export async function POST(req, res) {
     try {
-        console.log('req 1:>> ', req.url);
-        console.log('REQ 1:>> ', req.nextUrl.origin);
+
         const token = cookies().get('paymentData')?.value;
         // const token = req.token;
 
@@ -33,11 +32,12 @@ export async function POST(req, res) {
         );
 
         const data = await response.json();
+        return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir`, req.url));
         // const url = req.nextUrl.clone();
 
         // const request = req.url.origin;
-        console.log('url :>> ', req);
-        console.log('response :>> ', response);
+        // console.log('data :>> ', data);
+        // console.log('response :>> ', response);
 
         // console.log('req222 :>> ', res.searchParams);
         // console.log("Data NextURL-->", req.NextURL);
@@ -50,7 +50,7 @@ export async function POST(req, res) {
         // const data2= await response2.json
         //  return Response.json({data})
         // return NextResponse.redirect('/p-lecturer/verify', { status: 308 });
-        return NextResponse.redirect(new URL(`/p-lecturer`, req.url));
+        // permanentRedirect(`https://peyvand.razaviedu.ir/p-lecturer`);
         // return new NextResponse(JSON.stringify({ success: true, message: "verify ok" }), {
         //     status: 401,
         //     headers: { "content-type": "application/json" },

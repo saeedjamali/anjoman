@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const Verify = () => {
+
   useEffect(() => {
     const verifyPayment = async () => {
       try {

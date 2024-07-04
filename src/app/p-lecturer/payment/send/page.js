@@ -14,7 +14,7 @@ function page() {
     const [amount, setAmount] = useState(10000);
     const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
-    console.log("hiiiii");
+ 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
