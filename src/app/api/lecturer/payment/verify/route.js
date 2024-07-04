@@ -32,7 +32,7 @@ export async function POST(req, res) {
         );
 
         const data = await response.json();
-        return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir`, req.url));
+        return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
         // const url = req.nextUrl.clone();
 
         // const request = req.url.origin;

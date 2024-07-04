@@ -34,7 +34,7 @@ export async function POST(req) {
                     Amount: amount,
                     OrderId: orderId,
                     LocalDateTime,
-                    ReturnUrl: `/api/lecturer/payment/verify`,
+                    ReturnUrl: `https://peyvand.razaviedu.ir/api/lecturer/payment/verify`,
                     SignData: encryptedSignData,
                     MultiIdentityData,
                 }),
