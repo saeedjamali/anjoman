@@ -590,7 +590,7 @@ export default function LecturerManager({ setShowDetailLecturer,
                     emptyContent={"ثبت نامی یافت نشد"}
                     items={sortedItems}
                     loadingContent={<Spinner />}
-                    loadingState={loadingState}>
+                    loadingState={isLoadingLecturerList}>
                     {(item) => (
                         <TableRow key={item._id}  >
                             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
