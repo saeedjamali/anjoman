@@ -158,7 +158,7 @@ export default function LecturerManager({ setShowDetailLecturer,
 
     const [isLoadingLecturerList, setIsLoadingLecturerList] = useState(false);
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-    const loadingState = isLoadingLecturerList ? "loading" : "idle";
+    const loadingState = !isLoadingLecturerList ? "loading" : "idle";
     const [limited, setLimited] = useState(1);
     const [description, setDescription] = useState("");
     const [isConfirm, setIsConfirm] = useState(0);
@@ -590,7 +590,7 @@ export default function LecturerManager({ setShowDetailLecturer,
                     emptyContent={"ثبت نامی یافت نشد"}
                     items={sortedItems}
                     loadingContent={<Spinner />}
-                    loadingState={isLoadingLecturerList}>
+                    loadingState={loadingState}>
                     {(item) => (
                         <TableRow key={item._id}  >
                             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
