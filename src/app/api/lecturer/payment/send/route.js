@@ -2,6 +2,7 @@ import crypto from "crypto";
 import { cookies } from 'next/headers';
 
 export async function POST(req) {
+    
     try {
         const {
             amount,
@@ -34,8 +35,8 @@ export async function POST(req) {
                     Amount: amount,
                     OrderId: orderId,
                     LocalDateTime,
-                    // ReturnUrl: `http://localhost:3000/api/lecturer/payment/verify`,
-                    ReturnUrl: `https://peyvand.razaviedu.ir/api/lecturer/payment/verify`,
+                    ReturnUrl: `http://localhost:3000/api/lecturer/payment/verify`,
+                    // ReturnUrl: `https://peyvand.razaviedu.ir/api/lecturer/payment/verify`,
                     SignData: encryptedSignData,
                     MultiIdentityData,
                 }),
