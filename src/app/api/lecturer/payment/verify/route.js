@@ -56,7 +56,8 @@ export async function POST(req, res) {
                         retrivalRefNo: data.RetrivalRefNo,
                         systemTraceNo: data.SystemTraceNo
                     });
-                    return NextResponse.redirect(new URL(`http://localhost:3000/api`, req.url));
+                    // return NextResponse.redirect(new URL(`http://localhost:3000/api`, req.url));
+                    return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
 
                 }
 
