@@ -36,17 +36,17 @@ export async function POST(req, res) {
     );
 
     const data = await response.json();
-    console.log("Data isssss---->", data);
+    // console.log("Data isssss---->", data);
     if (data.ResCode == 0) {
       const statusUpdate = await lectureModel.findOneAndUpdate(
-        { orderId },
+        { orderId:data.OrderId },
         {
           status: 1,
         }
       );
 
       if (statusUpdate) {
-        const paymentFounded = await paymentModel.findOnde({
+        const paymentFounded = await paymentModel.findOne({
           orderId: data.OrderId,
         });
         if (paymentFounded) {
@@ -60,10 +60,10 @@ export async function POST(req, res) {
             retrivalRefNo: data.RetrivalRefNo,
             systemTraceNo: data.SystemTraceNo,
           });
-          return NextResponse.redirect(
-            new URL(`http://localhost:3000/api`, req.url)
-          );
-          // return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
+          // return NextResponse.redirect(
+          //   new URL(`http://localhost:3000/api`, req.url)
+          // );
+          return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
         }
       } else {
         console.log("update status in lecturer model is failed!!");

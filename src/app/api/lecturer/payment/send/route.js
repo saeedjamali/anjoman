@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { cookies } from 'next/headers';
 
 export async function POST(req) {
-    
+
     try {
         const {
             amount,
@@ -12,6 +12,8 @@ export async function POST(req) {
             TerminalId,
             merchantKey,
         } = await req.json();
+
+        // console.log("Order Id------------>", orderId);
 
         const LocalDateTime = new Date().toISOString();
         const signData = `${TerminalId};${orderId};${amount}`;
@@ -35,8 +37,8 @@ export async function POST(req) {
                     Amount: amount,
                     OrderId: orderId,
                     LocalDateTime,
-                    ReturnUrl: `http://localhost:3000/api/lecturer/payment/verify`,
-                    // ReturnUrl: `https://peyvand.razaviedu.ir/api/lecturer/payment/verify`,
+                    // ReturnUrl: `http://localhost:3000/api/lecturer/payment/verify`,
+                    ReturnUrl: `https://peyvand.razaviedu.ir/api/lecturer/payment/verify`,
                     SignData: encryptedSignData,
                     MultiIdentityData,
                 }),
@@ -45,7 +47,7 @@ export async function POST(req) {
 
         const data = await response.json();
         const token = data.Token;
-
+        // console.log("data from send--->", data)
         cookies().set('paymentData', String(token), {
             httpOnly: true,
             secure: true,

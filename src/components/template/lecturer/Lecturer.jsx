@@ -119,6 +119,7 @@ function LectureInformation() {
                 }),
             });
             const orderIdUpdatedData = await orderIdPostResponse.json();
+            console.log("orderIdUpdatedData--->", orderIdUpdatedData)
             if (orderIdUpdatedData.status == 201) {
                 console.log(orderIdUpdatedData.message)
                 console.log(orderIdUpdatedData.orderId);
