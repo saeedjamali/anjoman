@@ -27,6 +27,7 @@ import {
 } from "@nextui-org/react";
 import ImageLoader from '@/components/module/contrct/ImageLoader';
 import ImageLoaderLecturer from '@/components/module/contrct/ImageLoaderLecturer';
+import { useAppProvider } from '@/components/context/AppProviders';
 
 const maxFileSize = 300000; //100KB
 const acceptType = "jpg";
@@ -89,7 +90,82 @@ function LectureInformation() {
     const [fields, setFields] = useState([]);
     const [degrees, setDegrees] = useState([]);
 
+    //? Paynment 
+    const merchantId = "000000140332725";
+    const terminalId = "24073676";
+    const merchantKey = "KTje3RNIhbijwGG2p69YQraFN5errUTV";
+    const [amount, setAmount] = useState(10000);
+    // const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
+    const { setToken, setSignData } = useAppProvider();
 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let orderId = Number(phone + '' + (Math.floor(Math.random() * 1000000) + 100000));
+        // setOrderId(Number(phone + '' + (Math.floor(Math.random() * 1000000) + 100000)))
+        // console.log("orderId --->", orderId)
+
+        try {
+            const orderIdPostResponse = await fetch("/api/lecturer/payment/update", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    orderId,
+                    userId: history._id,
+                    year: history.year
+
+                }),
+            });
+            const orderIdUpdatedData = await orderIdPostResponse.json();
+            if (orderIdUpdatedData.status == 201) {
+                console.log(orderIdUpdatedData.message)
+                console.log(orderIdUpdatedData.orderId);
+                const response = await fetch("/api/lecturer/payment/send", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        amount,
+                        orderId: orderIdUpdatedData.orderId,
+                        LocalDateTime: new Date().toISOString(),
+                        MultiIdentityData: {
+                            MultiIdentityRows: [
+                                {
+                                    IbanNumber: "IR940100004060031203656180",
+                                    Amount: amount,
+                                    PaymentIdentity: "365030160127560001401591600106",
+                                },
+                            ],
+                        },
+                        MerchantId: merchantId,
+                        TerminalId: terminalId,
+                        merchantKey,
+                    }),
+                });
+
+                const data = await response.json();
+                console.log("ResCode from token", data);
+                if (data.ResCode == 0) {
+                    const token = data.Token;
+                    const signData = data.signData;
+                    setToken(token);
+                    setSignData(signData);
+                    window.location.href = `https://sadad.shaparak.ir/Purchase?token=${token}`;
+
+                } else {
+                    console.log(data.Description)
+                    toast.info("خطا در ارتباط با درگاه بانک - دقایقی دیگر تلاش کنید")
+                }
+
+
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     useEffect(() => {
 
@@ -471,6 +547,8 @@ function LectureInformation() {
 
 
     const moveToPayment = () => {
+        // setActionType(4)
+        // onOpen()
         toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
     }
 
@@ -611,6 +689,18 @@ function LectureInformation() {
 
 
                                         </div>
+
+
+                                    }
+                                    {
+                                        beforeRegistered && history.status == 4 && history.phone == "09151208032" &&
+
+
+                                        < div className='items-end justify-end'>
+                                            <Button className={`mt-2  bg-yellow-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={(e) => handleSubmit(e)}> (آزمایشی)انتقال به درگاه پرداخت</Button>
+                                        </div>
+
+
 
 
                                     }
@@ -1528,14 +1618,18 @@ function LectureInformation() {
                                                 انتقال به درگاه پرداخت
                                             </ModalHeader>
                                             <ModalBody >
-                                                مبلغ قابل پرداخت : 250 هزار تومان
+                                                <p className='text-[16px]'>آیا مایل به ادامه فرایند می باشید؟</p>
+                                                <div className='text-[12px] mt-4'>
+                                                    <span className='text-gray-800'>مبلغ قابل پرداخت :</span>
+                                                    <span className='text-blue-500'> 250 هزار تومان</span>
+                                                </div>
 
                                             </ModalBody>
                                             <ModalFooter >
                                                 <Button color="foreground" variant="light" onPress={onClose}>
                                                     بستن
                                                 </Button>
-                                                <Button isLoading={isLoading} onClick={moveToPayment} color="primary" variant="light" onPress={onClose}>
+                                                <Button isLoading={isLoading} onClick={handleSubmit} color="primary" variant="light" onPress={onClose}>
                                                     انتقال به درگاه پرداخت
                                                 </Button>
                                             </ModalFooter>

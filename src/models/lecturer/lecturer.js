@@ -11,6 +11,10 @@ const schema = mongoose.Schema(
       type: String,
       required: true,
     },
+    orderId: {
+      type: Number,
+      required: false,
+    },
     name: {
       type: String,
       required: true,
@@ -54,7 +58,7 @@ const schema = mongoose.Schema(
       type: Number,
       required: false,
     },
-    
+
     govermental: {
       //? 1 : دولتی
       //? 2 : غیردولتی

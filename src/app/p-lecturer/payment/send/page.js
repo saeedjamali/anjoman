@@ -7,14 +7,13 @@ import { useAppProvider } from '@/components/context/AppProviders';
 function page() {
 
 
-    const [merchantId, setMerchantId] = useState("000000140332725");
-    const [terminalId, setTerminalId] = useState("24073676");
-
-    const [merchantKey, setMerchantKey] = useState("KTje3RNIhbijwGG2p69YQraFN5errUTV");
+    const merchantId = "000000140332725";
+    const terminalId = "24073676";
+    const merchantKey = "KTje3RNIhbijwGG2p69YQraFN5errUTV";
     const [amount, setAmount] = useState(10000);
     const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
- 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -48,7 +47,7 @@ function page() {
             const signData = data.signData;
             setToken(token);
             setSignData(signData);
-             window.location.href = `https://sadad.shaparak.ir/Purchase?token=${token}`;
+            window.location.href = `https://sadad.shaparak.ir/Purchase?token=${token}`;
         } catch (error) {
             console.error(error);
         }

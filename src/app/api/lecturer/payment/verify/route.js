@@ -2,6 +2,8 @@ import { cookies } from 'next/headers';
 import crypto from "crypto";
 import { NextResponse } from 'next/server';
 import { permanentRedirect, redirect } from 'next/navigation';
+import lectureModel from "@/models/lecturer/lecturer"
+import paymentModel from "@/models/payment/payment"
 
 export async function POST(req, res) {
     try {
@@ -19,7 +21,7 @@ export async function POST(req, res) {
 
         let encryptedSignData = cipher.update(token, "utf8", "base64");
         encryptedSignData += cipher.final("base64");
-
+        console.log("go to post api...---->")
         const response = await fetch(
             "https://sadad.shaparak.ir/api/v0/Advice/Verify",
             {
@@ -32,7 +34,38 @@ export async function POST(req, res) {
         );
 
         const data = await response.json();
-        return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
+        console.log("Data isssss---->", data)
+        if (data.ResCode == 0) {
+            const statusUpdate = await lectureModel.findOneAndUpdate(
+                { orderId },
+                {
+                    status: 1,
+                }
+            );
+
+            if (statusUpdate) {
+                const paymentFounded = await paymentModel.findOnde({ orderId: data.OrderId })
+                if (paymentFounded) {
+                    console.log("OrderId before is Exist!  ")
+                } else {
+                    const payment = await paymentModel.create({
+                        resCode: data.ResCode,
+                        orderId: data.OrderId,
+                        amount: data.Amount,
+                        description: data.Description,
+                        retrivalRefNo: data.RetrivalRefNo,
+                        systemTraceNo: data.SystemTraceNo
+                    });
+                    return NextResponse.redirect(new URL(`http://localhost:3000/api`, req.url));
+
+                }
+
+
+            } else {
+                console.log("update status in lecturer model is failed!!")
+            }
+        }
+
         // const url = req.nextUrl.clone();
 
         // const request = req.url.origin;
