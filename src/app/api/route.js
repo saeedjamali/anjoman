@@ -7,7 +7,7 @@ export async function POST(req, res) {
     // const response = NextResponse.next();
     // console.log("response--->", res)
     // console.log("req--->", req)
-    deleteCookie('paymentData', { req, res });
+    // deleteCookie('paymentData', { req, res });
     // cookies.delete('paymentData')
     permanentRedirect(`https://peyvand.razaviedu.ir/p-lecturer`)
     // // return NextResponse.redirect(new URL(`http://localhost:3000`, req.url));

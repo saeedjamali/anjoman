@@ -39,7 +39,7 @@ export async function POST(req, res) {
     // console.log("Data isssss---->", data);
     if (data.ResCode == 0) {
       const statusUpdate = await lectureModel.findOneAndUpdate(
-        { orderId:data.OrderId },
+        { orderId: data.OrderId },
         {
           status: 1,
         }
@@ -67,6 +67,7 @@ export async function POST(req, res) {
         }
       } else {
         console.log("update status in lecturer model is failed!!");
+        return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
       }
     }
 
@@ -95,7 +96,9 @@ export async function POST(req, res) {
     // return <div>test </div>
   } catch (error) {
     console.error(error);
-    return Response.json({ error: error.message }, { status: 500 });
+    return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
+
+    // return Response.json({ error: error.message }, { status: 500 });
   }
 }
 
