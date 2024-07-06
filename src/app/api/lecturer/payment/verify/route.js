@@ -105,3 +105,16 @@ export async function POST(req, res) {
 // export async function GET() {
 //     return new Response("Method Not Allowed", { status: 405 });
 // }
+export async function GET(req, res) {
+  // const response = NextResponse.next();
+  // console.log("response--->", res)
+  // console.log("req--->", req)
+  // deleteCookie('paymentData', { req, res });
+  // cookies.delete('paymentData')
+  permanentRedirect(`https://peyvand.razaviedu.ir/p-lecturer`)
+  // // return NextResponse.redirect(new URL(`http://localhost:3000`, req.url));
+
+  // return Response.json({ message: "Hello" })
+
+}
+
