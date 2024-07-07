@@ -1,5 +1,6 @@
 import connectToDB from "@/utils/db";
 import lecturerModel from "@/models/lecturer/lecturer";
+import paymentModel from "@/models/payment/payment";
 import { authenticateLecturer } from "@/utils/authenticateMe";
 let ObjectId = require("mongoose").Types.ObjectId;
 
@@ -19,7 +20,7 @@ export async function GET(req, { params }) {
 
 
         const lectureFound = await lecturerModel.findOne({
-            $and: [{ phone }, { year },{ isRemoved: false }]
+            $and: [{ phone }, { year }, { isRemoved: false }]
         });
 
         if (!lectureFound) {
@@ -29,10 +30,22 @@ export async function GET(req, { params }) {
             });
         }
 
+        if (lectureFound.orderId) {
+            const paymentFounded = await paymentModel.findOne({ orderId: lectureFound.orderId })
+            return Response.json({
+                message: "برای این شماره همراه این موارد یافت شد",
+                status: 200,
+                lectureFound,
+                paymentFounded
+
+            });
+        }
+
         return Response.json({
             message: "برای این شماره همراه این موارد یافت شد",
             status: 200,
             lectureFound,
+
         });
     } catch (error) {
         console.log("Error ->", error);

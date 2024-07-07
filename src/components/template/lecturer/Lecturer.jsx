@@ -5,7 +5,7 @@ import { valiadtePrsCode } from '@/utils/auth';
 import { generalCondition } from '@/utils/constants';
 import { convertTopersian, traverse } from '@/utils/convertnumtopersian';
 import { CheckIcon, NotificationIcon } from '@/utils/icon';
-import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Image, Input, Link, Radio, RadioGroup } from '@nextui-org/react';
+import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Image, Input, Link, Radio, RadioGroup, Tooltip } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
@@ -16,6 +16,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/colors/teal.css"
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 import transition from "react-element-popper/animations/transition";
 import {
     Modal,
@@ -95,6 +96,7 @@ function LectureInformation() {
     const terminalId = "24073676";
     const merchantKey = "KTje3RNIhbijwGG2p69YQraFN5errUTV";
     const [amount, setAmount] = useState(10000);
+    const [bill, setBill] = useState(null)
     // const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
 
@@ -178,10 +180,10 @@ function LectureInformation() {
             try {
                 const response = await fetch(`/api/lecturer/${phone}/${year}`);
                 const data = await response.json();
-
+                console.log("data---->", data)
                 if (data.status == 200) {
                     setHistory(data.lectureFound);
-
+                    setBill(data?.paymentFounded)
                     setBeforeRegistered(true)
                     // setCurrentYearHistory([...data.lectureFound]?.filter(item => item.year == year));
                 } else {
@@ -590,6 +592,10 @@ function LectureInformation() {
         }
     }
 
+    const showBill = () => {
+        setActionType(5);
+        onOpen();
+    }
 
     return (
         <div >
@@ -642,8 +648,8 @@ function LectureInformation() {
                         </div>
 
                         {!isNewRegister &&
-                            <div className='flex flex-col gap-y-4 md:gap-y-0 md:flex-row items-center justify-end mt-4'>
-                                <div className='flex-1 '>
+                            <div className='flex flex-col gap-y-4 md:gap-y-0 md:flex-row mt-4'>
+                                <div className='flex-1 flex items-center justify-start'>
                                     {/* <span className='text-[14px] p-2'></span> */}
                                     {
 
@@ -675,7 +681,7 @@ function LectureInformation() {
                                             </Chip>
                                     }
                                 </div>
-                                <div className='flex items-end justify-end'>
+                                <div className='flex items-center justify-end'>
                                     {/* <button className='mt-2 bg-red-500 text-white p-2 rounded-md text-[12px]' onClick={() => editHandler(event)} >ویرایش مشخصات</button> */}
 
                                     {
@@ -705,11 +711,27 @@ function LectureInformation() {
 
 
                                     }
-                                    {beforeRegistered ?
-                                        <Button className={`mt-2  bg-green-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>مشاهده سابقه</Button>
-                                        :
-                                        <Button className={`mt-2  bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
+                                    {
+                                        beforeRegistered && history.payment == 2 && history.status == 1 &&
+                                        <Tooltip
+                                            showArrow={true}
+                                            color="primary"
+                                            content="مشاهده سابقه تراکنش"
+                                        >
+                                            <div className='relative flex-center text-[12px] text-white bg-green-600 mr-2 p-2 rounded-full cursor-pointer ' onClick={showBill}>
+
+                                                <FaMoneyBillTransfer />
+                                            </div>
+                                        </Tooltip>
+
+
                                     }
+                                    {beforeRegistered ?
+                                        <Button className={`  bg-green-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>مشاهده سابقه</Button>
+                                        :
+                                        <Button className={` bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
+                                    }
+
                                 </div>
                             </div>
                         }
@@ -1500,11 +1522,68 @@ function LectureInformation() {
 
                                 </Card>
 
+
+
+                                {history.status == 1 && history.payment == 2 &&
+                                    <Card >
+                                        <CardHeader className="flex gap-3 bg-blue-500">
+
+                                            <div className="flex text-white">
+                                                <p className="text-md">اطلاعات پرداختی</p>
+                                            </div>
+                                        </CardHeader>
+                                        <Divider />
+                                        <CardBody className='w-full gap-y-2 text-[12px] md:text-[14px] lg:text-[16px]'>
+
+                                            <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                    نتیجه تراکنش
+                                                </p>
+                                                <p className='w-[60%] flex-center p-4'>
+                                                    {bill.resCode == 0 ? 'تراکنش موفق' : 'تراکنش ناموفق'}
+                                                </p>
+                                            </div>
+                                            <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                    مبلغ تراکنش
+                                                </p>
+                                                <p className='w-[60%] flex-center p-4'>
+                                                    {bill.amount}
+                                                </p>
+                                            </div>
+                                            <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                    شرح نتیجه تراکنش
+                                                </p>
+                                                <p className='w-[60%] flex-center p-4'>
+                                                    {bill.description}
+                                                </p>
+                                            </div>
+                                            <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                    شماره مرجع تراکنش
+                                                </p>
+                                                <p className='w-[60%] flex-center p-4'>
+                                                    {bill.retrivalRefNo}
+                                                </p>
+                                            </div>
+                                            <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                    شناسه پیگیری
+                                                </p>
+                                                <p className='w-[60%] flex-center p-4'>
+                                                    {bill.systemTraceNo}                                                                    </p>
+                                            </div>
+                                        </CardBody>
+
+                                    </Card>
+                                }
                                 <Card className='my-4'>
                                     <CardHeader className={`flex gap-3  text-white text-right ${status == 1 ? ' bg-blue-500 ' : status == 2 ? ' bg-green-500' : status == 3 ? ' bg-red-500' : status == 4 ? ' bg-purple-500' : ' hidden'} `}>
                                         <p className="text-lg ">{` توضیحات : ${history.comment} `}</p>
                                     </CardHeader>
                                 </Card>
+
 
                             </div>}
                     </form>
@@ -1619,11 +1698,15 @@ function LectureInformation() {
                                                 انتقال به درگاه پرداخت
                                             </ModalHeader>
                                             <ModalBody >
-                                                <p className='text-[16px]'>آیا مایل به ادامه فرایند می باشید؟</p>
-                                                <div className='text-[12px] mt-4'>
+                                                <div className='text-[12px] '>
+                                                    <span className='text-gray-800'>شماره همراه شما :</span>
+                                                    <span className='text-blue-500'> {phone}</span>
+                                                </div>
+                                                <div className='text-[12px] mt-2'>
                                                     <span className='text-gray-800'>مبلغ قابل پرداخت :</span>
                                                     <span className='text-blue-500'> 250 هزار تومان</span>
                                                 </div>
+                                                <p className='text-[16px] mt-4'>آیا مایل به ادامه فرایند می باشید؟</p>
 
                                             </ModalBody>
                                             <ModalFooter >
@@ -1674,7 +1757,92 @@ function LectureInformation() {
                                             </>
                                         )}
                                     </ModalContent>
-                                </Modal> : null
+                                </Modal> :
+                                actionType == 5 ?
+                                    <Modal
+                                        backdrop="opaque"
+                                        isOpen={isOpen}
+                                        onOpenChange={onOpenChange}
+                                        radius="lg"
+                                        classNames={{
+                                            body: "py-6 bg-white",
+                                            backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                                            base: "border-[#292f46] bg-slate-500 text-black",
+                                            header: " border-[#292f46] text-white  bg-primary_color ",
+                                            footer: " border-[#292f46] bg-white",
+                                            // closeButton: "hover:bg-white/5 active:bg-white/10 ",
+                                        }}
+                                    >
+                                        <ModalContent>
+                                            {(onClose) => (
+                                                <>
+                                                    {/* <ModalHeader className="flex flex-col justify-between items-start ">
+                                                        صورتحساب پرداخت شما
+                                                    </ModalHeader> */}
+                                                    <ModalBody >
+                                                        <Card >
+                                                            <CardHeader className="flex gap-3 bg-blue-500">
+
+                                                                <div className="flex text-white">
+                                                                    <p className="text-md">اطلاعات پرداختی</p>
+                                                                </div>
+                                                            </CardHeader>
+                                                            <Divider />
+                                                            <CardBody className='w-full gap-y-2 text-[12px] md:text-[14px] lg:text-[16px]'>
+
+                                                                <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                                    <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
+                                                                        نتیجه تراکنش
+                                                                    </p>
+                                                                    <p className='w-[60%] flex-center p-4'>
+                                                                        {bill.resCode == 0 ? 'تراکنش موفق' : 'تراکنش ناموفق'}
+                                                                    </p>
+                                                                </div>
+                                                                <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                                    <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
+                                                                        مبلغ تراکنش
+                                                                    </p>
+                                                                    <p className='w-[60%] flex-center p-4'>
+                                                                        {bill.amount}
+                                                                    </p>
+                                                                </div>
+                                                                <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                                    <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
+                                                                        شرح نتیجه تراکنش
+                                                                    </p>
+                                                                    <p className='w-[60%] flex-center p-4'>
+                                                                        {bill.description}
+                                                                    </p>
+                                                                </div>
+                                                                <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                                    <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
+                                                                        شماره مرجع تراکنش
+                                                                    </p>
+                                                                    <p className='w-[60%] flex-center p-4'>
+                                                                        {bill.retrivalRefNo}
+                                                                    </p>
+                                                                </div>
+                                                                <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
+                                                                    <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
+                                                                        شناسه پیگیری
+                                                                    </p>
+                                                                    <p className='w-[60%] flex-center p-4'>
+                                                                        {bill.systemTraceNo}                                                                    </p>
+                                                                </div>
+                                                            </CardBody>
+                                                            <Divider />
+                                                            <CardFooter className='flex items-end justify-center'>
+                                                                <Button color="foreground" variant="light" onPress={onClose}>
+                                                                    بستن
+                                                                </Button>
+                                                            </CardFooter>
+                                                        </Card>
+                                                    </ModalBody>
+
+                                                </>
+                                            )}
+                                        </ModalContent>
+                                    </Modal> : null
             }
 
 
