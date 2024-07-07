@@ -180,7 +180,7 @@ function LectureInformation() {
             try {
                 const response = await fetch(`/api/lecturer/${phone}/${year}`);
                 const data = await response.json();
-                console.log("data---->", data)
+                // console.log("data---->", data)
                 if (data.status == 200) {
                     setHistory(data.lectureFound);
                     setBill(data?.paymentFounded)
