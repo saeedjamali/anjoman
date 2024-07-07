@@ -1536,7 +1536,7 @@ function LectureInformation() {
                                         <CardBody className='w-full gap-y-2 text-[12px] md:text-[14px] lg:text-[16px]'>
 
                                             <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
-                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
                                                     نتیجه تراکنش
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
@@ -1544,7 +1544,7 @@ function LectureInformation() {
                                                 </p>
                                             </div>
                                             <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
-                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
                                                     مبلغ تراکنش
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
@@ -1552,7 +1552,7 @@ function LectureInformation() {
                                                 </p>
                                             </div>
                                             <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
-                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
                                                     شرح نتیجه تراکنش
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
@@ -1560,7 +1560,7 @@ function LectureInformation() {
                                                 </p>
                                             </div>
                                             <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
-                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
                                                     شماره مرجع تراکنش
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
@@ -1568,7 +1568,7 @@ function LectureInformation() {
                                                 </p>
                                             </div>
                                             <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
-                                                <p className='w-[40%] text-right text-white bg-blue-700 p-4 '>
+                                                <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
                                                     شناسه پیگیری
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
@@ -1788,7 +1788,7 @@ function LectureInformation() {
                                                                 </div>
                                                             </CardHeader>
                                                             <Divider />
-                                                            <CardBody className='w-full gap-y-2 text-[12px] md:text-[14px] lg:text-[16px]'>
+                                                            <CardBody className='w-full gap-y-2 text-[12px] md:text-[14px] '>
 
                                                                 <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
                                                                     <p className='w-[40%] text-right text-white bg-blue-400 p-4 '>
