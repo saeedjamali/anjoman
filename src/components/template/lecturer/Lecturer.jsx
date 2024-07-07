@@ -95,7 +95,7 @@ function LectureInformation() {
     const merchantId = "000000140332725";
     const terminalId = "24073676";
     const merchantKey = "KTje3RNIhbijwGG2p69YQraFN5errUTV";
-    const [amount, setAmount] = useState(10000);
+    const [amount, setAmount] = useState(20000);
     const [bill, setBill] = useState(null)
     // const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
@@ -677,7 +677,7 @@ function LectureInformation() {
                                         ) :
 
                                             <Chip color='primary'>
-                                                <span className=' text-[12px] text-white'>{`ثبت نام فعال برای سال تحصیلی ${year} ندارید`}</span>
+                                                <span className=' text-[12px] text-white '>{`ثبت نام فعال برای سال تحصیلی ${year} ندارید`}</span>
                                             </Chip>
                                     }
                                 </div>
@@ -689,10 +689,10 @@ function LectureInformation() {
 
 
                                         <div className='items-end justify-end'>
-                                            <Button className={`mt-2  bg-red-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
+                                            <Button className={`  bg-red-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
 
 
-                                            <Button className={`mt-2  bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => moveToPayment()}>انتقال به درگاه پرداخت</Button>
+                                            <Button className={` bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => moveToPayment()}>انتقال به درگاه پرداخت</Button>
 
 
                                         </div>
@@ -704,7 +704,7 @@ function LectureInformation() {
 
 
                                         < div className='items-end justify-end'>
-                                            <Button className={`mt-2  bg-yellow-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={(e) => handleSubmit(e)}> (آزمایشی)انتقال به درگاه پرداخت</Button>
+                                            <Button className={`  bg-yellow-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={(e) => handleSubmit(e)}> (آزمایشی)انتقال به درگاه پرداخت</Button>
                                         </div>
 
 
