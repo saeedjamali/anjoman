@@ -95,7 +95,7 @@ function LectureInformation() {
     const merchantId = "000000140332725";
     const terminalId = "24073676";
     const merchantKey = "KTje3RNIhbijwGG2p69YQraFN5errUTV";
-    const [amount, setAmount] = useState(20000);
+    const [amount, setAmount] = useState(2500000);
     const [bill, setBill] = useState(null)
     // const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
@@ -549,6 +549,11 @@ function LectureInformation() {
     }
 
 
+    const moveToPaymentTest = () => {
+        setActionType(4)
+        onOpen()
+        // toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
+    }
     const moveToPayment = () => {
         // setActionType(4)
         // onOpen()
@@ -704,7 +709,7 @@ function LectureInformation() {
 
 
                                         < div className='items-end justify-end'>
-                                            <Button className={`  bg-yellow-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={(e) => handleSubmit(e)}> (آزمایشی)انتقال به درگاه پرداخت</Button>
+                                            <Button className={`  bg-yellow-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={(e) => moveToPaymentTest(e)}> (آزمایشی)انتقال به درگاه پرداخت</Button>
                                         </div>
 
 
