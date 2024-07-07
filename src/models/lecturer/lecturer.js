@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import user from "@/models/base/User";
+import payment from "@/models/payment/payment";
 import { provinceSchema } from "@/models/base/Province";
 import { regionSchema } from "@/models/base/Region";
 import { fieldSchema } from "@/models/base/Field";
@@ -14,6 +15,7 @@ const schema = mongoose.Schema(
     orderId: {
       type: Number,
       required: false,
+      ref: "Payment",
     },
     name: {
       type: String,

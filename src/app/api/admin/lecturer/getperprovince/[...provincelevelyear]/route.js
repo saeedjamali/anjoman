@@ -26,25 +26,44 @@ export async function GET(req, { params }) {
     }
 
     if (level == 2) {
-      lecturerList = await lecturerModel.find({
-        $and: [
-          { "province.code": provinceCode },
-          { year },
-          { isRemoved: false },
-        ],
-      });
+      lecturerList = await lecturerModel
+        .find({
+          $and: [
+            { "province.code": provinceCode },
+            { year },
+            { isRemoved: false },
+          ],
+        })
+        .populate([
+          {
+            path: "orderId",
+          },
+        ]);
     }
     if (level == 3) {
-      lecturerList = await lecturerModel.find({
-        $and: [{ year }, { isRemoved: false }],
-      });
+      lecturerList = await lecturerModel
+        .find({
+          $and: [{ year }, { isRemoved: false }],
+        })
+        .populate([
+          {
+            path: "orderId",
+          },
+        ]);
     }
     if (level == 999) {
-      lecturerList = await lecturerModel.find({
-        $and: [{ year }, { isRemoved: false }],
-      });
+      lecturerList = await lecturerModel
+        .find({
+          $and: [{ year }, { isRemoved: false }],
+        })
+        .populate([
+          {
+            path: "orderId",
+          },
+        ]);
     }
 
+    console.log("lecturerList---------->", lecturerList);
     if (lecturerList.length != 0) {
       return Response.json({
         message: "لیست ثبت نام ها با موفقیت دریافت شد",
