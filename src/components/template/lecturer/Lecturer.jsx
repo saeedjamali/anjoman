@@ -700,7 +700,7 @@ function LectureInformation() {
 
                                         <div className='flex items-center justify-end'>
 
-                                            <Button className={` bg-blue-500  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => moveToPayment()}>انتقال به درگاه پرداخت</Button>
+                                            <Button className={` bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => moveToPayment()}>انتقال به درگاه پرداخت</Button>
 
                                             <Button className={`hidden md:flex  bg-red-500  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
 
