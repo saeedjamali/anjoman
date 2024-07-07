@@ -700,7 +700,7 @@ function LectureInformation() {
 
                                     }
                                     {
-                                        beforeRegistered && history.status == 4 && history.phone == "09151208032" &&
+                                        beforeRegistered && history.status == 4 && history.phone == "09159342733" &&
 
 
                                         < div className='items-end justify-end'>
