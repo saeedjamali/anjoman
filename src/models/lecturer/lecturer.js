@@ -17,6 +17,11 @@ const schema = mongoose.Schema(
       required: false,
       ref: "Payment",
     },
+    paymentId: {
+      type: mongoose.Types.ObjectId,
+      required: false,
+      ref: "Payment",
+    },
     name: {
       type: String,
       required: true,

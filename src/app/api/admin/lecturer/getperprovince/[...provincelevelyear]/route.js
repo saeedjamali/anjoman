@@ -58,7 +58,7 @@ export async function GET(req, { params }) {
         })
         .populate([
           {
-            path: "orderId",
+            path: "paymentId",
           },
         ]);
     }

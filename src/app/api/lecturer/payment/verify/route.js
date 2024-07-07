@@ -38,37 +38,58 @@ export async function POST(req, res) {
     const data = await response.json();
     // console.log("Data isssss---->", data);
     if (data.ResCode == 0) {
+      const payment = await paymentModel.create({
+        resCode: data.ResCode,
+        orderId: data.OrderId,
+        amount: data.Amount,
+        description: data.Description,
+        retrivalRefNo: data.RetrivalRefNo,
+        systemTraceNo: data.SystemTraceNo,
+      });
+
       const statusUpdate = await lectureModel.findOneAndUpdate(
         { orderId: data.OrderId },
         {
           status: 1,
+          paymentId: payment._id,
         }
       );
 
-      if (statusUpdate) {
-        const paymentFounded = await paymentModel.findOne({
-          orderId: data.OrderId,
-        });
-        if (paymentFounded) {
-          console.log("OrderId before is Exist!  ");
-        } else {
-          const payment = await paymentModel.create({
-            resCode: data.ResCode,
-            orderId: data.OrderId,
-            amount: data.Amount,
-            description: data.Description,
-            retrivalRefNo: data.RetrivalRefNo,
-            systemTraceNo: data.SystemTraceNo,
-          });
-          // return NextResponse.redirect(
-          //   new URL(`http://localhost:3000/api`, req.url)
-          // );
-          return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
-        }
-      } else {
-        console.log("update status in lecturer model is failed!!");
-        return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
-      }
+      return NextResponse.redirect(
+        new URL(`https://peyvand.razaviedu.ir/api`, req.url)
+      );
+      // if (statusUpdate) {
+      //   const paymentFounded = await paymentModel.findOne({
+      //     orderId: data.OrderId,
+      //   });
+      //   if (paymentFounded) {
+      //     console.log("OrderId before is Exist!  ");
+      //   } else {
+      //     const payment = await paymentModel.create({
+      //       resCode: data.ResCode,
+      //       orderId: data.OrderId,
+      //       amount: data.Amount,
+      //       description: data.Description,
+      //       retrivalRefNo: data.RetrivalRefNo,
+      //       systemTraceNo: data.SystemTraceNo,
+      //     });
+      //     // return NextResponse.redirect(
+      //     //   new URL(`http://localhost:3000/api`, req.url)
+      //     // );
+      //     return NextResponse.redirect(
+      //       new URL(`https://peyvand.razaviedu.ir/api`, req.url)
+      //     );
+      //   }
+      // } else {
+      //   console.log("update status in lecturer model is failed!!");
+      //   return NextResponse.redirect(
+      //     new URL(`https://peyvand.razaviedu.ir/api`, req.url)
+      //   );
+      // }
+    } else {
+      return NextResponse.redirect(
+        new URL(`https://peyvand.razaviedu.ir/api`, req.url)
+      );
     }
 
     // const url = req.nextUrl.clone();
@@ -96,7 +117,9 @@ export async function POST(req, res) {
     // return <div>test </div>
   } catch (error) {
     console.error(error);
-    return NextResponse.redirect(new URL(`https://peyvand.razaviedu.ir/api`, req.url));
+    return NextResponse.redirect(
+      new URL(`https://peyvand.razaviedu.ir/api`, req.url)
+    );
 
     // return Response.json({ error: error.message }, { status: 500 });
   }
@@ -111,10 +134,8 @@ export async function GET(req, res) {
   // console.log("req--->", req)
   // deleteCookie('paymentData', { req, res });
   // cookies.delete('paymentData')
-  permanentRedirect(`https://peyvand.razaviedu.ir/p-lecturer`)
+  permanentRedirect(`https://peyvand.razaviedu.ir/p-lecturer`);
   // // return NextResponse.redirect(new URL(`http://localhost:3000`, req.url));
 
   // return Response.json({ message: "Hello" })
-
 }
-
