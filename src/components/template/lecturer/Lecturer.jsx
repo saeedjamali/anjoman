@@ -18,6 +18,11 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/colors/teal.css"
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import transition from "react-element-popper/animations/transition";
+import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineFreeCancellation } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
+import { BiSolidDetail } from "react-icons/bi";
 import {
     Modal,
     ModalContent,
@@ -555,9 +560,9 @@ function LectureInformation() {
         // toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
     }
     const moveToPayment = () => {
-        setActionType(4)
-        onOpen()
-        // toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
+        // setActionType(4)
+        // onOpen()
+        toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
     }
 
     const removeRegister = async () => {
@@ -693,12 +698,15 @@ function LectureInformation() {
                                         beforeRegistered && history.status == 4 &&
 
 
-                                        <div className='items-end justify-end'>
-                                            <Button className={`  bg-red-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
+                                        <div className='flex items-center justify-end'>
 
+                                            <Button className={` bg-blue-500  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => moveToPayment()}>انتقال به درگاه پرداخت</Button>
 
-                                            <Button className={` bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => moveToPayment()}>انتقال به درگاه پرداخت</Button>
+                                            <Button className={`hidden md:flex  bg-red-500  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
 
+                                            <div className='flex-center justify-center md:hidden mr-2 cursor-pointer' onClick={() => submitRemoveDocument(event)}>
+                                                <MdDeleteOutline className='bg-red-500 p-1 text-[36px] text-white rounded-full flex ' />
+                                            </div>
 
                                         </div>
 
@@ -709,7 +717,7 @@ function LectureInformation() {
 
 
                                         < div className='items-end justify-end'>
-                                            <Button className={`  bg-yellow-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={(e) => moveToPaymentTest(e)}> (آزمایشی)انتقال به درگاه پرداخت</Button>
+                                            <Button className={`  bg-yellow-500  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={(e) => moveToPaymentTest(e)}> (آزمایشی)انتقال به درگاه پرداخت</Button>
                                         </div>
 
 
@@ -718,23 +726,34 @@ function LectureInformation() {
                                     }
                                     {
                                         beforeRegistered && history.payment == 2 && history.status == 1 &&
-                                        <Tooltip
-                                            showArrow={true}
-                                            color="primary"
-                                            content="مشاهده سابقه تراکنش"
-                                        >
-                                            <Button className='relative flex-center text-[12px] text-white bg-green-600 mr-2 p-2 cursor-pointer rounded-md' onClick={showBill}>
-                                                اطلاعات پرداخت
-                                                {/* <FaMoneyBillTransfer /> */}
-                                            </Button>
-                                        </Tooltip>
+                                        <div className='flex items-center justify-end'>
+                                            <Tooltip
+                                                showArrow={true}
+                                                color="primary"
+                                                content="مشاهده سابقه تراکنش"
+                                            >
+                                                <Button className='hidden relative md:flex-center text-[10px] md:text-[12px] text-white bg-green-600 mr-2 p-2 cursor-pointer rounded-md' onClick={showBill}>
+                                                    اطلاعات پرداخت
+                                                    {/* <FaMoneyBillTransfer /> */}
+                                                </Button>
+                                            </Tooltip>
+                                            <div className='flex-center justify-center md:hidden mr-2 cursor-pointer' onClick={showBill}>
+                                                <FaMoneyBillTransfer className='bg-green-500 p-1 text-[36px] text-white rounded-full flex ' />
+                                            </div>
 
+                                        </div>
 
                                     }
                                     {beforeRegistered ?
-                                        <Button className={`  bg-green-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>اطلاعات ثبت نام</Button>
+                                        <>
+                                            <Button className={`hidden md:flex  bg-green-600  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>اطلاعات ثبت نام</Button>
+
+                                            <div className='flex-center justify-center md:hidden mr-2 cursor-pointer' onClick={() => setSeeHistory(prev => !prev)}>
+                                                <BiSolidDetail className='bg-green-500 p-1 text-[36px] text-white rounded-full flex ' />
+                                            </div>
+                                        </>
                                         :
-                                        <Button className={` bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
+                                        <Button className={`md:hidden bg-blue-600  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
                                     }
 
                                 </div>
@@ -968,8 +987,8 @@ function LectureInformation() {
 
                                             }
 
-                                            <div className='grid grid-cols-1 md:grid-cols-2   md:gap-4'>
-                                                <div className='relative mt-2 flex justify-start col-span-1'>
+                                            <div className='grid grid-cols-1 mt-2 md:grid-cols-2   md:gap-4'>
+                                                <div className='relative flex justify-start col-span-1'>
                                                     <Autocomplete
                                                         tabIndex={7}
                                                         isDisabled={isPersonalInformation}
@@ -999,7 +1018,7 @@ function LectureInformation() {
                                                     </Autocomplete>
 
                                                 </div>
-                                                <div className='relative mt-2 flex justify-start col-span-1'>
+                                                <div className='relative flex justify-start col-span-1'>
                                                     <Autocomplete
                                                         tabIndex={8}
                                                         isDisabled={isPersonalInformation}
@@ -1030,7 +1049,7 @@ function LectureInformation() {
                                                 </div>
                                             </div>
                                             <div className='grid grid-cols-1 md:grid-cols-2 md:gap-4'>
-                                                <div className='relative mt-2 flex justify-start items-start text-right col-span-1'>
+                                                <div className='relative flex justify-start items-start text-right col-span-1'>
                                                     <Autocomplete
                                                         tabIndex={9}
                                                         isDisabled={isPersonalInformation}
@@ -1059,7 +1078,7 @@ function LectureInformation() {
                                                     </Autocomplete>
 
                                                 </div>
-                                                <div className='relative mt-2 flex justify-start items-start text-right col-span-1'>
+                                                <div className='relative flex justify-start items-start text-right col-span-1'>
                                                     <Autocomplete
                                                         tabIndex={10}
                                                         isDisabled={isPersonalInformation}
@@ -1545,7 +1564,7 @@ function LectureInformation() {
                                                     نتیجه تراکنش
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
-                                                    {bill.resCode == 0 ? 'تراکنش موفق' : 'تراکنش ناموفق'}
+                                                    {bill?.resCode == 0 ? 'تراکنش موفق' : 'تراکنش ناموفق'}
                                                 </p>
                                             </div>
                                             <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
@@ -1553,7 +1572,7 @@ function LectureInformation() {
                                                     مبلغ تراکنش
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
-                                                    {bill.amount}
+                                                    {bill?.amount}
                                                 </p>
                                             </div>
                                             <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
@@ -1561,7 +1580,7 @@ function LectureInformation() {
                                                     شرح نتیجه تراکنش
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
-                                                    {bill.description}
+                                                    {bill?.description}
                                                 </p>
                                             </div>
                                             <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
@@ -1569,7 +1588,7 @@ function LectureInformation() {
                                                     شماره مرجع تراکنش
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
-                                                    {bill.retrivalRefNo}
+                                                    {bill?.retrivalRefNo}
                                                 </p>
                                             </div>
                                             <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
@@ -1577,7 +1596,7 @@ function LectureInformation() {
                                                     شناسه پیگیری
                                                 </p>
                                                 <p className='w-[60%] flex-center p-4'>
-                                                    {bill.systemTraceNo}                                                                    </p>
+                                                    {bill?.systemTraceNo}                                                                    </p>
                                             </div>
                                         </CardBody>
 
@@ -1800,7 +1819,7 @@ function LectureInformation() {
                                                                         نتیجه تراکنش
                                                                     </p>
                                                                     <p className='w-[60%] flex-center p-4'>
-                                                                        {bill.resCode == 0 ? 'تراکنش موفق' : 'تراکنش ناموفق'}
+                                                                        {bill?.resCode == 0 ? 'تراکنش موفق' : 'تراکنش ناموفق'}
                                                                     </p>
                                                                 </div>
                                                                 <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
@@ -1808,7 +1827,7 @@ function LectureInformation() {
                                                                         مبلغ تراکنش
                                                                     </p>
                                                                     <p className='w-[60%] flex-center p-4'>
-                                                                        {`${bill.amount} ریال`}
+                                                                        {`${bill?.amount} ریال`}
                                                                     </p>
                                                                 </div>
                                                                 <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
@@ -1816,7 +1835,7 @@ function LectureInformation() {
                                                                         شرح نتیجه تراکنش
                                                                     </p>
                                                                     <p className='w-[60%] flex-center p-4'>
-                                                                        {bill.description}
+                                                                        {bill?.description}
                                                                     </p>
                                                                 </div>
                                                                 <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
@@ -1824,7 +1843,7 @@ function LectureInformation() {
                                                                         شماره مرجع تراکنش
                                                                     </p>
                                                                     <p className='w-[60%] flex-center p-4'>
-                                                                        {bill.retrivalRefNo}
+                                                                        {bill?.retrivalRefNo}
                                                                     </p>
                                                                 </div>
                                                                 <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
@@ -1832,7 +1851,7 @@ function LectureInformation() {
                                                                         شناسه پیگیری
                                                                     </p>
                                                                     <p className='w-[60%] flex-center p-4'>
-                                                                        {bill.systemTraceNo}                                                                    </p>
+                                                                        {bill?.systemTraceNo}                                                                    </p>
                                                                 </div>
                                                             </CardBody>
                                                             <Divider />
