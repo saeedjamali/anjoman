@@ -81,6 +81,7 @@ import LecturerManager from "@/components/template/lecturer/LecturerManager";
 import ImageLoaderLecturer from "@/components/module/contrct/ImageLoaderLecturer";
 import { NotificationIcon } from "@/utils/icon";
 import { valiadtePrsCode } from "@/utils/auth";
+import CountUp from 'react-countup';
 
 function LecturerPage() {
   const { admin, user } = useUserProvider();
@@ -135,6 +136,15 @@ function LecturerPage() {
   const [degrees, setDegrees] = useState([]);
   const [error, setError] = useState([]);
 
+
+  //? Counter
+
+  const [allCount, setAllCount] = useState(0);
+  const [freeCount, setFreeCount] = useState(0);
+  const [payCount, setPayCount] = useState(0);
+  const [pendingCount, setPendingCount] = useState(0);
+
+
   useEffect(() => {
     getRegions(province);
     // setRegions(prev => [...regions, { regionCode: 1, regionName: ' مقدس' }])
@@ -149,6 +159,14 @@ function LecturerPage() {
     getFields();
     getDegrees();
   }, []);
+
+  useEffect(() => {
+    setAllCount(lecturerList?.length)
+    setFreeCount(lecturerList.filter(item => item.payment == 1).length)
+    setPayCount(lecturerList.filter(item => item.payment == 2 && item.status == 1).length)
+    setPendingCount(lecturerList.filter(item => item.payment == 2 && item.status == 4).length)
+
+  }, [lecturerList]);
 
   useEffect(() => {
     if (currentLecturer) {
@@ -369,23 +387,23 @@ function LecturerPage() {
           lc.organ == 1
             ? "آموزش و پرورش"
             : lc.organ == 2
-            ? "دانشگاه"
-            : lc.organ == 3
-            ? "حوزه علمیه"
-            : "نامشخص",
+              ? "دانشگاه"
+              : lc.organ == 3
+                ? "حوزه علمیه"
+                : "نامشخص",
         isAcademic: lc.isAcademic ? "بله " : "خیر",
         typeAcademic:
           lc.typeAcademic == 1
             ? "استادیار"
             : lc.typeAcademic == 2
-            ? "دانشیار"
-            : "نامشخص",
+              ? "دانشیار"
+              : "نامشخص",
         govermental:
           lc.govermental == 1
             ? "دولتی"
             : lc.typeAcademic == 2
-            ? "غیردولتی"
-            : "نامشخص",
+              ? "غیردولتی"
+              : "نامشخص",
         provinceName: lc.provinceName,
         regionName: lc.regionName,
         degree: lc.degree.name,
@@ -397,12 +415,12 @@ function LecturerPage() {
           lc.status == 1
             ? "ثبت نام شده"
             : lc.status == 2
-            ? "قبولی آزمون"
-            : lc.status == 3
-            ? "رد"
-            : lc.status == 4
-            ? "در انتظار پرداخت"
-            : "نامخشخص",
+              ? "قبولی آزمون"
+              : lc.status == 3
+                ? "رد"
+                : lc.status == 4
+                  ? "در انتظار پرداخت"
+                  : "نامخشخص",
         payment: lc.payment == 1 ? "رایگان" : "پرداخت",
         createAt: lc.createdAt,
       };
@@ -487,6 +505,54 @@ function LecturerPage() {
       />
       <div>
         <div className="p-4 bg-slate-200 rounded-lg">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 my-4">
+            <Button
+              isLoading={isLoading}
+              className="flex flex-col items-center justify-center h-24 col-span-1"
+              color="primary"
+            >
+              <span className="text-white  text-2xl">
+                {<CountUp start={0} end={allCount}></CountUp>}
+
+              </span>
+              <span className="text-white  text-md">
+                کل ثبت نام ها
+              </span>
+            </Button>
+            <Button
+              className="flex flex-col items-center justify-center h-24 col-span-1"
+              color="secondary"
+            >
+              <span className="text-white  text-2xl">
+                {<CountUp start={0} end={freeCount}></CountUp>}
+              </span>
+              <span className="text-white  text-md">
+                مشمول(رایگان)
+              </span>
+            </Button>
+            <Button
+              className="flex flex-col items-center justify-center h-24 col-span-1"
+              color="success"
+            >
+              <span className="text-white  text-2xl">
+                {<CountUp start={0} end={payCount}></CountUp>}
+              </span>
+              <span className="text-white  text-md">
+                پرداختی ها
+              </span>
+            </Button>
+            <Button
+              className="flex flex-col items-center justify-center h-24 col-span-1"
+              color="warning"
+            >
+              <span className="text-white text-2xl">
+                {<CountUp start={0} end={pendingCount}></CountUp>}
+              </span>
+              <span className="text-white text-md">
+                در انتظار پرداخت
+              </span>
+            </Button>
+          </div>
           <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
             <span>لیست ثبت نام مدرسین آموزش خانواده</span>
 
@@ -627,7 +693,7 @@ function LecturerPage() {
                             آموزش و پرورش
                           </Radio>
                           <Radio value="2" size="sm">
-                          عضو هیات علمی دانشگاه
+                            عضو هیات علمی دانشگاه
                           </Radio>
                           <Radio value="3" size="sm">
                             حوزه علمیه
@@ -693,7 +759,7 @@ function LecturerPage() {
                       </div>
                     </div>
                   ) : null}
-                  <div className="grid grid-cols-1 md:grid-cols-2 mt-2  md:gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                     <div className="relative mt-2 flex justify-start col-span-1">
                       <Input
                         tabIndex={6}
@@ -784,10 +850,10 @@ function LecturerPage() {
                     currentLecturer.organ == 3 ||
                     currentLecturer.isCertificateBefore
                   ) && (
-                    <div className="w-full flex-center">
-                      با توجه به بند های انتخاب شده مدرکی بارگذاری نشده است
-                    </div>
-                  )}
+                      <div className="w-full flex-center">
+                        با توجه به بند های انتخاب شده مدرکی بارگذاری نشده است
+                      </div>
+                    )}
 
                   {/* <div className="w-full  relative mt-2 flex justify-between item-start col-span-2">
                     <div className="flex items-center justify-start text-[14px] text-right">
@@ -808,23 +874,23 @@ function LecturerPage() {
 
                   {(currentLecturer.organ == 2 ||
                     currentLecturer.organ == 3) && (
-                    <div className="w-full  relative mt-2 flex justify-between item-center col-span-2">
-                      <div className="flex-center text-[14px] text-right">
-                        {" "}
-                        تصویر معرفی نامه بارگذاری شده
+                      <div className="w-full  relative mt-2 flex justify-between item-center col-span-2">
+                        <div className="flex-center text-[14px] text-right">
+                          {" "}
+                          تصویر معرفی نامه بارگذاری شده
+                        </div>
+                        <div className="gap-2  ">
+                          {currentLecturer.introDoc?.map((image, index) => (
+                            <div key={index}>
+                              <ImageLoaderLecturer
+                                imageUrl={image}
+                                code={"intro"}
+                              />
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                      <div className="gap-2  ">
-                        {currentLecturer.introDoc?.map((image, index) => (
-                          <div key={index}>
-                            <ImageLoaderLecturer
-                              imageUrl={image}
-                              code={"intro"}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                    )}
                   {currentLecturer.isCertificateBefore && (
                     <div className="w-full  relative mt-2 flex justify-between item-center col-span-2">
                       <div className="flex-center text-[14px] text-right">
@@ -866,7 +932,7 @@ function LecturerPage() {
                 <CardBody>
                   <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                     <div className="relative mt-2 flex justify-start col-span-1">
-                    <Input
+                      <Input
                         disabled={true}
                         type="text"
                         label="سال تحصیلی"
@@ -874,7 +940,7 @@ function LecturerPage() {
                         labelPlacement={"inside"}
                         value={year}
                       ></Input>
-                     
+
                     </div>
                     <div className="relative mt-2 flex justify-start col-span-1">
                       {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
@@ -891,7 +957,7 @@ function LecturerPage() {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
                     <div className="relative mt-2 flex justify-start col-span-1">
-                     
+
                       <Input
                         tabIndex={1}
                         type="text"

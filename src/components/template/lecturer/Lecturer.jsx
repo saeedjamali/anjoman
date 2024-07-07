@@ -968,7 +968,7 @@ function LectureInformation() {
 
                                             }
 
-                                            <div className='grid grid-cols-1 md:grid-cols-2 mt-2  md:gap-4'>
+                                            <div className='grid grid-cols-1 md:grid-cols-2   md:gap-4'>
                                                 <div className='relative mt-2 flex justify-start col-span-1'>
                                                     <Autocomplete
                                                         tabIndex={7}
@@ -1390,7 +1390,7 @@ function LectureInformation() {
 
                                         }
 
-                                        <div className='grid grid-cols-1 md:grid-cols-2 mt-2  md:gap-4'>
+                                        <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
                                             <div className='relative mt-2 flex justify-start col-span-1'>
 
                                                 <Input
