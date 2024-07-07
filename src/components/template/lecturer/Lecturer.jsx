@@ -705,7 +705,7 @@ function LectureInformation() {
 
                                     }
                                     {
-                                        beforeRegistered && history.status == 4 && history.phone == "09159342733" &&
+                                        beforeRegistered && history.status == 4 && history.phone == "09155026293" &&
 
 
                                         < div className='items-end justify-end'>
@@ -1808,7 +1808,7 @@ function LectureInformation() {
                                                                         مبلغ تراکنش
                                                                     </p>
                                                                     <p className='w-[60%] flex-center p-4'>
-                                                                        {bill.amount}
+                                                                        {`${bill.amount} ریال`}
                                                                     </p>
                                                                 </div>
                                                                 <div className='flex items-center justify-start border-[1px] border-blue-300 rounded-md'>
