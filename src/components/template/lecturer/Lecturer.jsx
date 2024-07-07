@@ -555,9 +555,9 @@ function LectureInformation() {
         // toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
     }
     const moveToPayment = () => {
-        // setActionType(4)
-        // onOpen()
-        toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
+        setActionType(4)
+        onOpen()
+        // toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
     }
 
     const removeRegister = async () => {
@@ -723,16 +723,16 @@ function LectureInformation() {
                                             color="primary"
                                             content="مشاهده سابقه تراکنش"
                                         >
-                                            <div className='relative flex-center text-[12px] text-white bg-green-600 mr-2 p-2 rounded-full cursor-pointer ' onClick={showBill}>
-
-                                                <FaMoneyBillTransfer />
-                                            </div>
+                                            <Button className='relative flex-center text-[12px] text-white bg-green-600 mr-2 p-2 cursor-pointer rounded-md' onClick={showBill}>
+                                                اطلاعات پرداخت
+                                                {/* <FaMoneyBillTransfer /> */}
+                                            </Button>
                                         </Tooltip>
 
 
                                     }
                                     {beforeRegistered ?
-                                        <Button className={`  bg-green-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>مشاهده سابقه</Button>
+                                        <Button className={`  bg-green-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>اطلاعات ثبت نام</Button>
                                         :
                                         <Button className={` bg-blue-600  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
                                     }
