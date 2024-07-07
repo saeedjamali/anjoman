@@ -25,7 +25,10 @@ const schema = mongoose.Schema({
         required: true,
     },
 
-});
+},
+    {
+        timestamps: true,
+    });
 
 const Payment =
     mongoose.models?.Payment || mongoose.model("Payment", schema);
