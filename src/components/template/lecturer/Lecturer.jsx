@@ -555,14 +555,14 @@ function LectureInformation() {
 
 
     const moveToPaymentTest = () => {
-        // setActionType(4)
-        // onOpen()
-        toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
-    }
-    const moveToPayment = () => {
         setActionType(4)
         onOpen()
         // toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
+    }
+    const moveToPayment = () => {
+        // setActionType(4)
+        // onOpen()
+        toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
     }
 
     const removeRegister = async () => {
