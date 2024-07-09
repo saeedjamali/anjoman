@@ -122,6 +122,7 @@ export default function LecturerManager({ setShowDetailLecturer,
     const [regionObj, setRegionObj] = useState(null);
     const [degreeObj, setDegreeObj] = useState(null);
     const [fieldObj, setFieldObj] = useState(null);
+    const [paymentObj, setPaymentObj] = useState(null);
 
     const [cityName, setCityName] = useState("");
     const [isCertificateBefore, setIsCertificateBefore] = useState(false);

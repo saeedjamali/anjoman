@@ -100,7 +100,7 @@ function LectureInformation() {
     const merchantId = "000000140332725";
     const terminalId = "24073676";
     const merchantKey = "KTje3RNIhbijwGG2p69YQraFN5errUTV";
-    const [amount, setAmount] = useState(2500000);
+    const [amount, setAmount] = useState(10000);
     const [bill, setBill] = useState(null)
     // const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
@@ -555,9 +555,9 @@ function LectureInformation() {
 
 
     const moveToPaymentTest = () => {
-        setActionType(4)
-        onOpen()
-        // toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
+        // setActionType(4)
+        // onOpen()
+        toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
     }
     const moveToPayment = () => {
         setActionType(4)
@@ -713,7 +713,7 @@ function LectureInformation() {
 
                                     }
                                     {
-                                        beforeRegistered && history.status == 4 && history.phone == "09155026293" &&
+                                        beforeRegistered && history.status == 4 && history.phone == "09151208032" &&
 
 
                                         < div className='items-end justify-end'>
@@ -753,7 +753,7 @@ function LectureInformation() {
                                             </div>
                                         </>
                                         :
-                                        <Button className={`md:hidden bg-blue-600  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
+                                        <Button className={` bg-blue-600  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
                                     }
 
                                 </div>

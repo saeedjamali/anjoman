@@ -36,7 +36,7 @@ export async function GET(req, { params }) {
         })
         .populate([
           {
-            path: "orderId",
+            path: "paymentId",
           },
         ]);
     }
@@ -47,7 +47,7 @@ export async function GET(req, { params }) {
         })
         .populate([
           {
-            path: "orderId",
+            path: "paymentId",
           },
         ]);
     }
@@ -63,7 +63,7 @@ export async function GET(req, { params }) {
         ]);
     }
 
-    console.log("lecturerList---------->", lecturerList);
+    // console.log("lecturerList---------->", lecturerList);
     if (lecturerList.length != 0) {
       return Response.json({
         message: "لیست ثبت نام ها با موفقیت دریافت شد",
