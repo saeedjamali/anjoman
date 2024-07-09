@@ -23,7 +23,7 @@ export async function POST(req, res) {
 
     let encryptedSignData = cipher.update(token, "utf8", "base64");
     encryptedSignData += cipher.final("base64");
-    console.log("go to post api...---->");
+    // console.log("go to post api...---->");
     const response = await fetch(
       "https://sadad.shaparak.ir/api/v0/Advice/Verify",
       {
