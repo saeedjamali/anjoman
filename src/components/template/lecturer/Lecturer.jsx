@@ -197,7 +197,7 @@ function LectureInformation() {
                 }
             } catch (error) {
                 console.log(error)
-                toast.error("خطای ناشناخته")
+                // toast.error("خطای ناشناخته")
             }
         }
 
@@ -260,7 +260,7 @@ function LectureInformation() {
                 toast.info(data.message)
             }
         } catch (error) {
-            toast.error("خطای ناشناخته")
+            console.error("خطای ناشناخته")
         }
     }
     const getFields = async () => {
@@ -274,7 +274,7 @@ function LectureInformation() {
                 toast.info(data.message)
             }
         } catch (error) {
-            toast.error("خطای ناشناخته")
+            console.error("خطای ناشناخته")
         }
     }
 
@@ -289,7 +289,7 @@ function LectureInformation() {
                 toast.info(data.message)
             }
         } catch (error) {
-            toast.error("خطای ناشناخته")
+            console.error("خطای ناشناخته")
         }
     }
 
@@ -306,7 +306,7 @@ function LectureInformation() {
             }
         } catch (error) {
 
-            toast.error("خطای ناشناخته")
+            console.error("خطای ناشناخته")
         }
     }
 
