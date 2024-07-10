@@ -213,7 +213,7 @@ function LecturerPage() {
         // toast.info(data.message);
       }
     } catch (error) {
-      toast.error("خطای ناشناخته");
+      console.error("خطای ناشناخته");
     }
   };
   const getFields = async () => {
@@ -224,10 +224,10 @@ function LecturerPage() {
       if (data.status == 200) {
         setFields(data.fields);
       } else {
-        toast.info(data.message);
+        console.info(data.message);
       }
     } catch (error) {
-      toast.error("خطای ناشناخته");
+      console.error("خطای ناشناخته");
     }
   };
 
@@ -242,7 +242,7 @@ function LecturerPage() {
         toast.info(data.message);
       }
     } catch (error) {
-      toast.error("خطای ناشناخته");
+      console.error("خطای ناشناخته");
     }
   };
 
@@ -263,7 +263,7 @@ function LecturerPage() {
         // toast.error(data.message);
       }
     } catch (error) {
-      toast.error("خطای ناشناخته");
+      console.error("خطای ناشناخته");
     }
   };
 
