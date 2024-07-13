@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { cookies } from "next/headers";
-
+import tokenModel from "@/models/payment/token";
 export async function POST(req) {
   try {
     const {
@@ -36,8 +36,8 @@ export async function POST(req) {
           Amount: amount,
           OrderId: orderId,
           LocalDateTime,
-        //   ReturnUrl: `http://localhost:3000/api/lecturer/payment/verify`,
-          ReturnUrl: `https://peyvand.razaviedu.ir/api/lecturer/payment/verify`,
+          // ReturnUrl: `http://localhost:3000/api/lecturer/payment/verify/${orderId}`,
+          ReturnUrl: `https://peyvand.razaviedu.ir/api/lecturer/payment/verify/${orderId}`,
           SignData: encryptedSignData,
           MultiIdentityData,
         }),
@@ -46,13 +46,37 @@ export async function POST(req) {
 
     const data = await response.json();
     const token = data.Token;
+
+    const tokenLecturer = await tokenModel.findOneAndUpdate(
+      { orderId },
+      {
+        token,
+      }
+    );
+
+    if (!tokenLecturer) {
+      const tokenFounded = await tokenModel.create({ orderId, token });
+    }
+
+    // const tokenResponse = await fetch(
+    //   `/api/lecturer/payment/token/${orderId}`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       token,
+    //     }),
+    //   }
+    // );
     // console.log("data from send--->", data)
-    cookies().set("paymentData", String(token), {
-      httpOnly: true,
-      secure: true,
-      maxAge: 60 * 60,
-      path: "/",
-    });
+    // cookies().set("paymentData", String(token), {
+    //   httpOnly: true,
+    //   secure: true,
+    //   maxAge: 60 * 60,
+    //   path: "/",
+    // });
 
     return Response.json(data);
   } catch (error) {

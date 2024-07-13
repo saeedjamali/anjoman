@@ -61,9 +61,9 @@ function SwiperText({ data }) {
                                         <p className="text-[14px] font-bold text-secondary-800 flex-1">
                                             {title}
                                         </p>
-                                        <p className="text-[10px]  text-secondary-600 flex-1">
+                                        {/* <p className="text-[10px]  text-secondary-600 flex-1">
                                             {tagline}
-                                        </p>
+                                        </p> */}
 
 
 
@@ -106,7 +106,7 @@ function SwiperText({ data }) {
                             </ModalHeader>
                             <ModalBody >
 
-                                <p>
+                                <p className='text-right justify-start text-justify'>
                                     {body}
                                 </p>
                                 <div className='w-full flex-center '>

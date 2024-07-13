@@ -67,7 +67,7 @@ function SwiperModule({ data }) {
                                             {title}
                                         </p>
                                         <p className="md:text-sm  font-semibold text-white">
-                                            {tagline}
+                                            {tagline ? tagline?.slice(0, 150) + "..." : null}
                                         </p>
                                         <Button className='bg-white text-secondary-800' onClick={() => showNews(title, tagline, image, date)}>
                                             مشاهده جزییات
@@ -113,7 +113,7 @@ function SwiperModule({ data }) {
                             </ModalHeader>
                             <ModalBody >
 
-                                <p>
+                                <p className='text-right justify-start text-justify'>
                                     {body}
                                 </p>
                                 <div className='w-full flex-center '>

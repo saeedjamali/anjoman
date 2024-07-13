@@ -101,6 +101,7 @@ function LectureInformation() {
     const terminalId = "24073676";
     const merchantKey = "KTje3RNIhbijwGG2p69YQraFN5errUTV";
     const [amount, setAmount] = useState(2500000);
+    // const [amount, setAmount] = useState(10000);
     const [bill, setBill] = useState(null)
     // const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
@@ -126,10 +127,10 @@ function LectureInformation() {
                 }),
             });
             const orderIdUpdatedData = await orderIdPostResponse.json();
-            console.log("orderIdUpdatedData--->", orderIdUpdatedData)
+            // console.log("orderIdUpdatedData--->", orderIdUpdatedData)
             if (orderIdUpdatedData.status == 201) {
-                console.log(orderIdUpdatedData.message)
-                console.log(orderIdUpdatedData.orderId);
+                // console.log(orderIdUpdatedData.message)
+                // console.log(orderIdUpdatedData.orderId);
                 const response = await fetch("/api/lecturer/payment/send", {
                     method: "POST",
                     headers: {
@@ -155,7 +156,7 @@ function LectureInformation() {
                 });
 
                 const data = await response.json();
-                console.log("ResCode from token", data);
+                // console.log("ResCode from token", data);
                 if (data.ResCode == 0) {
                     const token = data.Token;
                     const signData = data.signData;

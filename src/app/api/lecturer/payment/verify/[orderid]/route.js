@@ -4,15 +4,31 @@ import { NextResponse } from "next/server";
 import { permanentRedirect, redirect } from "next/navigation";
 import lectureModel from "@/models/lecturer/lecturer";
 import paymentModel from "@/models/payment/payment";
-
-export async function POST(req, res) {
+import tokenModel from "@/models/payment/token";
+export async function POST(req, { params }) {
   try {
-    const token = cookies().get("paymentData")?.value;
+    const orderIdParams = params.orderid;
+    const { token } = await tokenModel.findOneAndUpdate({
+      orderId: orderIdParams,
+    });
+    // console.log("Token is---->", token);
+
+    // const token = cookies().get("paymentData")?.value;
     // const token = req.token;
+
+    // if (!token) {
+    //   return NextResponse.json(
+    //     { error: "No payment token found" },
+    //     { status: 400 }
+    //   );
+    // }
 
     if (!token) {
       return NextResponse.json(
-        { error: "No payment token found" },
+        {
+          error:
+            "خطا در پرداخت - در صورت کسر از حساب مبلغ حداکثر تا 72 ساعت بعد به حساب شما باز میگردد - از یک مرورگر دیگر برای پرداخت استفاده نمایید.",
+        },
         { status: 400 }
       );
     }
@@ -54,7 +70,7 @@ export async function POST(req, res) {
           paymentId: payment._id,
         }
       );
-
+      // console.log("statusUpdate---->", statusUpdate);
       return NextResponse.redirect(
         new URL(`https://peyvand.razaviedu.ir/api`, req.url)
       );

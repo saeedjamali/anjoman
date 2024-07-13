@@ -18,7 +18,6 @@ export async function PUT(req) {
         const updateLecturer = await lecturerModel.findOneAndUpdate(
             { $and: [{ _id: userId }, { year }] },
             {
-
                 orderId,
 
             }
