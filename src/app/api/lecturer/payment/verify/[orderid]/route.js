@@ -52,7 +52,7 @@ export async function POST(req, { params }) {
     );
 
     const data = await response.json();
-    console.log("Data isssss---->", data);
+    console.log("Data Payment is---->", data);
     if (data.ResCode == 0) {
       const payment = await paymentModel.create({
         resCode: data.ResCode,
