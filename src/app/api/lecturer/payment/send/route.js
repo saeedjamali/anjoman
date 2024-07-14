@@ -12,7 +12,7 @@ export async function POST(req) {
       merchantKey,
     } = await req.json();
 
-    // console.log("Order Id------------>", orderId);
+    console.log("Order Id------------>", orderId, amount);
 
     const LocalDateTime = new Date().toISOString();
     const signData = `${TerminalId};${orderId};${amount}`;

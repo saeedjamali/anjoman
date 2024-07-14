@@ -176,6 +176,76 @@ function LectureInformation() {
         }
     };
 
+    const handleSubmitTest = async (e) => {
+        e.preventDefault();
+        let orderId = Number(phone + '' + (Math.floor(Math.random() * 1000000) + 100000));
+        // setOrderId(Number(phone + '' + (Math.floor(Math.random() * 1000000) + 100000)))
+        // console.log("orderId --->", orderId)
+
+        try {
+            const orderIdPostResponse = await fetch("/api/lecturer/payment/update", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    orderId,
+                    userId: history._id,
+                    year: history.year
+
+                }),
+            });
+            const orderIdUpdatedData = await orderIdPostResponse.json();
+            // console.log("orderIdUpdatedData--->", orderIdUpdatedData)
+            if (orderIdUpdatedData.status == 201) {
+                // console.log(orderIdUpdatedData.message)
+                // console.log(orderIdUpdatedData.orderId);
+                const response = await fetch("/api/lecturer/payment/send", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        amount: 10000,
+                        orderId: orderIdUpdatedData.orderId,
+                        LocalDateTime: new Date().toISOString(),
+                        MultiIdentityData: {
+                            MultiIdentityRows: [
+                                {
+                                    IbanNumber: "IR940100004060031203656180",
+                                    Amount: 10000,
+                                    PaymentIdentity: "365030160127560001401591600106",
+                                },
+                            ],
+                        },
+                        MerchantId: merchantId,
+                        TerminalId: terminalId,
+                        merchantKey,
+                    }),
+                });
+
+                const data = await response.json();
+                console.log("ResCode from token", data);
+                if (data.ResCode == 0) {
+                    const token = data.Token;
+                    const signData = data.signData;
+                    setToken(token);
+                    setSignData(signData);
+                    window.location.href = `https://sadad.shaparak.ir/Purchase?token=${token}`;
+
+                } else {
+                    console.log(data.Description)
+                    toast.info("خطا در ارتباط با درگاه بانک - دقایقی دیگر تلاش کنید")
+                }
+
+
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
     useEffect(() => {
 
         setPhoneInp(phone);
@@ -718,7 +788,7 @@ function LectureInformation() {
 
 
                                         < div className='items-end justify-end'>
-                                            <Button className={`  bg-yellow-500  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={(e) => moveToPaymentTest(e)}> (آزمایشی)انتقال به درگاه پرداخت</Button>
+                                            <Button className={`  bg-yellow-500  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={(e) => handleSubmitTest(e)}> (آزمایشی)انتقال به درگاه پرداخت</Button>
                                         </div>
 
 
