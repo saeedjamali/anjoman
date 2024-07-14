@@ -52,7 +52,7 @@ export async function POST(req, { params }) {
     );
 
     const data = await response.json();
-    // console.log("Data isssss---->", data);
+    console.log("Data isssss---->", data);
     if (data.ResCode == 0) {
       const payment = await paymentModel.create({
         resCode: data.ResCode,
@@ -62,14 +62,16 @@ export async function POST(req, { params }) {
         retrivalRefNo: data.RetrivalRefNo,
         systemTraceNo: data.SystemTraceNo,
       });
+      if (payment) {
+        const statusUpdate = await lectureModel.findOneAndUpdate(
+          { orderId: data.OrderId },
+          {
+            status: 1,
+            paymentId: payment._id,
+          }
+        );
+      }
 
-      const statusUpdate = await lectureModel.findOneAndUpdate(
-        { orderId: data.OrderId },
-        {
-          status: 1,
-          paymentId: payment._id,
-        }
-      );
       // console.log("statusUpdate---->", statusUpdate);
       return NextResponse.redirect(
         new URL(`https://peyvand.razaviedu.ir/api`, req.url)
