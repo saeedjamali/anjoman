@@ -36,8 +36,8 @@ export async function POST(req) {
           Amount: amount,
           OrderId: orderId,
           LocalDateTime,
-          // ReturnUrl: `http://localhost:3000/api/lecturer/payment/verify/${orderId}`,
-          ReturnUrl: `https://peyvand.razaviedu.ir/api/lecturer/payment/verify/${orderId}`,
+          ReturnUrl: `http://localhost:3000/api/lecturer/payment/verify/${orderId}`,
+          // ReturnUrl: `https://peyvand.razaviedu.ir/api/lecturer/payment/verify/${orderId}`,
           SignData: encryptedSignData,
           MultiIdentityData,
         }),
@@ -46,7 +46,6 @@ export async function POST(req) {
 
     const data = await response.json();
     const token = data.Token;
-
     const tokenLecturer = await tokenModel.findOneAndUpdate(
       { orderId },
       {

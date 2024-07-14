@@ -8,10 +8,12 @@ import tokenModel from "@/models/payment/token";
 export async function POST(req, { params }) {
   try {
     const orderIdParams = params.orderid;
-    const { token } = await tokenModel.findOneAndUpdate({
-      orderId: orderIdParams,
+    console.log("orderIdParams--->", orderIdParams);
+    const { token } = await tokenModel.findOne({
+      orderId: orderIdParams
     });
-    // console.log("Token is---->", token);
+    console.log("Token is---->", token);
+    console.log("orderIdParams is---->", orderIdParams);
 
     // const token = cookies().get("paymentData")?.value;
     // const token = req.token;
