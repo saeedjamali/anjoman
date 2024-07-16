@@ -4,8 +4,8 @@ import { useUserProvider } from '@/components/context/UserProvider';
 import { valiadtePrsCode } from '@/utils/auth';
 import { generalCondition } from '@/utils/constants';
 import { convertTopersian, traverse } from '@/utils/convertnumtopersian';
-import { CheckIcon, NotificationIcon } from '@/utils/icon';
-import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Image, Input, Link, Radio, RadioGroup, Tooltip } from '@nextui-org/react';
+import { CheckIcon, EditIcon, NotificationIcon } from '@/utils/icon';
+import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Image, Input, Link, Radio, RadioGroup, Tooltip } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
@@ -23,6 +23,8 @@ import { MdOutlineFreeCancellation } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 import { BiSolidDetail } from "react-icons/bi";
+import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import {
     Modal,
     ModalContent,
@@ -34,12 +36,13 @@ import {
 import ImageLoader from '@/components/module/contrct/ImageLoader';
 import ImageLoaderLecturer from '@/components/module/contrct/ImageLoaderLecturer';
 import { useAppProvider } from '@/components/context/AppProviders';
+import ExamCard from './ExamCard';
 
 const maxFileSize = 300000; //100KB
 const acceptType = "jpg";
 
 function LectureInformation() {
-    const { user } = useUserProvider();
+    const { user, showArrow, setShowArrow } = useUserProvider();
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [payment, setPayment] = useState(0); //? 1 : submit   ---- 2 : payment
     const [comment, setComment] = useState("");
@@ -678,6 +681,15 @@ function LectureInformation() {
         onOpen();
     }
 
+    const cardHandler = () => {
+
+        if (user.profile.length == 0) {
+            toast.info("ابتدا نسبت به بارگذاری تصویر خود از قسمت پروفایل ، اقدام نمایید")
+            setShowArrow(true)
+            return
+        }
+        toast.success("ایول بریم واسه چاپ")
+    }
     return (
         <div >
             <ToastContainer
@@ -771,9 +783,9 @@ function LectureInformation() {
 
                                         <div className='flex items-center justify-end'>
 
-                                            <Button className={` bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => moveToPaymentTest()}>انتقال به درگاه پرداخت</Button>
+                                            {/* <Button className={` bg-blue-500  text-white p-2 rounded-md text-[12px] mr-2`} onClick={() => moveToPaymentTest()}>انتقال به درگاه پرداخت</Button>
 
-                                            <Button className={`hidden md:flex  bg-red-500  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
+                                            <Button className={`hidden md:flex  bg-red-500  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button> */}
 
                                             <div className='flex-center justify-center md:hidden mr-2 cursor-pointer' onClick={() => submitRemoveDocument(event)}>
                                                 <MdDeleteOutline className='bg-red-500 p-1 text-[36px] text-white rounded-full flex ' />
@@ -798,16 +810,16 @@ function LectureInformation() {
                                     {
                                         beforeRegistered && history.payment == 2 && history.status == 1 &&
                                         <div className='flex items-center justify-end'>
-                                            <Tooltip
+                                            {/* <Tooltip
                                                 showArrow={true}
                                                 color="primary"
                                                 content="مشاهده سابقه تراکنش"
                                             >
                                                 <Button className='hidden relative md:flex-center text-[10px] md:text-[12px] text-white bg-green-600 mr-2 p-2 cursor-pointer rounded-md' onClick={showBill}>
                                                     اطلاعات پرداخت
-                                                    {/* <FaMoneyBillTransfer /> */}
                                                 </Button>
                                             </Tooltip>
+                                             */}
                                             <div className='flex-center justify-center md:hidden mr-2 cursor-pointer' onClick={showBill}>
                                                 <FaMoneyBillTransfer className='bg-green-500 p-1 text-[36px] text-white rounded-full flex ' />
                                             </div>
@@ -817,19 +829,138 @@ function LectureInformation() {
                                     }
                                     {beforeRegistered ?
                                         <>
-                                            <Button className={`hidden md:flex  bg-green-600  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>اطلاعات ثبت نام</Button>
+                                            {/* <Button className={`hidden md:flex  bg-green-600  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => setSeeHistory(prev => !prev)}>اطلاعات ثبت نام</Button> */}
 
                                             <div className='flex-center justify-center md:hidden mr-2 cursor-pointer' onClick={() => setSeeHistory(prev => !prev)}>
                                                 <BiSolidDetail className='bg-green-500 p-1 text-[36px] text-white rounded-full flex ' />
                                             </div>
                                         </>
                                         :
-                                        <Button className={` bg-blue-600  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
+                                        <></>
+                                        // <Button className={` bg-blue-600  text-white p-2 rounded-md text-[10px] md:text-[12px] mr-2`} onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
                                     }
 
                                 </div>
                             </div>
                         }
+
+                    </form>
+                </div>
+
+
+
+
+            </div >
+            <div className='w-full border-2 border-slate-100 mt-2 rounded-md'>
+                <div className='flex items-center  bg-slate-100 p-2' >
+                    <span className=' w-full flex text-[12px]'>پیشرفت فرایند ثبت نام مدرسین آموزش خانواده</span>
+                </div>
+
+                <div className='w-full p-2 text-[12px]'>
+                    <div className='items-center justify-between m-4 grid grid-cols-1 md:grid-cols-2 '>
+                        <div className='flex-1 text-blue-500 col-span-1 flex items-center justify-start h-8'>
+                            <span className='text-green-500 ml-2'>
+                                {
+                                    beforeRegistered ?
+                                        <IoCheckmarkDoneCircleSharp className='text-[16px]' />
+                                        :
+                                        <IoCheckmarkDoneCircleOutline className='text-[16px]' />
+
+                                }
+                                {/* <CheckIcon size={16} /> */}
+                            </span>
+                            <span className='font-bold'>
+                                گام اول :
+                            </span>
+                            <span className='mr-2'>
+                                ثبت نام اولیه
+                            </span>
+                        </div>
+                        <div className='col-span-1 flex items-center justify-end h-8'>
+                            {beforeRegistered && history.status == 4 &&
+
+                                <Button className='bg-red-500 text-white text-[12px] h-auto py-2 ml-2' onClick={() => submitRemoveDocument(event)}>لغو ثبت نام</Button>
+                            }
+                            {beforeRegistered ? <>
+                                <Button className='bg-green-500 text-white text-[12px] h-auto py-2 ' onClick={() => setSeeHistory(prev => !prev)} >جزییات ثبت نام</Button>
+                            </> :
+                                <Button className='bg-blue-500 text-white text-[12px] h-auto py-2' onClick={() => submitHandler(event)}>ثبت نام مدرسین</Button>
+                            }
+
+                        </div>
+                    </div>
+                    <Divider className="my-2" />
+                    <div className=' items-center justify-between m-4 grid grid-cols-1 md:grid-cols-2 '>
+                        <div className='flex-1 text-blue-500 col-span-1 flex items-center justify-start h-8'>
+                            <span className='text-green-500 ml-2'>
+                                {history.status == 1 ?
+                                    <IoCheckmarkDoneCircleSharp className='text-[16px]' />
+                                    :
+                                    <IoCheckmarkDoneCircleOutline className='text-[16px]' />
+                                }
+                            </span>
+                            <span className='font-bold'>
+                                گام دوم :
+                            </span>
+                            <span className='mr-2'>
+                                پرداخت وجه
+                            </span>
+                        </div>
+                        <div className='col-span-1 flex items-center justify-end  h-8'>
+                            {
+                                beforeRegistered && history.payment == 2 && history.status == 1 &&
+                                <Button className='bg-green-500 text-white text-[12px] h-auto py-2 ' onClick={showBill}>جزییات پرداخت</Button>
+                            }
+                            {
+                                beforeRegistered && history.payment == 2 && history.status == 4 &&
+                                <Button className='bg-blue-500 text-white text-[12px] h-auto py-2' onClick={() => moveToPaymentTest()}>انتقال به درگاه پرداخت</Button>
+                            }
+                            {
+                                beforeRegistered && history.payment == 1 &&
+                                <span className='text-green-500'>رایگان</span>
+
+                            }
+                        </div>
+                    </div>
+                    <Divider className="my-2" />
+                    <div className=' items-center justify-between m-4 grid grid-cols-1 md:grid-cols-2 '>
+                        {/* //? در صورتی که تصویر پروفایل داشته باشه سبز بشه */}
+                        <div className='flex-1 text-blue-500 col-span-1 flex items-center justify-start h-8'>
+                            <span className='text-green-500 ml-2'>
+                                {history.status == 1 ?
+                                    <IoCheckmarkDoneCircleSharp className='text-[16px]' />
+                                    :
+                                    <IoCheckmarkDoneCircleOutline className='text-[16px]' />
+                                }
+                            </span>
+                            <span className='font-bold'>
+                                گام سوم :
+                            </span>
+                            <span className='mr-2'>
+                                دریافت کارت شرکت در آزمون
+                            </span>
+                        </div>
+                        <div className='col-span-1 flex items-center justify-end  h-8'>
+                            {
+                                beforeRegistered && history.status == 1 &&
+                                <Button className='bg-green-500 text-white text-[12px] h-auto py-2 ' onClick={cardHandler}>دریافت کارت</Button>
+                            }
+                        </div>
+                    </div>
+                    <Divider className="my-2" />
+                    <ExamCard image={user?.profile[0]} lecturer={history} region={regionObj?.regionName} />
+                </div>
+
+            </div>
+            {(seeHistory || isNewRegister) &&
+                <div className='w-full border-2 border-slate-100 mt-2 rounded-md'>
+                    <div className='flex items-center  bg-slate-100 p-2' >
+                        {!beforeRegistered ?
+                            <span className=' w-full flex text-[12px]'>فرم تکمیل اطلاعات</span> :
+                            <span className=' w-full flex text-[12px]'>جزییات ثبت نام</span>}
+
+                    </div>
+                    <div className='w-full p-2'>
                         {!beforeRegistered &&
                             <div className='flex flex-col justify-start mt-4'>
                                 {/* //? بررسی شرایط عمومی */}
@@ -949,15 +1080,15 @@ function LectureInformation() {
                                                         </span>
                                                     </div>
                                                     {/*                                                   
-                                                    <Input
-                                                        tabIndex={3}
-                                                        disabled={isPersonalInformation}
-                                                        type="number"
-                                                        label="سن"
-                                                        size='md'
-                                                        labelPlacement={"inside"}
-                                                        value={age} onChange={(event) => setAge(event.target.value)} ></Input>
-                                                         */}
+                                                      <Input
+                                                          tabIndex={3}
+                                                          disabled={isPersonalInformation}
+                                                          type="number"
+                                                          label="سن"
+                                                          size='md'
+                                                          labelPlacement={"inside"}
+                                                          value={age} onChange={(event) => setAge(event.target.value)} ></Input>
+                                                           */}
                                                 </div>
                                             </div>
                                             <div className='grid grid-cols-1 md:grid-cols-2  md:gap-4'>
@@ -1217,20 +1348,20 @@ function LectureInformation() {
                                         <Divider />
                                         <CardBody className='text-[12px] items-start gap-y-4'>
                                             {/* <div className='w-full  relative mt-2 flex justify-between item-center col-span-2'>
-                                                <div className='flex-center text-[14px]'>بارگذاری تصویر مدرک تحصیلی</div>
-                                                <div className="gap-2">
-                                                    <ImageUploader
-                                                        imageItems={degreeDoc}
-                                                        onChange={onChangeDegreeDoc}
-                                                        maxNumber={1}
-                                                        acceptType={acceptType}
-                                                        maxFileSize={maxFileSize}
-                                                        user={user}
-
-                                                    />
-                                                </div>
-
-                                            </div> */}
+                                                  <div className='flex-center text-[14px]'>بارگذاری تصویر مدرک تحصیلی</div>
+                                                  <div className="gap-2">
+                                                      <ImageUploader
+                                                          imageItems={degreeDoc}
+                                                          onChange={onChangeDegreeDoc}
+                                                          maxNumber={1}
+                                                          acceptType={acceptType}
+                                                          maxFileSize={maxFileSize}
+                                                          user={user}
+  
+                                                      />
+                                                  </div>
+  
+                                              </div> */}
                                             {!(organ == 2 || organ == 3 || isCertificateBefore) &&
                                                 <div className='w-full flex-center'>
                                                     با توجه به بند های انتخاب شده نیازی به بارگذاری مدرک نیست
@@ -1552,21 +1683,21 @@ function LectureInformation() {
                                     <Divider />
                                     <CardBody className='text-[12px] items-start gap-y-4'>
                                         {/* <div className='w-full  relative mt-2 flex justify-between item-start col-span-2'>
-                                            <div className='flex items-center justify-start text-[14px] text-right'> تصویر مدرک تحصیلی</div>
-                                            <div className="gap-2  ">
-                                                {history.degreeDoc?.map(
-                                                    (image, index) => (
-                                                        <div key={index}>
-                                                            <ImageLoaderLecturer
-                                                                imageUrl={image}
-                                                                code={"degree"}
-                                                            />
-                                                        </div>
-                                                    )
-                                                )}
-                                            </div>
-
-                                        </div> */}
+                                              <div className='flex items-center justify-start text-[14px] text-right'> تصویر مدرک تحصیلی</div>
+                                              <div className="gap-2  ">
+                                                  {history.degreeDoc?.map(
+                                                      (image, index) => (
+                                                          <div key={index}>
+                                                              <ImageLoaderLecturer
+                                                                  imageUrl={image}
+                                                                  code={"degree"}
+                                                              />
+                                                          </div>
+                                                      )
+                                                  )}
+                                              </div>
+  
+                                          </div> */}
                                         {!(history.organ == 2 || history.organ == 3 || history.isCertificateBefore) &&
                                             <div className='w-full flex-center'>
                                                 با توجه به بند های انتخاب شده مدرکی بارگذاری نشده است
@@ -1681,10 +1812,9 @@ function LectureInformation() {
 
 
                             </div>}
-                    </form>
-                </div>
+                    </div>
+                </div>}
 
-            </div >
             {
                 //? 1 : submit  2: payment
                 actionType == 1 ?

@@ -12,6 +12,7 @@ function UserProvider({
   currentAdmin,
 }) {
   const [showSidebar, setShowSideBar] = useState(true);
+  const [showArrow, setShowArrow] = useState(false);
   const [user, setUser] = useState(userFounded);
   const [admin, setAdmin] = useState(currentAdmin);
 
@@ -33,6 +34,8 @@ function UserProvider({
     <>
       <UserContext.Provider
         value={{
+          showArrow,
+          setShowArrow,
           showSidebar,
           setShowSideBar,
           user,
