@@ -30,6 +30,7 @@ import { toast } from "react-toastify";
 import { authTypes, roles, year } from '@/utils/constants'
 import { useUserProvider } from "@/components/context/UserProvider";
 import { ChevronDownIcon, DeleteIcon, EditIcon, EyeIcon, SearchIcon } from "@/utils/icon";
+import { FaBuilding } from "react-icons/fa6";
 // import { columns, users, statusOptions } from "./data";
 
 
@@ -98,7 +99,7 @@ export default function LecturerManager({ setShowDetailLecturer,
     currentLecturer,
     setLecturerlistLen,
     lecturerList,
-    setLecturerList, setActionType }) {
+    setLecturerList, actionType, setActionType, selectedKeys, setSelectedKeys }) {
 
     const { region, admin, user } = useUserProvider();
     const [action, setAction] = useState(0); //? 1 : submit   ---- 2 : payment
@@ -110,47 +111,6 @@ export default function LecturerManager({ setShowDetailLecturer,
     const [phoneInp, setPhoneInp] = useState(phone);
     const [prsCode, setPrsCode] = useState("");
     const [meliCode, setMeliCode] = useState(identifier);
-    const [occuptionState, setOccuptionState] = useState(0);
-    const [organ, setOrgan] = useState(0);
-    const [isAcademic, setIsAcademic] = useState(false);
-    const [typeAcademic, setTypeAcademic] = useState(0);
-    const [province, setProvince] = useState(null);
-    const [regionName, setRegionName] = useState(null);
-    const [degree, setDegree] = useState(0);
-    const [field, setField] = useState(0);
-    const [provinceObj, setProvinceObj] = useState(null);
-    const [regionObj, setRegionObj] = useState(null);
-    const [degreeObj, setDegreeObj] = useState(null);
-    const [fieldObj, setFieldObj] = useState(null);
-    const [paymentObj, setPaymentObj] = useState(null);
-
-    const [cityName, setCityName] = useState("");
-    const [isCertificateBefore, setIsCertificateBefore] = useState(false);
-    const [age, setAge] = useState(0);
-    const [isAccepted, setIsAccepted] = useState(null);
-    const [status, setStatus] = useState(0);
-    const [degreeDoc, setDegreeDoc] = useState([]);
-    const [introDoc, setIntroDoc] = useState([]);
-    const [certificateDoc, setCertificateDoc] = useState([]);
-
-
-    //? Status
-    const [isNewRegister, setIsNewRegister] = useState(false);
-    const [isGeneralCondition, setIsGeneralCondition] = useState(false);
-    const [isPersonalInformation, setIsPersonalInformation] = useState(false);
-    const [isUploadedDocument, setIsUploadedDocument] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [notCompletePersonalInformation, setNotCompletePersonalInformatio] = useState(true);
-    const [error, setError] = useState([]);
-    const [beforeRegistered, setBeforeRegistered] = useState(false);
-    const [seeHistory, setSeeHistory] = useState(false);
-
-    //? Provinces , Region , Field , Degree
-    const [provinces, setProvinces] = useState([]);
-    const [regions, setRegions] = useState([]);
-    const [fields, setFields] = useState([]);
-    const [degrees, setDegrees] = useState([]);
-
 
 
     const [isLoadingForModalbtn, setIsLoadingForModalbtn] = useState(false);
@@ -158,7 +118,6 @@ export default function LecturerManager({ setShowDetailLecturer,
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
     const [isLoadingLecturerList, setIsLoadingLecturerList] = useState(false);
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
     const [limited, setLimited] = useState(1);
     const [description, setDescription] = useState("");
     const [isConfirm, setIsConfirm] = useState(0);
@@ -345,6 +304,7 @@ export default function LecturerManager({ setShowDetailLecturer,
                             <Tooltip content="مشاهده جزییات">
                                 <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                                     <EyeIcon onClick={(e) => {
+                                        console.log(currentItem)
                                         e.preventDefault();
                                         setCurrentLecturer(currentItem)
                                         setShowDetailLecturer(prev => !prev)
@@ -379,6 +339,23 @@ export default function LecturerManager({ setShowDetailLecturer,
                                     }} />
                                 </span>
                             </Tooltip>
+                            {currentItem.testCenter ?
+                                <Tooltip content="مرکز آزمون">
+                                    <span className=" text-danger cursor-pointer active:opacity-50" >
+                                        <FaBuilding className={currentItem.testCenter.gender == 1 ? 'text-purple-500' : 'text-rose-500'} onClick={(e) => {
+                                            e.preventDefault();
+                                            setCurrentLecturer(currentItem)
+                                            setActionType(5)
+                                            // ? show detail test center
+                                            onOpen();
+
+
+                                        }} />
+                                    </span>
+                                </Tooltip> :
+                                null
+
+                            }
                         </div>
 
                     </div>
@@ -601,46 +578,88 @@ export default function LecturerManager({ setShowDetailLecturer,
 
 
 
-            <Modal
-                backdrop="opaque"
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                radius="lg"
-                classNames={{
-                    body: "py-6 bg-white",
-                    backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-                    base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-                    header: " border-[#292f46]  bg-red-600 text-white",
-                    footer: " border-[#292f46] bg-white",
-                    closeButton: "hover:bg-white/5 active:bg-white/10",
-                }}
-            >
-                <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalHeader className="flex flex-col gap-1  text-md">
-                                حذف ثبت نام
-                            </ModalHeader>
-                            <ModalBody className="text-black">
-                                {`از حذف ثبت نام ${currentLecturer.name} اطمینان دارید؟`}
+            {actionType == 3 ?
+                <Modal
+                    backdrop="opaque"
+                    isOpen={isOpen}
+                    onOpenChange={onOpenChange}
+                    radius="lg"
+                    classNames={{
+                        body: "py-6 bg-white",
+                        backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                        base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
+                        header: " border-[#292f46]  bg-red-600 text-white",
+                        footer: " border-[#292f46] bg-white",
+                        closeButton: "hover:bg-white/5 active:bg-white/10",
+                    }}
+                >
+                    <ModalContent>
+                        {(onClose) => (
+                            <>
+                                <ModalHeader className="flex flex-col gap-1  text-md">
+                                    حذف ثبت نام
+                                </ModalHeader>
+                                <ModalBody className="text-black">
+                                    {`از حذف ثبت نام ${currentLecturer.name} اطمینان دارید؟`}
 
-                            </ModalBody>
-                            <ModalFooter >
-                                <Button color="foreground" variant="bordered" onPress={onClose}>
-                                    بستن
-                                </Button>
-                                <Button isLoading={isLoadingForDenyModalbtn} color="danger" variant="shadow" onClick={() => onDeleteLecturerItem(currentLecturer, lecturerList)}>
+                                </ModalBody>
+                                <ModalFooter >
+                                    <Button color="foreground" variant="bordered" onPress={onClose}>
+                                        بستن
+                                    </Button>
+                                    <Button isLoading={isLoadingForDenyModalbtn} color="danger" variant="shadow" onClick={() => onDeleteLecturerItem(currentLecturer, lecturerList)}>
 
-                                    حذف
-                                </Button>
+                                        حذف
+                                    </Button>
 
-                            </ModalFooter>
-                        </>
-                    )}
-                </ModalContent>
-            </Modal >
+                                </ModalFooter>
+                            </>
+                        )}
+                    </ModalContent>
+                </Modal > :
+                actionType == 5 ?
+                    <Modal
+                        backdrop="opaque"
+                        isOpen={isOpen}
+                        onOpenChange={onOpenChange}
+                        radius="lg"
+                        classNames={{
+                            body: "py-6 bg-white",
+                            backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                            base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
+                            header: " border-[#292f46]  bg-purple-600 text-white",
+                            footer: " border-[#292f46] bg-white",
+                            closeButton: "hover:bg-white/5 active:bg-white/10",
+                        }}
+                    >
+                        <ModalContent>
+                            {(onClose) => (
+                                <>
+                                    <ModalHeader className="flex flex-col gap-1  text-md">
+                                        {`مرکز آزمون ${currentLecturer.testCenter.name}`}
+                                    </ModalHeader>
+                                    <ModalBody className="text-black">
+                                        <p>آدرس : {currentLecturer.testCenter.address}</p>
+                                        <p>جنسیت : {currentLecturer.testCenter.gender == 1 ? "آقایان" : "خانم "}</p>
+                                        <p>شماره تماس : {currentLecturer.testCenter.phone}</p>
+                                    </ModalBody>
+                                    <ModalFooter >
+                                        <Button color="foreground" variant="bordered" onPress={onClose}>
+                                            بستن
+                                        </Button>
 
 
+                                    </ModalFooter>
+                                </>
+                            )}
+                        </ModalContent>
+                    </Modal >
+
+                    : null
+
+
+
+            }
 
 
         </>

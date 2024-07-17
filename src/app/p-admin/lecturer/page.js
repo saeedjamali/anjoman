@@ -11,6 +11,8 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import "react-multi-date-picker/styles/colors/teal.css";
 import transition from "react-element-popper/animations/transition";
+import { FcEnteringHeavenAlive } from "react-icons/fc";
+import { FaBuildingUser } from "react-icons/fa6";
 
 import {
   Autocomplete,
@@ -26,12 +28,6 @@ import {
   Image,
   Radio,
   RadioGroup,
-} from "@nextui-org/react";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
   Button,
   Input,
   Modal,
@@ -40,12 +36,6 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-  Spinner,
-  Table,
-  TableRow,
-  TableCell,
-  TableColumn,
-  Tooltip,
 } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
@@ -84,6 +74,8 @@ import { valiadtePrsCode } from "@/utils/auth";
 import CountUp from "react-countup";
 
 function LecturerPage() {
+  const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
+  const [selected, setSelected] = React.useState(0); //? test center selected
   const { admin, user } = useUserProvider();
   const [isLoading, setIsLoading] = useState(false);
   const [lecturerList, setLecturerList] = useState([]);
@@ -134,6 +126,7 @@ function LecturerPage() {
   const [regions, setRegions] = useState([]);
   const [fields, setFields] = useState([]);
   const [degrees, setDegrees] = useState([]);
+  const [testCenter, setTestCenter] = useState([]);
   const [error, setError] = useState([]);
 
   //? Counter
@@ -156,6 +149,7 @@ function LecturerPage() {
     getProvinces();
     getFields();
     getDegrees();
+    getTestCenter();
   }, []);
 
   useEffect(() => {
@@ -238,6 +232,21 @@ function LecturerPage() {
 
       if (data.status == 200) {
         setDegrees(data.degrees);
+      } else {
+        toast.info(data.message);
+      }
+    } catch (error) {
+      console.error("خطای ناشناخته");
+    }
+  };
+
+  const getTestCenter = async () => {
+    try {
+      const response = await fetch(`/api/base/testcenter/getall/${1265}`);
+      const data = await response.json();
+
+      if (data.status == 200) {
+        setTestCenter(data.testCenter);
       } else {
         toast.info(data.message);
       }
@@ -434,6 +443,9 @@ function LecturerPage() {
           : "",
         retrivalRefNo: lc.paymentId?.retrivalRefNo,
         systemTraceNo: lc.paymentId?.systemTraceNo,
+        testcenter: lc.testCenter?.name,
+        tcaddress: lc.testCenter?.address,
+        tcphone: lc.testCenter?.phone,
       };
     });
 
@@ -467,6 +479,9 @@ function LecturerPage() {
         "تاریخ پرداخت",
         "شماره مرجع تراکنش",
         "شماره پیگیری",
+        "نام مرکز آزمون",
+        "آدرس مرکز آزمون",
+        "تماس مرکز آزمون",
       ],
     ];
 
@@ -503,6 +518,55 @@ function LecturerPage() {
       setAgeText("");
     }
   }
+
+  const setTestCenterToLecturer = (selectedItems) => {
+    if (selectedItems.size == 0) {
+      toast.info("حداقل یک مورد را انتخاب نمایید");
+      return;
+    }
+    const isUsedTestCenter = testCenter.map((item) => {
+      return {
+        ...item,
+        isUsed: lecturerList.filter((lc) => lc.testCenter?._id == item?._id)
+          .length,
+      };
+    });
+    setTestCenter(isUsedTestCenter);
+    onOpen();
+    // toast.success("ایول");
+    // console.log(isUsedTestCenter);
+  };
+
+  const mapTestCenterToLecturer = async () => {
+    if (selected == 0) {
+      toast.info("یکی از مراکز را انتخاب نمایید");
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/admin/lecturer/addtotestcenter", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lecturers: [...selectedKeys],
+          testCenter: selected,
+        }),
+      });
+      const data = await response.json();
+      if (data.status == 201) {
+        toast.success("اطلاعات مرکز آزمون پرسنل بروز شد");
+        setIsLoading(false);
+        onClose();
+        location.reload();
+        return;
+      }
+      toast.error(data.message);
+    } catch (error) {
+      console.log("Error in catch mapTestCenterToLecturer --->", error);
+    }
+  };
 
   return (
     <>
@@ -563,10 +627,16 @@ function LecturerPage() {
           <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
             <span>لیست ثبت نام مدرسین آموزش خانواده</span>
 
-            <div className="flex-center gap-8">
+            <div className="flex-center gap-6">
               {/* <span className="text-[12px]">
                                 در حال بررسی ({countCurrentAction}) مورد
                             </span> */}
+              <span
+                className="cursor-pointer text-[20px]"
+                onClick={() => setTestCenterToLecturer(selectedKeys)}
+              >
+                <FaBuildingUser className="text-slate-900" />
+              </span>
               <span
                 className="cursor-pointer"
                 onClick={() => exportToExcel(lecturerList)}
@@ -583,6 +653,9 @@ function LecturerPage() {
             lecturerList={lecturerList}
             setLecturerList={setLecturerList}
             setActionType={setActionType}
+            actionType={actionType}
+            selectedKeys={selectedKeys}
+            setSelectedKeys={setSelectedKeys}
           />
         </div>
 
@@ -1350,6 +1423,63 @@ function LecturerPage() {
           </div>
         )}
       </div>
+      <Modal
+        backdrop="opaque"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        radius="lg"
+        classNames={{
+          body: "py-6 bg-white",
+          backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+          base: "border-[#292f46] bg-slate-500 text-black",
+          header: " border-[#292f46] text-white  bg-primary_color ",
+          footer: " border-[#292f46] bg-white",
+          closeButton: "hover:bg-white/5 active:bg-white/10 ",
+        }}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col justify-between items-start ">
+                انتخاب مرکز آزمون
+              </ModalHeader>
+              <ModalBody>
+                <RadioGroup
+                  label="مرکز آزمون مورد نظر را انتخاب نمایید"
+                  color="warning"
+                  value={selected}
+                  onValueChange={setSelected}
+                >
+                  {testCenter?.map((item) => {
+                    return (
+                      <Radio
+                        value={item._id}
+                        description={`${item.address} - ظرفیت ${item.capacity} (${item?.isUsed})`}
+                      >
+                        {item.name} -{" "}
+                        {item.gender == 1 ? " آقایان " : " خانم ها"}
+                      </Radio>
+                    );
+                  })}
+                </RadioGroup>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="foreground" variant="light" onPress={onClose}>
+                  بستن
+                </Button>
+                <Button
+                  isLoading={isLoading}
+                  onClick={mapTestCenterToLecturer}
+                  color="success"
+                  variant="light"
+                >
+                  اختصاص مرکز
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </>
   );
 }

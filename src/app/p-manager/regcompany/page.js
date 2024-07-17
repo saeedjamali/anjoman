@@ -88,7 +88,7 @@ function RegCompany() {
             toast.error(data.message)
 
         } catch (error) {
-            console.log("Error in catch map company to reg --->", error)
+            console.log("Error in catch map TEST CENTER to LECTURER --->", error)
             toast.error("خطای ناشناخته")
 
         }

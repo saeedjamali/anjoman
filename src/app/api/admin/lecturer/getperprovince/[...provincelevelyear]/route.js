@@ -38,6 +38,9 @@ export async function GET(req, { params }) {
           {
             path: "paymentId",
           },
+          {
+            path: "testCenter",
+          },
         ]);
     }
     if (level == 3) {
@@ -49,6 +52,9 @@ export async function GET(req, { params }) {
           {
             path: "paymentId",
           },
+          {
+            path: "testCenter",
+          },
         ]);
     }
     if (level == 999) {
@@ -59,6 +65,9 @@ export async function GET(req, { params }) {
         .populate([
           {
             path: "paymentId",
+          },
+          {
+            path: "testCenter",
           },
         ]);
     }

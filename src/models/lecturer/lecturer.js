@@ -133,6 +133,11 @@ const schema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    testCenter: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: "TestCenter",
+    },
     status: {
       //? status == 1  ثبت نام شده
       //? status == 2  قبولی در مضاحبه

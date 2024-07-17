@@ -1,0 +1,237 @@
+"filename", "language", "Properties", "JSON with Comments", "Makefile", "Docker", "YAML", "Shell Script", "JavaScript", "CSS", "JSON", "Markdown", "JavaScript JSX", "XML", "comment", "blank", "total"
+"d:\FrontHooks\Next-SabzLearn\anjoman\.env", "Properties", 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 12
+"d:\FrontHooks\Next-SabzLearn\anjoman\Dockerfile", "Docker", 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 11
+"d:\FrontHooks\Next-SabzLearn\anjoman\Makefile", "Makefile", 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3
+"d:\FrontHooks\Next-SabzLearn\anjoman\README.md", "Markdown", 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 14, 37
+"d:\FrontHooks\Next-SabzLearn\anjoman\docker-compose.yml", "YAML", 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 1, 2, 24
+"d:\FrontHooks\Next-SabzLearn\anjoman\jsconfig.json", "JSON with Comments", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8
+"d:\FrontHooks\Next-SabzLearn\anjoman\next.config.mjs", "JavaScript", 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 25, 5, 70
+"d:\FrontHooks\Next-SabzLearn\anjoman\nginx-default.conf", "Properties", 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 6, 34
+"d:\FrontHooks\Next-SabzLearn\anjoman\package-lock.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 0, 7860, 0, 0, 0, 0, 1, 7861
+"d:\FrontHooks\Next-SabzLearn\anjoman\package.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 0, 1, 62
+"d:\FrontHooks\Next-SabzLearn\anjoman\postcss.config.js", "JavaScript", 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"d:\FrontHooks\Next-SabzLearn\anjoman\postcss.config.mjs", "JavaScript", 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 1, 2, 9
+"d:\FrontHooks\Next-SabzLearn\anjoman\public\images\burst.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 1, 7
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\500.js", "JavaScript", 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 2, 9
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\500.js", "JavaScript", 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 2, 9
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\admins\getadmin\[...levelisactiveprovince]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 4, 8, 50
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\admins\putadmin\[...idlevel]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 0, 1, 5, 59
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\contract\getperregion\[...regionlevelyear]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 68, 0, 0, 0, 0, 0, 1, 7, 76
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\contract\putsubmit\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 8, 11, 67
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\contract\removecontract\[id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 1, 6, 30
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\lecturer\getperprovince\[...provincelevelyear]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 73, 0, 0, 0, 0, 0, 2, 8, 83
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\lecturer\remove\[lecturerid]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 29, 0, 0, 0, 0, 0, 2, 5, 36
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\lecturer\update\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 73, 0, 0, 0, 0, 0, 1, 7, 81
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\modir\getmodirs\[...regionlevel]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 3, 4, 55
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\modir\putmodirs\[id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 70, 0, 0, 0, 0, 0, 4, 11, 85
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\modirunits\getmu\[...regionlevel]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 3, 5, 63
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\modirunits\putmu\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 75, 0, 0, 0, 0, 0, 0, 5, 80
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\modirunits\putunit\[id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 24, 10, 89
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\units\getcountunit\[...regionlevelyear]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 2, 7, 65
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\units\getunits\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 2, 26
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\units\putunits\[id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 0, 3, 11, 73
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\update\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 34, 0, 0, 0, 0, 0, 2, 5, 41
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\users\getusers\[...regionlevel]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 69, 0, 0, 0, 0, 0, 16, 3, 88
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\users\putusers\[...userId]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 1, 7, 46
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\admin\users\resetpass\[id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 0, 5, 42
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\forgot-password\resetpass\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 1, 9, 35
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\forgot-password\sendsms\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 1, 10, 67
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\forgot-password\verifysms\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 1, 8, 41
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\login\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 99, 0, 0, 0, 0, 0, 1, 14, 114
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\logout\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 2, 8
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\me\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 0, 0, 18, 71
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\refresh\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 2, 9, 48
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\register\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 157, 0, 0, 0, 0, 0, 4, 26, 187
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\sms\send\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 0, 1, 10, 64
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\auth\sms\verify\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 1, 8, 41
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\base\degree\getall\[all]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 0, 3, 30
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\base\degree\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 9, 5, 44
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\base\field\getall\[all]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 5, 31
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\base\field\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 9, 4, 40
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\base\province\getall\[all]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 4, 30
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\base\province\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 0, 6, 33
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\base\testcenter\getall\[all]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 3, 29
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\base\testcenter\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 9, 4, 50
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\lecturer\[...phoneyear]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 11, 55
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\lecturer\[phone]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 0, 6, 39
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\lecturer\getimage\[...filename]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 4, 8, 35
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\lecturer\payment\send\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 0, 20, 9, 86
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\lecturer\payment\token\[orderid]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 6, 42
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\lecturer\payment\update\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 2, 6, 44
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\lecturer\payment\verify\[orderid]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 78, 0, 0, 0, 0, 0, 68, 16, 162
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\lecturer\register\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 154, 0, 0, 0, 0, 0, 5, 13, 172
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\lecturer\remove\[lecturerid]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 29, 0, 0, 0, 0, 0, 2, 5, 36
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\admin\getadmin\[...levelisctive]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 4, 4, 41
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\admin\putadmin\[...idlevel]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 1, 5, 55
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\company\addfromexcel\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 0, 0, 0, 8, 69
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\company\getcompany\[year]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 4, 6, 29
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\company\putcompany\[...companyId]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 0, 3, 16, 83
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\pricelist\addpricelistfromexcel\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 60, 0, 0, 0, 0, 0, 0, 7, 67
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\pricelist\getpricelist\[...yeargradegender]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 3, 9, 49
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\pricelist\putpricelist\[...pricelistid]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 63, 0, 0, 0, 0, 0, 3, 16, 82
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\regcompany\addtoregion\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 0, 8, 56
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\regcompany\getall\[year]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 4, 28
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\regcompany\getregbycompanyid\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 2, 16
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\region\addfromexcel\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 0, 0, 4, 61
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\region\getregion\[...id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 1, 3, 26
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\region\putregion\[regionId]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 0, 3, 13, 75
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\unit\addfromexcel\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 70, 0, 0, 0, 0, 0, 0, 7, 77
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\unit\getunit\[...page]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 1, 6, 29
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\unit\putunit\[unitId]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 66, 0, 0, 0, 0, 0, 2, 16, 84
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\users\getusers\[...regionlevel]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 3, 8, 48
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\users\putusers\[...userid]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 1, 7, 46
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\manager\users\resetpas\[id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 0, 5, 42
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modir\addnewunit\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 0, 12, 60
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modir\contract\add\nocontract\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 1, 9, 47
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modir\contract\add\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 111, 0, 0, 0, 0, 0, 40, 14, 165
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modir\contract\getimage\[...filename]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 4, 6, 31
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modir\contract\getperunit\[...unitid]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 42, 0, 0, 0, 0, 0, 3, 6, 51
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modir\contract\removecontract\[id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 1, 7, 31
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modir\pricelist\getpricelist\[...yeargradegender]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 3, 11, 54
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modir\regcompany\getcompanybyregid\[...id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 0, 4, 41
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modir\update\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 2, 7, 34
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modirunit\[...userid]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 10, 5, 47
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\modirunit\update\[...userid]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 52, 0, 0, 0, 0, 0, 13, 7, 72
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\region\[regioncode]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 3, 6, 45
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\region\province\[provincecode]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 4, 7, 47
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 5, 19
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\unit\[...id]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 39, 0, 0, 0, 0, 0, 3, 6, 48
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\user\[...phone]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 4, 5, 57
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\user\getimage\[...filename]\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 4, 6, 37
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\api\user\profile\route.js", "JavaScript", 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 0, 2, 7, 62
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\error.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 3, 39
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\globals.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 128, 0, 0, 0, 0, 20, 43, 191
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\layout.js", "JavaScript", 0, 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 0, 5, 32
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\loading.js", "JavaScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 4, 20
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\not-found.js", "JavaScript", 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 4, 23
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\admin\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 8, 44
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\contract\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 11, 19, 510
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\error.js", "JavaScript", 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 4, 24
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\layout.js", "JavaScript", 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 1, 4, 55
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\lecturer\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 1331, 0, 0, 0, 0, 0, 54, 56, 1441
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\loading.js", "JavaScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 4, 20
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\modirs\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 7, 43
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\modirunits\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 0, 11, 48
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 29, 12, 74
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\units-not\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 6, 42
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-admin\users\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 7, 43
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-lecturer\error.js", "JavaScript", 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 4, 24
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-lecturer\layout.js", "JavaScript", 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 0, 5, 43
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-lecturer\loading.js", "JavaScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 4, 20
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-lecturer\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 7, 31
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-lecturer\payment\send\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 113, 0, 0, 0, 0, 0, 1, 8, 122
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-lecturer\payment\verify\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 28, 0, 0, 0, 0, 0, 1, 8, 37
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\admin\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 8, 44
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\company\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 8, 55
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\error.js", "JavaScript", 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 4, 24
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\layout.js", "JavaScript", 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 1, 2, 59
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\loading.js", "JavaScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 4, 20
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 26, 19, 59
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\pricelist\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 8, 55
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\regcompany\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 119, 0, 0, 0, 0, 0, 3, 21, 143
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\region\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 0, 6, 55
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\school\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 5, 49
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-manager\users\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 0, 0, 7, 44
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-modir\error.js", "JavaScript", 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 4, 24
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-modir\layout.js", "JavaScript", 0, 0, 0, 0, 0, 0, 71, 0, 0, 0, 0, 0, 0, 5, 76
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-modir\loading.js", "JavaScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 4, 20
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-modir\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 184, 0, 0, 0, 0, 0, 30, 20, 234
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-modir\uniform\company\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 1, 3, 15
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-modir\uniform\contract\layout.js", "JavaScript", 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 3, 8
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-modir\uniform\contract\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 1223, 0, 0, 0, 0, 0, 50, 48, 1321
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-parent\company\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 2, 9
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-parent\error.js", "JavaScript", 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 2, 10
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-parent\layout.js", "JavaScript", 0, 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 0, 1, 12, 70
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-parent\loading.js", "JavaScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 4, 20
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-parent\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 26, 19, 57
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\p-parent\school\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 2, 9
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\app\page.js", "JavaScript", 0, 0, 0, 0, 0, 0, 109, 0, 0, 0, 0, 0, 2, 9, 120
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\context\AppProviders.js", "JavaScript", 0, 0, 0, 0, 0, 0, 34, 0, 0, 0, 0, 0, 3, 4, 41
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\context\UserProvider.js", "JavaScript", 0, 0, 0, 0, 0, 0, 54, 0, 0, 0, 0, 0, 0, 8, 62
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\ComboSearch.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 10, 5, 40
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\Footer.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29, 0, 0, 3, 32
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\Map.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 87, 0, 4, 21, 112
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\Navbar.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 185, 0, 2, 19, 206
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\Sidebar.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 138, 0, 5, 18, 161
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\SidebarItem.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 0, 3, 7, 37
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\admin\AdminManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 537, 0, 43, 81, 661
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\company\CompanyManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 711, 0, 25, 80, 816
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\company\ExcelCompanyUploader.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 464, 0, 4, 54, 522
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\contrct\AutoCompleteYear.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 8, 38
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\contrct\ContractList.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 182, 0, 2, 30, 214
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\contrct\ContractManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 615, 0, 23, 87, 725
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\contrct\ImageLoader.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 3, 4, 56
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\contrct\ImageLoaderLecturer.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 3, 4, 56
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\modir\ModirManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 488, 0, 41, 78, 607
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\pricelist\ExcelPriceListUploader.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 461, 0, 4, 56, 521
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\pricelist\PriceListContract.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 273, 0, 5, 36, 314
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\pricelist\PriceListManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 589, 0, 22, 85, 696
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\region\ExcelRegionUploader.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 467, 0, 4, 55, 526
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\region\RegionManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 534, 0, 20, 71, 625
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\swiper\SliderButton.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 4, 19
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\swiper\SwiperModule.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 122, 0, 4, 16, 142
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\swiper\SwiperText.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 108, 0, 10, 18, 136
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\unit\ExcelUnitUploader.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 462, 0, 4, 51, 517
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\unit\ModirUnitAdmin.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 711, 0, 27, 97, 835
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\unit\UnitCounter.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 2, 10
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\unit\UnitManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 652, 0, 20, 69, 741
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\uploader\ImageProfileUploader.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 188, 0, 39, 22, 249
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\uploader\ImageUploader.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 188, 0, 39, 22, 249
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\uploader\UploadHandler.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 199, 0, 18, 42, 259
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\uploader\UploaderS3.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 203, 0, 13, 39, 255
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\user\ImageLoaderCard.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 3, 5, 48
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\user\ImageLoaderProfile.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 3, 5, 48
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\user\UserAdminManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 533, 0, 26, 85, 644
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\module\user\UserManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 535, 0, 25, 83, 643
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\admin\AdminInformation.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 142, 0, 4, 25, 171
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\lecturer\ExamCard.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 73, 0, 1, 13, 87
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\lecturer\Lecturer.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1625, 0, 207, 246, 2078
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\lecturer\LecturerManager.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 545, 0, 24, 81, 650
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\lecturer\PublicCondition.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21, 0, 0, 3, 24
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\login-register\Forgot.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 78, 0, 1, 10, 89
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\login-register\Login.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 171, 0, 8, 22, 201
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\login-register\Register.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 268, 0, 25, 45, 338
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\login-register\ResetPass.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 103, 0, 2, 16, 121
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\login-register\RoleSelection.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 6, 12, 118
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\login-register\Sms.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 108, 0, 3, 14, 125
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\modir\ModirInformation.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 132, 0, 3, 23, 158
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\modir\Notification.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 2, 10, 62
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\components\template\modir\SchoolInformation.jsx", "JavaScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 177, 0, 2, 20, 199
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\data\slider-data.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 0, 1, 38
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\middleware.js", "JavaScript", 0, 0, 0, 0, 0, 0, 29, 0, 0, 0, 0, 0, 25, 13, 67
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\admin\adminRegion.js", "JavaScript", 0, 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 8, 2, 65
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\base\Degree.js", "JavaScript", 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 1, 3, 19
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\base\Field.js", "JavaScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 1, 2, 19
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\base\Otp.js", "JavaScript", 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 5, 30
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\base\Province.js", "JavaScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 1, 3, 20
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\base\Region.js", "JavaScript", 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 6, 5, 51
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\base\TestCenter.js", "JavaScript", 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 3, 3, 41
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\base\Unit.js", "JavaScript", 0, 0, 0, 0, 0, 0, 111, 0, 0, 0, 0, 0, 9, 4, 124
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\base\User.js", "JavaScript", 0, 0, 0, 0, 0, 0, 45, 0, 0, 0, 0, 0, 3, 3, 51
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\company\company.js", "JavaScript", 0, 0, 0, 0, 0, 0, 63, 0, 0, 0, 0, 0, 9, 6, 78
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\company\pricelist.js", "JavaScript", 0, 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 0, 8, 5, 72
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\company\regcompany.js", "JavaScript", 0, 0, 0, 0, 0, 0, 29, 0, 0, 0, 0, 0, 0, 5, 34
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\lecturer\lecturer.js", "JavaScript", 0, 0, 0, 0, 0, 0, 138, 0, 0, 0, 0, 0, 24, 6, 168
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\modiran\contract.js", "JavaScript", 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 9, 4, 94
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\modiran\modir.js", "JavaScript", 0, 0, 0, 0, 0, 0, 42, 0, 0, 0, 0, 0, 8, 2, 52
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\modiran\modirUnit.js", "JavaScript", 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 4, 7, 49
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\payment\payment.js", "JavaScript", 0, 0, 0, 0, 0, 0, 34, 0, 0, 0, 0, 0, 0, 3, 37
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\models\payment\token.js", "JavaScript", 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 5, 27
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\style\404.module.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 85, 0, 0, 0, 0, 0, 9, 94
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\style\fonts.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 97, 0, 0, 0, 0, 6, 20, 123
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\style\style.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 177, 0, 0, 0, 0, 3, 35, 215
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\ScrollToTop.js", "JavaScript", 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 8, 38
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\aos.js", "JavaScript", 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 15
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\auth.js", "JavaScript", 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 22, 22, 144
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\authenticateMe.js", "JavaScript", 0, 0, 0, 0, 0, 0, 479, 0, 0, 0, 0, 0, 49, 78, 606
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\constants.js", "JavaScript", 0, 0, 0, 0, 0, 0, 73, 0, 0, 0, 0, 0, 41, 7, 121
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\convertnumtopersian.js", "JavaScript", 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 10, 18, 63
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\db.js", "JavaScript", 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 7, 32
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\icon.js", "JavaScript", 0, 0, 0, 0, 0, 0, 389, 0, 0, 0, 0, 0, 0, 16, 405
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\random.js", "JavaScript", 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\resetPassword.js", "JavaScript", 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 6, 30
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\tripleSwitch.js", "JavaScript", 0, 0, 0, 0, 0, 0, 126, 0, 0, 0, 0, 0, 1, 12, 139
+"d:\FrontHooks\Next-SabzLearn\anjoman\src\utils\uploader.js", "JavaScript", 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 4, 11, 71
+"d:\FrontHooks\Next-SabzLearn\anjoman\tailwind.config.js", "JavaScript", 0, 0, 0, 0, 0, 0, 46, 0, 0, 0, 0, 0, 7, 4, 57
+"d:\FrontHooks\Next-SabzLearn\anjoman\update.sh", "Shell Script", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 2
+"Total", "-", 33, 7, 2, 10, 21, 1, 11008, 487, 7958, 23, 13537, 6, 1649, 3405, 38147

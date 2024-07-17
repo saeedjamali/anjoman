@@ -50,8 +50,26 @@ export const degree = [
   { code: 3, name: "سطح سه حوزه" },
   { code: 4, name: "سطح چهار حوزه" },
 ];
-
-
+export const testCenter = [
+  {
+    code: 1,
+    gender: 1, //?Male
+    type: "lecturer",
+    name: "علامه جعفری",
+    address: "مشهد، بلوار وکیل آباد ، صدف و بعد از میدان معلم",
+    phone: "05138769876",
+    capacity: 200,
+  },
+  {
+    code: 2,
+    gender: 2, //?FeMale
+    type: "lecturer",
+    name: "بعثت",
+    address: "مشهد، رضاشهر ، خاقانی 12",
+    phone: "05137615042",
+    capacity: 200,
+  },
+];
 
 ///?استان ها ==> در قسمت مدرسین آموزش خانواده
 // ? with web api
@@ -90,11 +108,7 @@ export const degree = [
 //   { code: 58, name: "کردستان" },
 //   { code: 60, name: "سمنان" },
 // ];
-export const province = [
-  { code: 16, name: "خراسان رضوی" }
-
-];
-
+export const province = [{ code: 16, name: "خراسان رضوی" }];
 
 export const generalCondition = [
   "مستخدم(رسمی ، آزمایشی ، پیمانی) بازنشسته یا شاغل آموزش و پرورش و یا اساتید رسمی دانشگاه های دولتی و غیر دولتی و يا حوزه علميه",
@@ -102,8 +116,5 @@ export const generalCondition = [
   "داشتن حداقل 30 سال سن",
   "تاهل",
   "نداشتن سابقه محکومیت قضایی و محرومیت اجتماعی",
-  "برخورداری از سلامت جسم و روان و داشتن قدرت بیان"
-
-
-
-]
+  "برخورداری از سلامت جسم و روان و داشتن قدرت بیان",
+];
