@@ -563,8 +563,10 @@ function LecturerPage() {
         return;
       }
       toast.error(data.message);
+      setIsLoading(false);
     } catch (error) {
       console.log("Error in catch mapTestCenterToLecturer --->", error);
+      setIsLoading(false);
     }
   };
 
@@ -1461,6 +1463,9 @@ function LecturerPage() {
                       </Radio>
                     );
                   })}
+                  <Radio value={null} description={"تعیین نشده است"}>
+                    بدون مرکز
+                  </Radio>
                 </RadioGroup>
               </ModalBody>
               <ModalFooter>

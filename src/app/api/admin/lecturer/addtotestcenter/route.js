@@ -10,6 +10,7 @@ export async function POST(req) {
     return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
   }
   let { lecturers, testCenter } = await req.json();
+  console.log("lc ln----------->", lecturers.length);
   let allLecturer = lecturers[0] == "a" ? true : false;
   try {
     const { isConnected, message } = await connectToDB();
@@ -18,27 +19,34 @@ export async function POST(req) {
     }
 
     if (allLecturer) {
-        console.log("Yes")
-      await Promise.all(
-        await lecturers.map(async (lc) => {
-          const lecturerUpdated = await lecturerModel.findOneAndUpdate({
-            $set: {
-              testCenter,
-            },
+        return Response.json({
+            message: "برای جلوگیری از بروز خطا،امکان انتخاب  کل موارد غیر فعال می باشد.",
+            status: 401,
           });
-        })
-      );
-      return Response.json({
-        message: "اطلاعات مرکز آزمون کل افراد بروز شد",
-        status: 201,
-      });
+    //   console.log("Yes");
+    //   await Promise.all(
+    //     await lecturers.map(async (lc) => {
+    //       const lecturerUpdated = await lecturerModel.findOneAndUpdate(
+    //         { status: 1 },
+    //         {
+    //           $set: {
+    //             testCenter,
+    //           },
+    //         }
+    //       );
+    //     })
+    //   );
+    //   return Response.json({
+    //     message: "اطلاعات مرکز آزمون کل افراد بروز شد",
+    //     status: 201,
+    //   });
     }
 
     let lecturerUpdated = {};
     await Promise.all(
       await lecturers.map(async (lc) => {
         lecturerUpdated = await lecturerModel.findOneAndUpdate(
-          { _id: lc },
+          { $and: [{ _id: lc }, { status: 1 }] },
           {
             $set: {
               testCenter,
