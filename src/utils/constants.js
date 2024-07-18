@@ -55,18 +55,28 @@ export const testCenter = [
     code: 1,
     gender: 1, //?Male
     type: "lecturer",
-    name: "علامه جعفری",
-    address: "مشهد، بلوار وکیل آباد ، صدف و بعد از میدان معلم",
-    phone: "05138769876",
-    capacity: 200,
+    name: "دبیرستان دکتر علی شریعتی",
+    address:
+      "مشهد، ابتدای خیابان امام خمینی، جنب اداره کل آموزش و پرورش استان خراسان رضوی ",
+    phone: "ندارد",
+    capacity: 370,
   },
   {
     code: 2,
     gender: 2, //?FeMale
     type: "lecturer",
-    name: "بعثت",
-    address: "مشهد، رضاشهر ، خاقانی 12",
-    phone: "05137615042",
+    name: "دبیرستان فرزانگان یک",
+    address: "مشهد، بلوار شهید صادقی، صادقی۲۷",
+    phone: "ندارد",
+    capacity: 200,
+  },
+  {
+    code: 3,
+    gender: 2, //?FeMale
+    type: "lecturer",
+    name: "دبیرستان شاهد ایثارگران",
+    address: "مشهد ، چهارراه ابوطالب، پشت بیمارستان خاتم الانبیاء",
+    phone: "ندارد",
     capacity: 200,
   },
 ];

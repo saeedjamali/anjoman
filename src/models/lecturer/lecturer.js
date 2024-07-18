@@ -5,6 +5,7 @@ import { provinceSchema } from "@/models/base/Province";
 import { regionSchema } from "@/models/base/Region";
 import { fieldSchema } from "@/models/base/Field";
 import { degreeSchema } from "@/models/base/Degree";
+import { testCenterSchema } from "@/models/base/TestCenter";
 
 const schema = mongoose.Schema(
   {
@@ -16,6 +17,11 @@ const schema = mongoose.Schema(
       type: Number,
       required: false,
       ref: "Payment",
+    },
+    seatCode: {
+      //? شماره صندلی یا شماره داوطلبی
+      type: Number,
+      required: false,
     },
     paymentId: {
       type: mongoose.Types.ObjectId,

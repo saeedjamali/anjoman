@@ -28,7 +28,7 @@ function ImageLoaderCard({ imageUrl, code }) {
         <div>
             <div
                 // key={index}
-                className="relative flex-center w-12 h-18 rounded-sm"
+                className="relative flex-center w-16 h-20 rounded-sm"
             >
                 <img
                     src={image}

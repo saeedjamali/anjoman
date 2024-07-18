@@ -446,6 +446,7 @@ function LecturerPage() {
         testcenter: lc.testCenter?.name,
         tcaddress: lc.testCenter?.address,
         tcphone: lc.testCenter?.phone,
+        seatCode: lc?.seatCode,
       };
     });
 
@@ -482,6 +483,7 @@ function LecturerPage() {
         "نام مرکز آزمون",
         "آدرس مرکز آزمون",
         "تماس مرکز آزمون",
+        "شماره صندلی",
       ],
     ];
 
@@ -1451,15 +1453,23 @@ function LecturerPage() {
                   color="warning"
                   value={selected}
                   onValueChange={setSelected}
+                  className="text-[14px]"
                 >
                   {testCenter?.map((item) => {
                     return (
                       <Radio
+                        className="mt-2"
                         value={item._id}
                         description={`${item.address} - ظرفیت ${item.capacity} (${item?.isUsed})`}
                       >
-                        {item.name} -{" "}
-                        {item.gender == 1 ? " آقایان " : " خانم ها"}
+                        <span
+                          className={
+                            item.gender == 1 ? " text-blue-500" : "text-red-500"
+                          }
+                        >
+                          {item.name} -{" "}
+                          {item.gender == 1 ? " آقایان " : " خانم ها"}
+                        </span>
                       </Radio>
                     );
                   })}

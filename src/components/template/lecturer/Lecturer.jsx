@@ -37,6 +37,7 @@ import ImageLoader from '@/components/module/contrct/ImageLoader';
 import ImageLoaderLecturer from '@/components/module/contrct/ImageLoaderLecturer';
 import { useAppProvider } from '@/components/context/AppProviders';
 import ExamCard from './ExamCard';
+import { useReactToPrint } from 'react-to-print';
 
 const maxFileSize = 300000; //100KB
 const acceptType = "jpg";
@@ -106,6 +107,8 @@ function LectureInformation() {
     const [amount, setAmount] = useState(2500000);
     // const [amount, setAmount] = useState(10000);
     const [bill, setBill] = useState(null)
+    const [testCenter, setTestCenter] = useState(null)
+    const [showExamCard, setShowExamCard] = useState(false)
     // const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
 
@@ -263,6 +266,7 @@ function LectureInformation() {
                 if (data.status == 200) {
                     setHistory(data.lectureFound);
                     setBill(data?.paymentFounded)
+                    setTestCenter(data?.testCenterFounded)
                     setBeforeRegistered(true)
                     // setCurrentYearHistory([...data.lectureFound]?.filter(item => item.year == year));
                 } else {
@@ -688,7 +692,10 @@ function LectureInformation() {
             setShowArrow(true)
             return
         }
-        toast.success("ایول بریم واسه چاپ")
+        // setActionType(6);
+        // onOpen();
+        setShowExamCard(prev => !prev)
+        // toast.success("ایول بریم واسه چاپ")
     }
     return (
         <div >
@@ -927,7 +934,7 @@ function LectureInformation() {
                         {/* //? در صورتی که تصویر پروفایل داشته باشه سبز بشه */}
                         <div className='flex-1 text-blue-500 col-span-1 flex items-center justify-start h-8'>
                             <span className='text-green-500 ml-2'>
-                                {history.status == 1 ?
+                                {(history.status == 1) ?
                                     <IoCheckmarkDoneCircleSharp className='text-[16px]' />
                                     :
                                     <IoCheckmarkDoneCircleOutline className='text-[16px]' />
@@ -940,19 +947,37 @@ function LectureInformation() {
                                 دریافت کارت شرکت در آزمون
                             </span>
                         </div>
-                        <div className='col-span-1 flex items-center justify-end  h-8'>
-                            {
-                                beforeRegistered && history.status == 1 &&
-                                <Button className='bg-green-500 text-white text-[12px] h-auto py-2 ' onClick={cardHandler}>دریافت کارت</Button>
-                            }
+                        <div>
+                            <div className='col-span-1 flex items-center justify-end  h-8'>
+                                {
+                                    beforeRegistered && history.status == 1 && history.payment == 2 ?
+                                        <Button Button className='bg-green-500 text-white text-[12px] h-auto py-2 ' onClick={cardHandler}>دریافت کارت</Button> :
+                                        beforeRegistered && history.status == 1 && history.payment == 1 ?
+                                            <span className='text-green-500'>
+                                                عدم نیاز به حضور در آزمون
+                                            </span> :
+                                            beforeRegistered && history.status == 4 && history.payment == 2 ?
+                                                <span className='text-red-500'>
+                                                    در انتظار پرداخت وجه
+                                                </span> :
+                                                <span className='text-gray-500'>
+                                                    نامشخص
+                                                </span>
+
+                                }
+                            </div>
                         </div>
                     </div>
-                    <Divider className="my-2" />
-                    <ExamCard image={user?.profile[0]} lecturer={history} region={regionObj?.regionName} />
+
+                    {showExamCard &&
+
+                        < ExamCard image={user?.profile[0]} lecturer={history} region={regionObj?.regionName} />
+                    }
                 </div>
 
             </div>
-            {(seeHistory || isNewRegister) &&
+            {
+                (seeHistory || isNewRegister) &&
                 <div className='w-full border-2 border-slate-100 mt-2 rounded-md'>
                     <div className='flex items-center  bg-slate-100 p-2' >
                         {!beforeRegistered ?
@@ -1813,7 +1838,8 @@ function LectureInformation() {
 
                             </div>}
                     </div>
-                </div>}
+                </div>
+            }
 
             {
                 //? 1 : submit  2: payment
@@ -2068,6 +2094,59 @@ function LectureInformation() {
                                             )}
                                         </ModalContent>
                                     </Modal> : null
+                // actionType == 6 ? //show print card
+                //     <Modal
+                //         size='2xl'
+                //         backdrop="opaque"
+                //         isOpen={isOpen}
+                //         onOpenChange={onOpenChange}
+                //         radius="lg"
+                //         classNames={{
+                //             body: "py-6 bg-white",
+                //             backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                //             base: "border-[#292f46] bg-slate-500 text-black",
+                //             header: " border-[#292f46] text-white  bg-primary_color ",
+                //             footer: " border-[#292f46] bg-white",
+                //             // closeButton: "hover:bg-white/5 active:bg-white/10 ",
+                //         }}
+                //     >
+                //         <ModalContent>
+                //             {(onClose) => (
+                //                 <>
+                //                     {/* <ModalHeader className="flex flex-col justify-between items-start ">
+                //                 صورتحساب پرداخت شما
+                //             </ModalHeader> */}
+                //                     <ModalBody >
+                //                         <Card >
+                //                             <CardHeader className="flex gap-3 bg-blue-500">
+
+                //                                 <div className="flex text-white">
+                //                                     <p className="text-md">کارت ورود به جلسه آزمون</p>
+                //                                 </div>
+                //                             </CardHeader>
+                //                             <Divider />
+                //                             <CardBody className='w-full gap-y-2 text-[12px] md:text-[14px] '>
+
+                //                                 <div className='p-2 border-slate-700 border-2 rounded-md'>
+                //                                     {/* <Divider className="my-2" /> */}
+                //                                     <ExamCard image={user?.profile[0]} lecturer={history} region={regionObj?.regionName} />
+
+                //                                 </div>
+                //                             </CardBody>
+
+                //                             <CardFooter className='flex items-end justify-center'>
+                //                                 <Button color="foreground" variant="light" onPress={onClose}>
+                //                                     بستن
+                //                                 </Button>
+                //                                 <Button Button className='bg-blue-500 text-white text-[12px] h-auto py-2 ' onClick={cardHandler}>چاپ کارت</Button>
+                //                             </CardFooter>
+                //                         </Card>
+                //                     </ModalBody>
+
+                //                 </>
+                //             )}
+                //         </ModalContent>
+                //     </Modal> : null
             }
 
 
