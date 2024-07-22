@@ -389,6 +389,10 @@ function LectureInformation() {
     }
 
     const submitHandler = () => {
+
+        toast.info("زمان ثبت نام مدرسین آموزش خانواده به اتمام رسیده است.")
+        return
+
         setIsLoading(true);
         if (beforeRegistered) {
             toast.info("شما قبلا ثبت نام نموده اید، از قسمت تاریخچه امکان مشاهده سوابق ثبت نام وجود دارد ")

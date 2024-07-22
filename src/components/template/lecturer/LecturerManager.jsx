@@ -481,7 +481,7 @@ export default function LecturerManager({ setShowDetailLecturer,
                         >
                             <option value="5">5</option>
                             <option value="10">10</option>
-                            <option value="50">50</option>
+                            <option value="200">200</option>
                         </select>
                     </label>
                 </div>

@@ -10,7 +10,7 @@ export async function POST(req) {
     return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
   }
   let { lecturers, testCenter } = await req.json();
-  console.log("testCenter----------->", testCenter);
+  // console.log("testCenter----------->", testCenter);
   let allLecturer = lecturers[0] == "a" ? true : false;
 
   try {
@@ -55,8 +55,8 @@ export async function POST(req) {
         maxSeatCode[0]?.seatCode == 0 || !maxSeatCode[0]?.seatCode
           ? 10001
           : maxSeatCode[0]?.seatCode + 1;
-      console.log("maxSeatCode--->", maxSeatCode[0]?.seatCode);
-      console.log("seatNumber--->", seatNumber);
+      // console.log("maxSeatCode--->", maxSeatCode[0]?.seatCode);
+      // console.log("seatNumber--->", seatNumber);
       await Promise.all(
         await lecturers.map(async (lc, index) => {
           lecturerUpdated = await lecturerModel.findOneAndUpdate(
