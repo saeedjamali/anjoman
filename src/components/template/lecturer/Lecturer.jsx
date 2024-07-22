@@ -637,8 +637,14 @@ function LectureInformation() {
 
 
     const moveToPaymentTest = () => {
-        setActionType(4)
-        onOpen()
+
+        toast.info("با توجه به اتمام مهلت ثبت نام، امکان ادامه فرایند میسر نمی باشد.")
+        return true;
+        // ? Active Payment
+        // setActionType(4)
+        // onOpen()
+
+
         // toast.info("در حال حاضر درگاه غیرفعال می باشد ، زمان فعالسازي درگاه از طریق پيامك اطلاعرساني خواهد شد")
     }
     const moveToPayment = () => {
