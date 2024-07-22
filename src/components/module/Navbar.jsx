@@ -19,7 +19,7 @@ import {
 } from "@nextui-org/react";
 import ImageProfileUploader from './uploader/ImageProfileUploader';
 import ImageLoaderProfile from './user/ImageLoaderProfile';
-const maxFileSize = 300000; //100KB
+const maxFileSize = 500000; //100KB
 const acceptType = "jpg";
 
 function Navbar() {
@@ -159,7 +159,7 @@ function Navbar() {
                             <ModalBody >
 
                                 <p>
-                                    حجم تصویر حداکثر 300 کیلوبایت باشد.
+                                    حجم تصویر حداکثر 500 کیلوبایت باشد.
                                 </p>
                                 <p>
                                     پسوند فایل Jpg باشد.
