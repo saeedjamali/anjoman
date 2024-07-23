@@ -136,8 +136,8 @@ function resultPage() {
         pauseOnHover
         theme="light"
       />
-      <div className="w-full h-screen flex-center bg-gradient-to-b from-primary_color via-primary_color to-secondary_color ">
-        <Card className="w-[400px] m-4 md:m-0 md:w-auto md:min-w-[600px]">
+      <div className="-z-20 w-full h-screen flex-center bg-gradient-to-b from-primary_color via-primary_color to-secondary_color ">
+        <Card className="z-10 w-[400px] m-4 md:m-0 md:w-auto md:min-w-[600px]">
           <CardHeader className="flex gap-3 bg-blue-500">
             <div className="flex text-white">
               <p className="text-md">سرویس اعلام نتایج دانش آموزی</p>
@@ -169,12 +169,13 @@ function resultPage() {
               className="bg-green-600 text-white"
               isLoading={isLoading}
               onClick={handleSubmit}
+              onSubmit={handleSubmit}
             >
               مشاهده نتیجه آزمون
             </Button>
           </CardFooter>
         </Card>
-        <p className="  text-white text-[12px] absolute bottom-4   shadow-sm text-center">
+        <p className="z-0 text-white text-[10px] absolute bottom-4   shadow-sm text-center">
           مالکیت مادی و معنوی این سایت متعلق به اداره کل آموزش و پرورش خراسان
           رضوی می باشد.
         </p>
