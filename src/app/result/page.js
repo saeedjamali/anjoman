@@ -65,7 +65,8 @@ function resultPage() {
                   animate__faster
                 `,
             },
-            confirmButtonText: "باشه",
+            confirmButtonText: "مشاهده شد",
+            showCloseButton: true,
           });
         } else if (result.result == 1) {
           Swal.fire({
@@ -73,8 +74,8 @@ function resultPage() {
             title: "پذیرفته شده اید",
             html: `دانش آموز گرامی ${result.name} ${result.family}  
              شما براي واحد سازماني <b>${result.schoolName} - ${result.regionName} </b>,
-             پذیرفته شده اید
-          `,
+             پذیرفته شده اید. 
+          <b><br> برای ادامه فرایند به اداره آموزش و پرورش ${result.regionName} مراجعه نمایید.<b>`,
             // text: ``,
             showClass: {
               popup: `
@@ -90,7 +91,8 @@ function resultPage() {
                   animate__faster
                 `,
             },
-            confirmButtonText: "باشه",
+            confirmButtonText: "مشاهده شد",
+            showCloseButton: true,
           });
         }
       } else {
@@ -113,13 +115,16 @@ function resultPage() {
                   animate__faster
                 `,
           },
-          confirmButtonText: "باشه",
+          closeButtonAriaLabel: "بستن",
+          confirmButtonText: "مشاهده شد",
           showCloseButton: true,
         });
       }
       setIsLoading(false);
-      console.log("Data is--->", data);
-    } catch (error) {}
+      //   console.log("Data is--->", data);
+    } catch (error) {
+      console.log("error in catch result->", error);
+    }
   };
   return (
     <div>
@@ -139,8 +144,11 @@ function resultPage() {
       <div className="-z-20 w-full h-screen flex-center bg-gradient-to-b from-primary_color via-primary_color to-secondary_color ">
         <Card className="z-10 w-[400px] m-4 md:m-0 md:w-auto md:min-w-[600px]">
           <CardHeader className="flex gap-3 bg-blue-500">
-            <div className="flex text-white">
-              <p className="text-md">سرویس اعلام نتایج دانش آموزی</p>
+            <div className="flex flex-col text-white">
+              <p className="text-md">
+                نتایج آزمون ورودی مدارس هیات امنایی نواحی مشهد
+              </p>
+              <p className="text-[12px] mt-4">سال تحصیلی 1404-1403</p>
             </div>
           </CardHeader>
           <Divider />
