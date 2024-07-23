@@ -170,7 +170,7 @@ function resultPage() {
               isLoading={isLoading}
               onClick={handleSubmit}
             >
-              نتیجه آزمون
+              مشاهده نتیجه آزمون
             </Button>
           </CardFooter>
         </Card>
