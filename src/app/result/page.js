@@ -71,7 +71,7 @@ function resultPage() {
         } else if (result.result == 1) {
           Swal.fire({
             icon: "success",
-            title: "پذیرفته شده اید",
+            title: "پذیرفته شده مرحله اول",
             html: `دانش آموز گرامی ${result.name} ${result.family}  
              شما براي واحد سازماني <b>${result.schoolName} - ${result.regionName} </b>,
              پذیرفته شده اید. 
