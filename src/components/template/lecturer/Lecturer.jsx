@@ -5,7 +5,7 @@ import { valiadtePrsCode } from '@/utils/auth';
 import { generalCondition } from '@/utils/constants';
 import { convertTopersian, traverse } from '@/utils/convertnumtopersian';
 import { CheckIcon, EditIcon, NotificationIcon } from '@/utils/icon';
-import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Image, Input, Link, Radio, RadioGroup, Tooltip } from '@nextui-org/react';
+import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Image, Input, Link, Radio, RadioGroup, Spinner, Tooltip } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
@@ -109,9 +109,19 @@ function LectureInformation() {
     const [bill, setBill] = useState(null)
     const [testCenter, setTestCenter] = useState(null)
     const [showExamCard, setShowExamCard] = useState(false)
+    const [isSelectedProt, setIsSelectedProt] = useState(false);
     // const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
-
+    const statusTitle = [{ status: 0, title: "نامشخص" },
+    { status: 1, title: "ثبت نام قطعی" },
+    { status: 2, title: "قبولی در آزمون " },
+    { status: 3, title: "مردود علمی" },
+    { status: 4, title: "در انتظار پرداخت" },
+    { status: 5, title: "قبولی در مصاحبه" },
+    { status: 6, title: "رد مصاحبه" },
+    { status: 7, title: "اعتراض به آزمون" },
+    { status: 8, title: "اعتراض به مصاحبه" }
+    ]
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -707,6 +717,12 @@ function LectureInformation() {
         setShowExamCard(prev => !prev)
         // toast.success("ایول بریم واسه چاپ")
     }
+
+    const handleProtTest = () => {
+        setIsLoading(prev => !prev)
+        setIsSelectedProt(prev => !prev)
+        console.log(isSelectedProt)
+    }
     return (
         <div >
             <ToastContainer
@@ -774,13 +790,13 @@ function LectureInformation() {
                                                 </Chip> :
                                                 history.status == 2 ?
                                                     <Chip color='success'>
-                                                        <span className=' text-[12px] text-white'>{`قبولی در مصاحبه`}</span>
+                                                        <span className=' text-[12px] text-white'>{statusTitle[history.status].title}</span>
                                                     </Chip> : history.status == 3 ?
                                                         <Chip color='danger'>
-                                                            <span className=' text-[12px] text-white'>{`رد مصاحبه`}</span>
+                                                            <span className=' text-[12px] text-white'>{statusTitle[history.status].title}</span>
                                                         </Chip> : history.status == 4 ?
                                                             <Chip color='warning'>
-                                                                <span className=' text-[12px] text-white'>{`در انتظار پرداخت`}</span>
+                                                                <span className=' text-[12px] text-white'>{statusTitle[history.status].title}</span>
                                                             </Chip> : <Chip color='warning'>
                                                                 <span className=' text-[12px] text-white'>{`نامشخص`}</span>
                                                             </Chip>
@@ -910,7 +926,7 @@ function LectureInformation() {
                     <div className=' items-center justify-between m-4 grid grid-cols-1 md:grid-cols-2 '>
                         <div className='flex-1 text-blue-500 col-span-1 flex items-center justify-start h-8'>
                             <span className='text-green-500 ml-2'>
-                                {history.status == 1 ?
+                                {history.status != 4 ?
                                     <IoCheckmarkDoneCircleSharp className='text-[16px]' />
                                     :
                                     <IoCheckmarkDoneCircleOutline className='text-[16px]' />
@@ -925,7 +941,7 @@ function LectureInformation() {
                         </div>
                         <div className='col-span-1 flex items-center justify-end  h-8'>
                             {
-                                beforeRegistered && history.payment == 2 && history.status == 1 &&
+                                beforeRegistered && history.payment == 2 &&
                                 <Button className='bg-green-500 text-white text-[12px] h-auto py-2 ' onClick={showBill}>جزییات پرداخت</Button>
                             }
                             {
@@ -944,7 +960,7 @@ function LectureInformation() {
                         {/* //? در صورتی که تصویر پروفایل داشته باشه سبز بشه */}
                         <div className='flex-1 text-blue-500 col-span-1 flex items-center justify-start h-8'>
                             <span className='text-green-500 ml-2'>
-                                {(history.status == 1) ?
+                                {(history.status != 4) ?
                                     <IoCheckmarkDoneCircleSharp className='text-[16px]' />
                                     :
                                     <IoCheckmarkDoneCircleOutline className='text-[16px]' />
@@ -970,9 +986,7 @@ function LectureInformation() {
                                                 <span className='text-red-500'>
                                                     در انتظار پرداخت وجه
                                                 </span> :
-                                                <span className='text-gray-500'>
-                                                    نامشخص
-                                                </span>
+                                                null
 
                                 }
                             </div>
@@ -983,6 +997,58 @@ function LectureInformation() {
 
                         < ExamCard image={user?.profile[0]} lecturer={history} region={regionObj?.regionName} />
                     }
+
+                    <Divider className="my-2" />
+                    <div className=' items-center justify-between m-4 grid grid-cols-1 md:grid-cols-2 '>
+                        {/* //? در صورتی که تصویر پروفایل داشته باشه سبز بشه */}
+                        <div className='flex-1 text-blue-500 col-span-1 flex items-center justify-start h-8'>
+                            <span className='text-green-500 ml-2'>
+                                {(history.status != 4) ?
+                                    <IoCheckmarkDoneCircleSharp className='text-[16px]' />
+                                    :
+                                    <IoCheckmarkDoneCircleOutline className='text-[16px]' />
+                                }
+                            </span>
+                            <span className='font-bold'>
+                                گام چهارم :
+                            </span>
+                            <span className='mr-2'>
+                                نتیجه آزمون
+                            </span>
+                        </div>
+                        <div>
+                            <div className='col-span-1 flex items-center justify-end  h-8'>
+                                {
+                                    beforeRegistered && history.status == 2 ?
+                                        <span className='text-green-500'>
+                                            قبولی در آزمون کتبی
+                                        </span> :
+
+
+                                        beforeRegistered && history.status == 3 && history.payment == 2 ?
+                                            <>
+                                                <span className='text-red-500 mx-4'>
+                                                    مردود علمی
+                                                </span>
+
+                                            </>
+                                            :
+                                            null
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div className='flex items-center justify-start py-2 relative'>
+                        <Checkbox defaultSelected size="sm" className='mx-4 ' color="danger" isLoading={false}
+                            isSelected={isSelectedProt} onValueChange={handleProtTest}>
+
+                            اینجانب نسبت به نتیجه آزمون اعتراض دارم</Checkbox>
+                        <span className='inline-block flex-center '>
+                            {isLoading && <Spinner size='sm' />}
+                        </span>
+                    </div>
+
                 </div>
 
             </div>

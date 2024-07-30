@@ -147,7 +147,7 @@ const schema = mongoose.Schema(
     status: {
       //? status == 1  ثبت نام شده
       //? status == 2  قبولی در مضاحبه
-      //? status == 3  رد شده
+      //? status == 3  مردود علمی
       //? status == 4 در انتظار پرداخت
       type: Number,
       required: false,
@@ -159,9 +159,18 @@ const schema = mongoose.Schema(
       type: Number,
       required: false,
     },
-    comment: {
+    commentProt: {
       type: String,
       default: "",
+    },
+    DocProt: {
+      type: [String],
+      default: [],
+      required: false,
+    },
+    isProt: {
+      type: Boolean,
+      default: false,
     },
     isRemoved: {
       type: Boolean,
