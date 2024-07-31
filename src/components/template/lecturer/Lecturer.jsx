@@ -2,10 +2,10 @@
 
 import { useUserProvider } from '@/components/context/UserProvider';
 import { valiadtePrsCode } from '@/utils/auth';
-import { generalCondition } from '@/utils/constants';
+import { generalCondition, statusTitle } from '@/utils/constants';
 import { convertTopersian, traverse } from '@/utils/convertnumtopersian';
 import { CheckIcon, EditIcon, NotificationIcon } from '@/utils/icon';
-import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Image, Input, Link, Radio, RadioGroup, Spinner, Tooltip } from '@nextui-org/react';
+import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs, Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Image, Input, Link, Radio, RadioGroup, Spinner, Textarea, Tooltip } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
@@ -112,16 +112,10 @@ function LectureInformation() {
     const [isSelectedProt, setIsSelectedProt] = useState(false);
     // const [orderId, setOrderId] = useState(Math.floor(Math.random() * 100000000000) + 10000000000);
     const { setToken, setSignData } = useAppProvider();
-    const statusTitle = [{ status: 0, title: "نامشخص" },
-    { status: 1, title: "ثبت نام قطعی" },
-    { status: 2, title: "قبولی در آزمون " },
-    { status: 3, title: "مردود علمی" },
-    { status: 4, title: "در انتظار پرداخت" },
-    { status: 5, title: "قبولی در مصاحبه" },
-    { status: 6, title: "رد مصاحبه" },
-    { status: 7, title: "اعتراض به آزمون" },
-    { status: 8, title: "اعتراض به مصاحبه" }
-    ]
+    const [commentProt, setCommentProt] = useState("");
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -718,10 +712,36 @@ function LectureInformation() {
         // toast.success("ایول بریم واسه چاپ")
     }
 
-    const handleProtTest = () => {
-        setIsLoading(prev => !prev)
-        setIsSelectedProt(prev => !prev)
-        console.log(isSelectedProt)
+    const handleProtTest = async () => {
+
+        setIsLoading(true)
+        if (isSelectedProt) {
+            try {
+                const formData = new FormData();
+                formData.append("isProt", isSelectedProt);
+                formData.append("commentprot", commentProt);
+                formData.append("id", history._id);
+                const res = await fetch("/api/lecturer/prot/", {
+                    method: "PUT",
+                    header: { "Content-Type": "multipart/form-data" },
+                    body: formData,
+                });
+                const data = await res.json();
+                if (data.status == 201) {
+                    toast.success(data.message)
+                    location.reload()
+                } else {
+                    toast.error(data.message)
+                }
+
+                setIsLoading(false)
+            } catch (error) {
+                console.log(error)
+                setIsLoading(false)
+            }
+        }
+
+
     }
     return (
         <div >
@@ -797,9 +817,13 @@ function LectureInformation() {
                                                         </Chip> : history.status == 4 ?
                                                             <Chip color='warning'>
                                                                 <span className=' text-[12px] text-white'>{statusTitle[history.status].title}</span>
-                                                            </Chip> : <Chip color='warning'>
-                                                                <span className=' text-[12px] text-white'>{`نامشخص`}</span>
-                                                            </Chip>
+                                                            </Chip> : history.status == 7 ?
+                                                                <Chip color='warning'>
+                                                                    <span className=' text-[12px] text-white'>{statusTitle[history.status].title}</span>
+                                                                </Chip>
+                                                                : <Chip color='warning'>
+                                                                    <span className=' text-[12px] text-white'>{`نامشخص`}</span>
+                                                                </Chip>
                                         ) :
 
                                             <Chip color='primary'>
@@ -1033,21 +1057,70 @@ function LectureInformation() {
 
                                             </>
                                             :
-                                            null
+                                            beforeRegistered && history.status == 7 && history.payment == 2 ?
+                                                <>
+                                                    <span className='text-orange-500 mx-4'>
+                                                        {statusTitle[history.status].title}
+                                                    </span>
+
+                                                </> : null
 
                                 }
                             </div>
                         </div>
                     </div>
-                    <div className='flex items-center justify-start py-2 relative'>
-                        <Checkbox defaultSelected size="sm" className='mx-4 ' color="danger" isLoading={false}
-                            isSelected={isSelectedProt} onValueChange={handleProtTest}>
 
-                            اینجانب نسبت به نتیجه آزمون اعتراض دارم</Checkbox>
-                        <span className='inline-block flex-center '>
-                            {isLoading && <Spinner size='sm' />}
-                        </span>
-                    </div>
+                    {
+                        beforeRegistered && history.status == 3 && history.payment == 2 &&  history.replyProt==null && history.DocProt.length == 0 &&
+                        <div className='flex flex-col items-start justify-start py-2 '>
+                            <Checkbox defaultSelected size="sm" className='mx-4 ' color="danger" isLoading={false}
+                                isSelected={isSelectedProt} onValueChange={setIsSelectedProt}>
+
+                                اینجانب نسبت به نتیجه آزمون اعتراض دارم</Checkbox>
+                            {
+                                isSelectedProt &&
+                                <div className='w-full  p-4 mt-2'>
+                                    <Textarea
+                                        label="توضیحات"
+                                        maxLength={200}
+                                        className="w-full mb-2"
+                                        description="حداکثر 200 کاراکتر"
+                                        value={commentProt}
+                                        onValueChange={setCommentProt}
+                                    />
+                                    <div className='mt-6 flex items-center justify-end'>
+                                        <Button isLoading={isLoading} className='bg-red-500 text-red-100' onClick={handleProtTest}>ثبت اعتراض</Button>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    }
+
+                    {
+                        beforeRegistered && (history.replyProt || history.DocProt.length != 0) &&
+                        < div className="gap-2  flex items-center justify-between p-4 ring-2 ring-red-200 rounded-md">
+
+                            <div>
+                                <span className='font-bold'>پاسخ :</span>
+                                <span> {history.replyProt}</span>
+                            </div>
+                            {beforeRegistered && history.DocProt.length != 0 && <div className='flex flex-col items-center'>
+                                <span className='font-bold mb-2'>تصویر کارنامه </span>
+                                {history.DocProt?.map(
+                                    (image, index) => (
+                                        <div key={index}>
+                                            <ImageLoaderLecturer
+                                                imageUrl={image}
+                                                code={"prot"}
+                                            />
+                                        </div>
+                                    )
+                                )}
+                            </div>}
+
+                        </div>
+                    }
 
                 </div>
 

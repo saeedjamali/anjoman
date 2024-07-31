@@ -1,7 +1,9 @@
 import connectToDB from "@/utils/db";
 import { authAdminApi } from "@/utils/authenticateMe";
 import lecturerModel from "@/models/lecturer/lecturer";
-
+import { getRndInteger } from "@/utils/random";
+import { writeFile } from "fs/promises";
+import path from "path";
 export async function PUT(req, { params }) {
   if (!(await authAdminApi())) {
     return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
@@ -30,7 +32,10 @@ export async function PUT(req, { params }) {
     const comment = formData.get("comment");
     const status = formData.get("status");
     const payment = formData.get("payment");
+    const replyProt = formData.get("replyProt");
+    const DocProt = formData.getAll("DocProt");
 
+    console.log("DocProt--->", DocProt);
     const { isConnected, message } = await connectToDB();
     if (!isConnected) {
       return Response.json({ message: "خطا در اتصال به پایگاه", status: 500 });
@@ -58,9 +63,27 @@ export async function PUT(req, { params }) {
         comment,
         status,
         payment,
+        replyProt,
       }
     );
 
+    DocProt?.map(async (img, index) => {
+      const buffer = Buffer.from(await img.arrayBuffer());
+      const filename =
+        phone + "" + Date.now() + "" + getRndInteger(10, 100) + "" + img.name;
+      const imgPath = path.join(
+        process.cwd(),
+        "upload/lecturer/prot/" + filename
+      );
+      await writeFile(imgPath, buffer);
+
+      await lecturerModel.updateOne(
+        { $and: [{ phone }, { year }, { isRemoved: false }] },
+        {
+          DocProt: `${filename}`,
+        }
+      );
+    });
     // return Response.json({ message: "کاربری با این شماره قبلا ثبت نام نموده است", status: 401, foundedUser });
     if (!updateLecturer) {
       return Response.json({

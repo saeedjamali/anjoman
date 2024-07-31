@@ -31,6 +31,7 @@ import { authTypes, roles, year } from '@/utils/constants'
 import { useUserProvider } from "@/components/context/UserProvider";
 import { ChevronDownIcon, DeleteIcon, EditIcon, EyeIcon, SearchIcon } from "@/utils/icon";
 import { FaBuilding } from "react-icons/fa6";
+import { generalCondition, statusTitle } from '@/utils/constants';
 // import { columns, users, statusOptions } from "./data";
 
 
@@ -81,13 +82,20 @@ const statusOptionsPayment = [
     { name: "پرداختی", uid: 2 }
 
 ];
-const statusOptions = [
-    { name: "ثبت نام شده", uid: 1 },
-    { name: "قبولی در مصاحبه", uid: 2 },
-    { name: "رد مصاحبه", uid: 3 },
-    { name: "در انتظار پرداخت", uid: 4 },
-    { name: "نامشخص", uid: 10 },
-];
+
+
+const statusOptions = [{ uid: 0, name: "نامشخص" },
+{ uid: 1, name: "ثبت نام قطعی" },
+{ uid: 2, name: "قبولی در آزمون " },
+{ uid: 3, name: "مردود علمی" },
+{ uid: 4, name: "در انتظار پرداخت" },
+{ uid: 5, name: "قبولی در مصاحبه" },
+{ uid: 6, name: "رد مصاحبه" },
+{ uid: 7, name: "اعتراض به آزمون" },
+{ uid: 8, name: "اعتراض به مصاحبه" }
+]
+
+
 export function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -287,7 +295,9 @@ export default function LecturerManager({ setShowDetailLecturer,
             case "status":
                 return (
                     <Chip className="capitalize" color={statusColorMapForStatus[lecturer.status]} size="sm" variant="flat">
-                        {cellValue == 1 ? 'ثبت نام شده ' : cellValue == 2 ? 'قبولی در مصاحبه' : cellValue == 3 ? 'رد شده' : cellValue == 4 ? 'در انتظار پرداخت' : 'نامشخص'}
+                        {statusOptions[cellValue].name}
+                        
+                        {/* {cellValue == 1 ? 'ثبت نام شده ' : cellValue == 2 ? 'قبولی در مصاحبه' : cellValue == 3 ? 'رد شده' : cellValue == 4 ? 'در انتظار پرداخت' : 'نامشخص'} */}
                     </Chip>
                 );
             case "payment":

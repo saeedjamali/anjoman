@@ -82,6 +82,17 @@ export const testCenter = [
   },
 ];
 
+export const statusTitle = [{ status: 0, title: "نامشخص" },
+  { status: 1, title: "ثبت نام قطعی" },
+  { status: 2, title: "قبولی در آزمون " },
+  { status: 3, title: "مردود علمی" },
+  { status: 4, title: "در انتظار پرداخت" },
+  { status: 5, title: "قبولی در مصاحبه" },
+  { status: 6, title: "رد مصاحبه" },
+  { status: 7, title: "اعتراض به آزمون" },
+  { status: 8, title: "اعتراض به مصاحبه" }
+  ]
+
 ///?استان ها ==> در قسمت مدرسین آموزش خانواده
 // ? with web api
 // export const province = [

@@ -72,7 +72,10 @@ import ImageLoaderLecturer from "@/components/module/contrct/ImageLoaderLecturer
 import { NotificationIcon } from "@/utils/icon";
 import { valiadtePrsCode } from "@/utils/auth";
 import CountUp from "react-countup";
-
+import { generalCondition, statusTitle } from "@/utils/constants";
+import ImageProfileUploader from "@/components/module/uploader/ImageProfileUploader";
+const maxFileSize = 1000000; //100KB
+const acceptType = "jpg";
 function LecturerPage() {
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [selected, setSelected] = React.useState(0); //? test center selected
@@ -113,10 +116,15 @@ function LecturerPage() {
   const [isCertificateBefore, setIsCertificateBefore] = useState(false);
   const [age, setAge] = useState(0);
   const [ageText, setAgeText] = useState("");
+
   const [isAccepted, setIsAccepted] = useState(null);
   const [status, setStatus] = useState(0);
   const [degreeDoc, setDegreeDoc] = useState([]);
   const [introDoc, setIntroDoc] = useState([]);
+  const [DocProt, setDocProt] = useState([]);
+  const [replyProt, setReplyProt] = useState("");
+  const [commentProt, setCommentProt] = useState("");
+
   const [certificateDoc, setCertificateDoc] = useState([]);
   const [notCompletePersonalInformation, setNotCompletePersonalInformation] =
     useState(true);
@@ -193,6 +201,9 @@ function LecturerPage() {
       setDegreeDoc(currentLecturer?.degreeDoc);
       setIntroDoc(currentLecturer.introDoc);
       setCertificateDoc(currentLecturer.certificateDoc);
+      setDocProt(currentLecturer?.DocProt);
+      setCommentProt(currentLecturer.commentProt);
+      setReplyProt(currentLecturer.replyProt);
     }
   }, [currentLecturer]);
 
@@ -359,7 +370,13 @@ function LecturerPage() {
         formData.append("isAccepted", isAccepted);
         formData.append("status", status);
         formData.append("payment", payment);
-        formData.append("comment", comment);
+        formData.append("replyProt", replyProt);
+        if (DocProt) {
+          for (const image of DocProt) {
+            formData.append("DocProt", image.file);
+          }
+        }
+        formData.append("comment", commentProt);
         formData.append("province", JSON.stringify(provinceObj));
         formData.append("region", JSON.stringify(regionObj));
         formData.append("degree", JSON.stringify(degreeObj));
@@ -570,6 +587,15 @@ function LecturerPage() {
       console.log("Error in catch mapTestCenterToLecturer --->", error);
       setIsLoading(false);
     }
+  };
+
+  const onChangeDocProt = (imageList, addUpdateIndex) => {
+    // data for submit
+    if (imageList.length > 1) {
+      toast.info("صرفا امکان بارگذاری یک تصویر وجود دارد");
+      return;
+    }
+    setDocProt(imageList);
   };
 
   return (
@@ -1319,18 +1345,11 @@ function LecturerPage() {
                           value={status + ""}
                           onValueChange={setStatus}
                         >
-                          <Radio value="1" size="sm">
-                            ثبت نام شده
-                          </Radio>
-                          <Radio value="2" size="sm">
-                            قبولی در مصاحبه
-                          </Radio>
-                          <Radio value="3" size="sm">
-                            رد در مصاحبه
-                          </Radio>
-                          <Radio value="4" size="sm">
-                            در انتظار پرداخت
-                          </Radio>
+                          {statusTitle.map((item) => (
+                            <Radio value={item.status + ""} size="sm">
+                              {item.title}
+                            </Radio>
+                          ))}
                         </RadioGroup>
                       </div>
                     </div>
@@ -1362,11 +1381,36 @@ function LecturerPage() {
                         tabIndex={1}
                         type="text"
                         size="md"
-                        label="توضیحات"
+                        label="توضیحات کاربر "
                         labelPlacement={"inside"}
-                        value={comment}
-                        onChange={(event) => setComment(event.target.value)}
+                        value={commentProt}
+                        onChange={(event) => setCommentProt(event.target.value)}
                       ></Input>
+                    </div>
+                  </div>
+                  <div className="flex items-center md:gap-4 mt-4 border-1 border-red-100 p-2 h-28">
+                    <div className="relative mt-2 flex-1 justify-start ">
+                      {/* <span className='text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24  '>نام و نام خانوادگی</span> */}
+                      <Input
+                        tabIndex={1}
+                        type="text"
+                        size="md"
+                        label="پاسخ به اعتراض"
+                        labelPlacement={"inside"}
+                        value={replyProt}
+                        onChange={(event) => setReplyProt(event.target.value)}
+                      ></Input>
+                    </div>
+                    <div className="">
+                      {/* <span>بارگذاری تصویر کارنامه</span> */}
+                      <ImageProfileUploader
+                        imageItems={DocProt}
+                        onChange={onChangeDocProt}
+                        maxNumber={1}
+                        acceptType={acceptType}
+                        maxFileSize={maxFileSize}
+                        // user={user}
+                      />
                     </div>
                   </div>
                   <div className="relative mt-4  flex justify-start items-start text-right col-span-2">

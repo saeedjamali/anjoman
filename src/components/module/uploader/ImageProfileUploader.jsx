@@ -158,7 +158,7 @@ function ImageProfileUploader({ imageItems, onChange, maxNumber, acceptType, max
                                     {
 
 
-                                        imageList.length == 0 ? (
+                                        imageList?.length == 0 ? (
                                             <span className="text-red-500">
                                                 {" "}
                                                 انتخاب نشده
@@ -171,7 +171,7 @@ function ImageProfileUploader({ imageItems, onChange, maxNumber, acceptType, max
                                                 >
                                                     <div className="flex-1 ">
                                                         <img
-                                                            src={image.data_url}
+                                                            src={image?.data_url}
                                                             alt=""
                                                             width="100"
                                                             height="100"
@@ -230,7 +230,7 @@ function ImageProfileUploader({ imageItems, onChange, maxNumber, acceptType, max
 
                             >
                                 <div className=" flex-1 flex-center rounded-md ">
-                                    {(imageItems.length != maxNumber) && <Button className="bg-transparent">
+                                    {(imageItems?.length != maxNumber) && <Button className="bg-transparent">
                                         <FaCloudUploadAlt className='text-xl text-blue-500' onClick={onImageUpload}
                                             {...dragProps} />
 
