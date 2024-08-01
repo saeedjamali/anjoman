@@ -188,7 +188,7 @@ export default function ExcelRegionUploader() {
 
     const addRegionFromExcel = async (event) => {
         event.preventDefault();
-        setIsLoading(false)
+        setIsLoading(true)
 
         try {
             if (region.length == 0) {

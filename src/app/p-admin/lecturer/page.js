@@ -13,7 +13,7 @@ import "react-multi-date-picker/styles/colors/teal.css";
 import transition from "react-element-popper/animations/transition";
 import { FcEnteringHeavenAlive } from "react-icons/fc";
 import { FaBuildingUser } from "react-icons/fa6";
-
+import { FaUpload } from "react-icons/fa6";
 import {
   Autocomplete,
   AutocompleteItem,
@@ -36,6 +36,7 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
+  Tooltip,
 } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
@@ -124,7 +125,7 @@ function LecturerPage() {
   const [DocProt, setDocProt] = useState([]);
   const [replyProt, setReplyProt] = useState("");
   const [commentProt, setCommentProt] = useState("");
-
+  const [result, setResult] = useState();
   const [certificateDoc, setCertificateDoc] = useState([]);
   const [notCompletePersonalInformation, setNotCompletePersonalInformation] =
     useState(true);
@@ -523,6 +524,58 @@ function LecturerPage() {
     saveAs(blob, "data.xlsx");
   };
 
+  const readExcel = (file) => {
+    try {
+      const promise = new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsArrayBuffer(file);
+        fileReader.onload = (e) => {
+          const bufferArray = e.target.result;
+          const wb = XLSX.read(bufferArray, {
+            type: "buffer",
+          });
+          const wsname = wb.SheetNames[0];
+          const ws = wb.Sheets[wsname];
+          const data = XLSX.utils.sheet_to_json(ws);
+          resolve(data);
+        };
+        fileReader.onerror = (error) => {
+          toast.error("قالب اکسل بارگذاری شده استاندارد نمی باشد");
+          reject(error);
+          return false;
+        };
+      });
+      promise.then(async (d) => {
+        setIsLoading(true);
+        console.log(d);
+        setResult(d);
+        try {
+          if (d.length == 0) {
+            toast.info("اکسل براساس فرمت مشخص بارگذاری شود");
+            return false;
+          }
+          const response = await fetch("/api/admin/lecturer/result", {
+            method: "POST",
+            headers: {
+              "content-Type": "application/json",
+            },
+            body: JSON.stringify([...d]),
+          });
+          const addResult = await response.json();
+          if (addResult.status == 201) {
+            toast.success(addResult.message);
+          } else {
+            toast.error(addResult.message);
+          }
+        } catch (error) {
+          toast.error("خطا ناشناخته");
+        }
+        setIsLoading(false);
+      });
+    } catch (error) {
+      toast.error("قالب اکسل بارگذاری شده استاندارد نمی باشد");
+    }
+  };
   function handleChange(value) {
     //تغییرات روی تاریخ رو اینجا اعمال کنید'
     const date = new DateObject(value);
@@ -657,22 +710,59 @@ function LecturerPage() {
           <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
             <span>لیست ثبت نام مدرسین آموزش خانواده</span>
 
-            <div className="flex-center gap-6">
+            <div className="relative flex-center gap-6">
               {/* <span className="text-[12px]">
                                 در حال بررسی ({countCurrentAction}) مورد
                             </span> */}
-              <span
-                className="cursor-pointer text-[20px]"
-                onClick={() => setTestCenterToLecturer(selectedKeys)}
-              >
-                <FaBuildingUser className="text-slate-900" />
-              </span>
-              <span
-                className="cursor-pointer"
-                onClick={() => exportToExcel(lecturerList)}
-              >
-                <FaDownload className="text-slate-900" />
-              </span>
+              <Tooltip content="بارگذاری نمرات">
+                {/* <span className="cursor-pointer" onClick={() => readExcel()}>
+                  <FaUpload className="text-slate-900" />
+                </span> */}
+                <Button
+                  className=""
+                  color="primary"
+                  endContent={<FaUpload />}
+                  isLoading={isLoading}
+                >
+                  <label for="excel">بارگذاری نمرات</label>
+                  <input
+                    id="excel"
+                    type="file"
+                    title=""
+                    className="custom-file-input text-white w-full "
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      readExcel(file);
+                    }}
+                  ></input>
+                </Button>
+                {/* <input
+                  id="excel"
+                  type="file"
+                  title=""
+                  className="custom-file-input text-white w-full "
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    readExcel(file);
+                  }}
+                ></input> */}
+              </Tooltip>
+              <Tooltip content="تخصیص مرکز آزمون">
+                <span
+                  className="cursor-pointer text-[20px]"
+                  onClick={() => setTestCenterToLecturer(selectedKeys)}
+                >
+                  <FaBuildingUser className="text-slate-900" />
+                </span>
+              </Tooltip>
+              <Tooltip content="دانلود">
+                <span
+                  className="cursor-pointer"
+                  onClick={() => exportToExcel(lecturerList)}
+                >
+                  <FaDownload className="text-slate-900" />
+                </span>
+              </Tooltip>
             </div>
           </div>
           <LecturerManager
@@ -689,7 +779,7 @@ function LecturerPage() {
           />
         </div>
 
-        {showDetailLecturer && actionType == 1 && (
+        {actionType == 1 && (
           <div div className="p-4 bg-slate-200 rounded-lg mt-4">
             {/* <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
               <p className=" flex text-bold ">{`جزییات ثبت نام ${currentLecturer.name}`}</p>
@@ -1026,7 +1116,7 @@ function LecturerPage() {
           </div>
         )}
 
-        {showDetailLecturer && actionType == 2 && (
+        {actionType == 2 && (
           <div div className="p-4 bg-slate-200 rounded-lg mt-4">
             {/* <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
               <p className=" flex text-bold ">{`ویرایش ثبت نام ${currentLecturer.name}`}</p>

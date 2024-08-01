@@ -31,6 +31,7 @@ import { authTypes, roles, year } from '@/utils/constants'
 import { useUserProvider } from "@/components/context/UserProvider";
 import { ChevronDownIcon, DeleteIcon, EditIcon, EyeIcon, SearchIcon } from "@/utils/icon";
 import { FaBuilding } from "react-icons/fa6";
+
 import { generalCondition, statusTitle } from '@/utils/constants';
 // import { columns, users, statusOptions } from "./data";
 
@@ -296,7 +297,7 @@ export default function LecturerManager({ setShowDetailLecturer,
                 return (
                     <Chip className="capitalize" color={statusColorMapForStatus[lecturer.status]} size="sm" variant="flat">
                         {statusOptions[cellValue].name}
-                        
+
                         {/* {cellValue == 1 ? 'ثبت نام شده ' : cellValue == 2 ? 'قبولی در مصاحبه' : cellValue == 3 ? 'رد شده' : cellValue == 4 ? 'در انتظار پرداخت' : 'نامشخص'} */}
                     </Chip>
                 );

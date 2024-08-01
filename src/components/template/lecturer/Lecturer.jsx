@@ -743,6 +743,10 @@ function LectureInformation() {
 
 
     }
+
+    // console.log("history.replyProt 1------->", history?.replyProt?.equals(""))
+    // console.log("history.replyProt 2------->", history?.replyProt == null && history?.replyProt.trim().isEmpty())
+
     return (
         <div >
             <ToastContainer
@@ -1045,7 +1049,7 @@ function LectureInformation() {
                                 {
                                     beforeRegistered && history.status == 2 ?
                                         <span className='text-green-500'>
-                                            قبولی در آزمون کتبی
+                                            حدنصاب نمره آزمون کتبی را کسب نموده و دعوت به مصاحبه خواهید شد. (زمان و مکان مصاحبه متعاقبا اطلاع رسانی می گردد.)
                                         </span> :
 
 
@@ -1071,7 +1075,7 @@ function LectureInformation() {
                     </div>
 
                     {
-                        beforeRegistered && history.status == 3 && history.payment == 2 &&  history.replyProt==null && history.DocProt.length == 0 &&
+                        beforeRegistered && history.status == 3 && history.payment == 2 && (history?.replyProt == null || history?.replyProt?.trim() == "") && history.DocProt.length == 0 &&
                         <div className='flex flex-col items-start justify-start py-2 '>
                             <Checkbox defaultSelected size="sm" className='mx-4 ' color="danger" isLoading={false}
                                 isSelected={isSelectedProt} onValueChange={setIsSelectedProt}>
@@ -1099,25 +1103,26 @@ function LectureInformation() {
 
                     {
                         beforeRegistered && (history.replyProt || history.DocProt.length != 0) &&
-                        < div className="gap-2  flex items-center justify-between p-4 ring-2 ring-red-200 rounded-md">
+                        < div className="gap-2  flex flex-col md:flex-row items-center justify-between p-4 ring-2 bg-slate-100 ring-slate-500 rounded-md">
 
-                            <div>
-                                <span className='font-bold'>پاسخ :</span>
+                            <div >
+                                <span className='font-bold'>پاسخ به اعتراض :</span>
                                 <span> {history.replyProt}</span>
                             </div>
-                            {beforeRegistered && history.DocProt.length != 0 && <div className='flex flex-col items-center'>
-                                <span className='font-bold mb-2'>تصویر کارنامه </span>
-                                {history.DocProt?.map(
-                                    (image, index) => (
-                                        <div key={index}>
-                                            <ImageLoaderLecturer
-                                                imageUrl={image}
-                                                code={"prot"}
-                                            />
-                                        </div>
-                                    )
-                                )}
-                            </div>}
+                            {beforeRegistered && history.DocProt.length != 0 &&
+                                <div className='flex md:flex-col mt-4 md:mt-0 items-center gap-x-4 md:gap-x-0'>
+                                    <span className='font-bold mb-2'>تصویر کارنامه </span>
+                                    {history.DocProt?.map(
+                                        (image, index) => (
+                                            <div key={index}>
+                                                <ImageLoaderLecturer
+                                                    imageUrl={image}
+                                                    code={"prot"}
+                                                />
+                                            </div>
+                                        )
+                                    )}
+                                </div>}
 
                         </div>
                     }
