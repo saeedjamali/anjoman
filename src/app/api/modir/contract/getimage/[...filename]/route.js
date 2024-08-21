@@ -6,7 +6,7 @@ export async function GET(req, { params }) {
   const filename = params.filename[0];
   const code = params.filename[1];
   let filePath = "";
-  if (!(await authenticateMe())) {
+  if (!((await authenticateMe()) || (await authAdminApi()))) {
     return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
   }
 
