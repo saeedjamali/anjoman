@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { authenticateMe } from "@/utils/authenticateMe";
 
 export async function GET(req, { params }) {
   const filename = params.filename[0];
