@@ -8,7 +8,7 @@
 
 
 * {
-  font-family: iranSans;
+  font-family: iransans;
 }
 
 :root {
@@ -28,6 +28,9 @@
   }
 }
 
+/* input[type='file'] {
+  color: transparent;
+} */
 
 
 /* width */

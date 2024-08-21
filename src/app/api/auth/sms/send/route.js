@@ -9,42 +9,51 @@ export async function POST(req) {
   const now = new Date();
   const expTime = now.getTime() + 120_000; // 5 Mins
 
-  const code = Math.floor(Math.random() * 99999).toString().padEnd(5, "0");
+  const code = Math.floor(Math.random() * 99999)
+    .toString()
+    .padEnd(5, "0");
 
   try {
-
-
     request.post(
       {
-        url: 'http://ippanel.com/api/select',
+        url: "http://ippanel.com/api/select",
         body: {
-          "op": "pattern",
-          "user": "u09151208032",
-          "pass": "Faraz@1408650850000068",
-          "fromNum": "3000505",
-          "toNum": phone,
-          "patternCode": "uzjj070v0q8v36y",
-          "inputData": [
-            { "verification-code": code }
-          ]
+          op: "pattern",
+          user: "u09151208032",
+          pass: "Faraz@1408650850000068",
+          fromNum: "3000505",
+          toNum: phone,
+          patternCode: "uzjj070v0q8v36y",
+          inputData: [{ "verification-code": code }],
         },
         json: true,
       },
       async function (error, response, body) {
-
         if (!error && response.statusCode === 200) {
           //YOU‌ CAN‌ CHECK‌ THE‌ RESPONSE‌ AND SEE‌ ERROR‌ OR‌ SUCCESS‌ MESSAGE
           const { isConnected } = await connectToDB();
           if (!isConnected) {
-            return Response.json({ message: "Error in connect to db :))", status: 500 });
+            return Response.json({
+              message: "Error in connect to db :))",
+              status: 500,
+            });
           }
 
-          const otp = await otpModel.findOneAndUpdate({ phone }, { code, expTime });
+          const otp = await otpModel.findOneAndUpdate(
+            { phone },
+            { code, expTime }
+          );
           if (otp) {
-            return Response.json({ message: "کد با موفقیت ارسال شد :))", status: 200 });
+            return Response.json({
+              message: "کد با موفقیت ارسال شد :))",
+              status: 200,
+            });
           } else {
             const opt = await otpModel.create({ code, phone, expTime });
-            return Response.json({ message: "User Create and Code Sent Successfully :))", status: 201 });
+            return Response.json({
+              message: "User Create and Code Sent Successfully :))",
+              status: 201,
+            });
           }
         } else {
           console.log(error);
@@ -52,12 +61,9 @@ export async function POST(req) {
       }
     );
 
-    return Response.json(
-      { message: "کد با موفقیت ارسال شد :))", status: 200 }
-    );
+    return Response.json({ message: "کد با موفقیت ارسال شد :))", status: 200 });
   } catch (error) {
-    console.log("Catch error ---->", error)
-    return Response.json(
-      { message: "Sent error :))", status: 401 })
+    console.log("Catch error ---->", error);
+    return Response.json({ message: "Sent error :))", status: 401 });
   }
 }

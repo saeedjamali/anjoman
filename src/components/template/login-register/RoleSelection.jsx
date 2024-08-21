@@ -72,12 +72,12 @@ function RoleSelection({ role, SetRole, SetAuthTypesForm }) {
                     <ul className="grid grid-cols-2 font-iranyekanMedium text-sm my-4 gap-8">
                         <li  >
 
-                            <button className="role-section" onClick={() => toast.info("در حال حاضر غیر فعال می باشد.")}>
+                            {/* <button className="role-section" onClick={() => toast.info("در حال حاضر غیر فعال می باشد.")}> */}
 
-                                {/* <button className="role-section" onClick={() => {
+                            <button className="role-section" onClick={() => {
                                 SetRole(roles.MODIR)
                                 roleHandler(event, roles.MODIR)
-                            }}> */}
+                            }}>
                                 <Image className="w-16 h-16 my-2" src={"/images/school.png"} width={100} height={100} alt="modir" />
                                 <span className="w-full bg-header text-center py-1 px-4 rounded-b-lg">مدیر مدرسه</span>
                             </button>

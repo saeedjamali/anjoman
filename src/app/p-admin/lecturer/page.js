@@ -719,7 +719,7 @@ function LecturerPage() {
                   <FaUpload className="text-slate-900" />
                 </span> */}
                 <Button
-                  className=""
+                  className="hidden md:flex"
                   color="primary"
                   endContent={<FaUpload />}
                   isLoading={isLoading}
@@ -729,7 +729,7 @@ function LecturerPage() {
                     id="excel"
                     type="file"
                     title=""
-                    className="custom-file-input text-white w-full "
+                    className="custom-file-input text-white "
                     onChange={(e) => {
                       const file = e.target.files[0];
                       readExcel(file);
