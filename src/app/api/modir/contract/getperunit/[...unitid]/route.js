@@ -4,6 +4,8 @@ import connectToDB from "@/utils/db";
 
 export async function GET(req, { params }) {
   const units = await params.unitid;
+  const uniqueUnit = new Set(units);
+  const array = [...uniqueUnit];
   // const u = JSON.parse(units);
   if (!(await authenticateMe())) {
     return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
@@ -19,7 +21,7 @@ export async function GET(req, { params }) {
     // let contractlist = [];
     let contractlist = [];
     await Promise.all(
-      units.map(async (unit) => {
+      array.map(async (unit) => {
         contractlist.push(
           ...(await contractModel.find({ "Unit.schoolCode": unit }).populate([
             {

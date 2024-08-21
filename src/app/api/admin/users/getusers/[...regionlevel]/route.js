@@ -34,6 +34,16 @@ export async function GET(req, { params }) {
           },
         },
       ]);
+      const userList = await Promise.all(
+        await usersInMuList.map(async (user) => {
+          const userFound = await userModel.findOne({
+            $and: [{ _id: user._id }, { role: "modir" }],
+          });
+          if (userFound) {
+            users.push({ ...userFound._doc, count: user.count });
+          }
+        })
+      );
     }
     if (level == 2) {
       //? access province
@@ -51,12 +61,21 @@ export async function GET(req, { params }) {
           },
         },
       ]);
+
+      const userList = await Promise.all(
+        await usersInMuList.map(async (user) => {
+          const userFound = await userModel.findOne({
+            $and: [{ _id: user._id }, { role: "modir" }],
+          });
+          if (userFound) {
+            users.push({ ...userFound._doc, count: user.count });
+          }
+        })
+      );
     }
     if (level == 3 || level == 999) {
       //?global access
-      // users = await modirUnitModel.find().populate({
-      //   path: "User",
-      // });
+
       usersInMuList = await modirUnitModel.aggregate([
         {
           $group: {
@@ -65,23 +84,49 @@ export async function GET(req, { params }) {
           },
         },
       ]);
+      const userList = await Promise.all(
+        await usersInMuList.map(async (user) => {
+          const userFound = await userModel.findOne({
+            $and: [{ _id: user._id }, { role: "modir" }],
+          });
+          if (userFound) {
+            users.push({ ...userFound._doc, count: user.count });
+          }
+        })
+      );
     }
-    users = await Promise.all(
-      usersInMuList.map(async (user) => {
-        const filterUser = await userModel.findOne({
-          $and: [{ _id: user._id }, { role: "modir" }],
-        });
-        return { ...filterUser._doc, count: user.count };
-      })
-    );
+
+    // console.log("users------>", users);
+    // await Promise.all(
+    // usersInMuList.map(async (user) => {
+    //   console.log("user--->", user);
+    //   let filterUser = await userModel.findOne({
+    //     $and: [{ _id: user._id }, { role: "modir" }],
+    //   });
+    //   // console.log("filterUser", filterUser._doc);
+    //   users.push({ ...filterUser, count: user.count });
+    //   // return { ...filterUser._doc, count: user.count };
+    // });
+    // // );
+    // console.log("users------>", users);
     const len = users.length;
-    return Response.json({
-      message: "با موفقیت دریافت شد",
-      status: 201,
-      users,
-      len,
-    });
+    if (users) {
+      return Response.json({
+        message: "با موفقیت دریافت شد",
+        status: 201,
+        users,
+        len,
+      });
+    } else {
+      return Response.json({
+        message: "با موفقیت دریافت شد",
+        status: 401,
+        users,
+        len,
+      });
+    }
   } catch (error) {
+    console.log("Error--->", error);
     return Response.json({ message: "خطای ناشناخته", status: 500 });
   }
 }

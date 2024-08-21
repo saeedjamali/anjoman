@@ -10,6 +10,7 @@ import { year } from "@/utils/constants";
 import { GrMap } from "react-icons/gr";
 import { FaRectangleList } from "react-icons/fa6";
 import { FaCloudDownloadAlt } from "react-icons/fa";
+import { FaCircleInfo } from "react-icons/fa6";
 import {
   Dropdown,
   DropdownTrigger,
@@ -49,13 +50,14 @@ import { TableBody, TableHeader } from "react-stately";
 import { IoIosArrowUp } from "react-icons/io";
 import { FaMinus } from "react-icons/fa";
 import { traverse } from "@/utils/convertnumtopersian";
-import { PlusIcon } from "@/utils/icon";
+import { CheckIcon, NotificationIcon, PlusIcon } from "@/utils/icon";
 import ImageLoader from "@/components/module/contrct/ImageLoader";
+import { valiadteMeliCode, valiadtePhone } from "@/utils/auth";
 function page() {
   const [images, setImages] = useState([]);
   const maxNumberContract = 2;
   const maxNumberFormDress = 4;
-  const maxFileSize = 100000; //100KB
+  const maxFileSize = 300000; //300KB
   const acceptType = "jpg";
   let filterUnit = [];
   const { user, setUser, modir, setModir, units, setUnits } = useUserProvider();
@@ -102,6 +104,14 @@ function page() {
   const [isAlarmNoContract, setIsAlarmNoContract] = useState(false);
   const [isCheckedNoContract, setIsCheckedNoContract] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [action, setAction] = useState(0); //? is used for show modal
+
+  //?new company added
+  const [companyOwner, setCompanyOwner] = useState(null);
+  const [companyPhone, setCompanyPhone] = useState(null);
+  const [companyOwnercode, setCompanyOwnercode] = useState(null);
+  const [companyName, setCompanyName] = useState(null);
+  const [companyAddress, setCompanyAddress] = useState(null);
 
   if (isClient) {
     // Check if document is finally loaded
@@ -202,26 +212,6 @@ function page() {
     setCurrentCompany(fetchCompany.find((c) => c.code == selectedCompany));
   }, [selectedCompany]);
 
-  // const getForbidden = (contractlist) => {
-  //   const newList = [...contractlist];
-  //   const filterContract = newList.filter(
-  //     (item) =>
-  //       item.year == year[selectedYear - 1]?.name &&
-  //       item.Unit.schoolCode == selectedUnit &&
-  //       (item.isConfirm == 1 || item.isConfirm == 0)
-  //   );
-
-  //   const count = filterContract;
-  //   const countLimit = filterContract[0]?.limited;
-  //   setCountContract(count);
-  //   setLimited(countLimit);
-  //   console.log("forbidden-->", filterContract);
-  //   console.log("forbidden-->", limited);
-  //   if (countContract > limited) {
-  //     setForbidden(true);
-  //   } else setForbidden(false);
-  // };
-  // console.log("imageFormDressList--->", imageFormDressList);
   const addNoContract = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -397,6 +387,7 @@ function page() {
     setLat(unit.lat);
     setLng(unit.lng);
     setCurrentUnit(unit);
+    setAction(1);
     onOpen();
   };
 
@@ -434,9 +425,7 @@ function page() {
   return (
     <>
       <ToastContainer
-        bodyClassName={() =>
-          " flex-center text-sm font-white p-3"
-        }
+        bodyClassName={() => " flex-center text-sm font-white p-3"}
         position="top-left"
         rtl={true}
         autoClose={5000}
@@ -580,6 +569,25 @@ function page() {
                     setShowDetail={setShowDetail}
                   />
                 </div>
+                {currentUnit && (
+                  <div>
+                    <div className="flex  mt-4">
+                      <FaCircleInfo />
+                      <span className="text-[12px] mr-2">
+                        در صورتی که شرکت طرف قرارداد در لیست شرکت ها نمی باشد از
+                        این قسمت
+                        <span
+                          className="bg-blue-500 font-bold px-1 mx-2 text-white rounded-lg cursor-pointer"
+                          onClick={onOpen}
+                        >
+                          {" "}
+                          اضافه{" "}
+                        </span>{" "}
+                        نمایید
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {showDetail && (
@@ -672,7 +680,7 @@ function page() {
                                 <TableCell>
                                   <div>تصاویر بارگذاری شده از قرارداد</div>
                                   <div className="text-[10px] text-red-400">
-                                    حداکثر دو تصویر با حجم 100 کیلوبایت
+                                    حداکثر دو تصویر با حجم 300 کیلوبایت
                                   </div>
                                 </TableCell>
                                 <TableCell>
@@ -696,7 +704,7 @@ function page() {
                                 <TableCell>
                                   <div> تصاویر بارگذاری شده از لباس فرم</div>
                                   <div className="text-[10px] text-red-400">
-                                    حداکثر چهار تصویر با حجم 100 کیلوبایت
+                                    حداکثر چهار تصویر با حجم 300 کیلوبایت
                                   </div>
                                 </TableCell>
                                 <TableCell>
@@ -1236,82 +1244,225 @@ function page() {
           closeButton: "hover:bg-white/5 active:bg-white/10",
         }}
       >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
-                تعیین موقعیت توزیع بر روی نقشه
-              </ModalHeader>
-              <ModalBody >
-                {
-                  <div>
-                    <form>
-                      <div className="relative mt-2 flex justify-end col-span-1">
-                        <div className="flex flex-col  w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
-                          <div className="flex gap-2">
-                            <Input
-                              type="text"
-                              label="آدرس"
-                              value={address}
-                              onChange={() => setAddress(event.target.value)}
-                            />
-                          </div>
-                          <div className="flex gap-2 ">
-                            <input
-                              className={`input-text-information mt-2 text-white `}
-                              name="maleno"
-                              type="text"
-                              disabled
-                              value={`${Number(lng).toFixed(5)} , ${Number(
-                                lat
-                              ).toFixed(5)} `}
-                              placeholder="موقعیت جغرافیایی"
-                            ></input>
-                          </div>
+        {action == 1 ? (
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
+                  تعیین موقعیت توزیع بر روی نقشه
+                </ModalHeader>
+                <ModalBody>
+                  {
+                    <div>
+                      <form>
+                        <div className="relative mt-2 flex justify-end col-span-1">
+                          <div className="flex flex-col  w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
+                            <div className="flex gap-2">
+                              <Input
+                                type="text"
+                                label="آدرس"
+                                value={address}
+                                onChange={() => setAddress(event.target.value)}
+                              />
+                            </div>
+                            <div className="flex gap-2 ">
+                              <input
+                                className={`input-text-information mt-2 text-white `}
+                                name="maleno"
+                                type="text"
+                                disabled
+                                value={`${Number(lng).toFixed(5)} , ${Number(
+                                  lat
+                                ).toFixed(5)} `}
+                                placeholder="موقعیت جغرافیایی"
+                              ></input>
+                            </div>
 
-                          <div className="w-full  mt-4 rounded-md bg-green-600 z-10 ">
-                            <Map
-                              setLat={setLat}
-                              setLng={setLng}
-                              lng={lng}
-                              lat={lat}
-                              setAddress={setAddress}
-                            />
+                            <div className="w-full  mt-4 rounded-md bg-green-600 z-10 ">
+                              <Map
+                                setLat={setLat}
+                                setLng={setLng}
+                                lng={lng}
+                                lat={lat}
+                                setAddress={setAddress}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </form>
-                  </div>
-                }
-              </ModalBody>
-              <ModalFooter >
-                <Button color="foreground" variant="light" onPress={onClose}>
-                  بستن
-                </Button>
-                <Button
-                  className="bg-green-700 text-white"
-                  color="success"
-                  variant="light"
-                  onClick={() => {
-                    // getAddress();
-                    if (address == "") {
-                      toast.error(
-                        "خطا در سروویس دریافت آدرس / آدرس را وارد نمایید."
-                      );
-                    } else {
-                      setConfirmAddress(true);
-                      toast.success("آدرس با موفقیت ذخیره شد");
-                    }
-                    onClose();
-                  }}
-                >
-                  ثبت
-                  {/* <div className="flex-center">{false && <Spinner />}</div> */}
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
+                      </form>
+                    </div>
+                  }
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="foreground" variant="light" onPress={onClose}>
+                    بستن
+                  </Button>
+                  <Button
+                    className="bg-green-700 text-white"
+                    color="success"
+                    variant="light"
+                    onClick={() => {
+                      // getAddress();
+                      if (address == "" || !address) {
+                        toast.error(
+                          "خطا در سرویس دریافت آدرس / آدرس را وارد نمایید."
+                        );
+                      } else {
+                        setConfirmAddress(true);
+                        toast.success("آدرس با موفقیت ذخیره شد");
+                        onClose();
+                      }
+                    }}
+                  >
+                    ثبت
+                    {/* <div className="flex-center">{false && <Spinner />}</div> */}
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        ) : (
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
+                  تکمیل اطلاعات شرکت
+                </ModalHeader>
+                <ModalBody>
+                  {
+                    <div>
+                      <form>
+                        <div className="relative mt-2 flex justify-end col-span-1">
+                          <div className="flex flex-col  w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
+                            <div className="space-y-2">
+                              <Input
+                                isRequired
+                                type="text"
+                                label="نام و نام خانوادگی مالک"
+                                value={companyOwner}
+                                onChange={() =>
+                                  setCompanyOwner(event.target.value)
+                                }
+                              />
+                              <Input
+                                isRequired
+                                type="Number"
+                                label="شماره همراه مالک"
+                                value={companyPhone}
+                                onChange={() =>
+                                  setCompanyPhone(event.target.value)
+                                }
+                              />
+                              <Input
+                                isRequired
+                                type="Number"
+                                label="کدملی"
+                                value={companyOwnercode}
+                                onChange={() =>
+                                  setCompanyOwnercode(event.target.value)
+                                }
+                              />
+                              <Input
+                                isRequired
+                                type="text"
+                                label="نام شرکت"
+                                value={companyName}
+                                onChange={() =>
+                                  setCompanyName(event.target.value)
+                                }
+                              />
+                              <Input
+                                isRequired
+                                type="text"
+                                label="آدرس"
+                                value={companyAddress}
+                                onChange={() =>
+                                  setCompanyAddress(event.target.value)
+                                }
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  }
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="foreground" variant="light" onPress={onClose}>
+                    بستن
+                  </Button>
+                  <Button
+                    isLoading={isLoading}
+                    className="bg-green-700 text-white"
+                    color="success"
+                    variant="light"
+                    onClick={async () => {
+                      if (
+                        !(
+                          companyAddress &&
+                          companyName &&
+                          companyOwner &&
+                          companyOwnercode &&
+                          companyPhone
+                        )
+                      ) {
+                        toast.error("کلیه موارد با دقت تکمیل شود");
+                        return;
+                      }
+
+                      if (!valiadtePhone(companyPhone)) {
+                        toast.info("شماره همراه وارد شده صحیح نمی باشد");
+                        return;
+                      }
+
+                      if (!valiadteMeliCode(companyOwnercode)) {
+                        toast.info("کد ملی ده رقمی وارد شود");
+                        return;
+                      }
+
+                      try {
+                        setIsLoading(true);
+                        const formData = new FormData();
+                        formData.append("year", currentYear.name);
+                        formData.append("region", currentUnit.regionCode);
+                        formData.append("owner", companyOwner);
+                        formData.append("phone", companyPhone);
+                        formData.append("ownerCode", companyOwnercode);
+                        formData.append("name", companyName);
+                        formData.append("address", companyAddress);
+                        formData.append("id", modir._id);
+
+                        const res = await fetch("/api/modir/addnewcompany", {
+                          method: "POST",
+                          header: { "Content-Type": "multipart/form-data" },
+                          body: formData,
+                        });
+                        const data = await res.json();
+                        if (data.status == 201) {
+                          setCurrentCompany(data.newCompany);
+                          toast.success(data.message);
+                          setShowDetail(true);
+                        } else {
+                          toast.error(data.message);
+                        }
+                      } catch (error) {
+                        console.log(
+                          "errror from catch add company from modir",
+                          error
+                        );
+                      }
+                      setIsLoading(false);
+                      onClose();
+                    }}
+                  >
+                    افزودن
+                    {/* <div className="flex-center">{false && <Spinner />}</div> */}
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        )}
       </Modal>
     </>
   );

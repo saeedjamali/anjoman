@@ -28,19 +28,18 @@ function ModirPage(params) {
   const { user, setUser, modir, setModir, units, setUnits } = useUserProvider();
   const [unitCode, setUnitCode] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [isClient, setIsClient] = useState(false)
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const currentYear = year.find((y) => y.currentYear);
 
-
   if (isClient) {
     // Check if document is finally loaded
-    traverse(document.getElementsByTagName('body')[0]);
+    traverse(document.getElementsByTagName("body")[0]);
     // localizeNumbers(document.getElementsByTagName('body')[0]);
   }
 
   useEffect(() => {
-    setIsClient(true)
+    setIsClient(true);
   }, []);
   const addModirUnitHandler = async (event, onClose) => {
     event.preventDefault();
@@ -97,8 +96,6 @@ function ModirPage(params) {
   //? کد یوس افکت در انتهای این تابع کامنت شد و درست کار میکنه
   return (
     <div className="w-full h-full ">
-
-
       <div className="xl:grid xl:grid-cols-2 xl:grid-flow-row auto-rows-[minmax(0,_2fr)] xl:gap-4">
         <div className="xl:col-span-1  xl:col-start-1 ">
           {/* <Suspense fallback={<p>در حال دریافت اطلاعات مدیر</p>}> */}
@@ -140,31 +137,31 @@ function ModirPage(params) {
                     <ModalHeader className="flex flex-col gap-1 text-md">
                       افزودن واحد سازمانی جدید
                     </ModalHeader>
-                    <ModalBody >
-                      {modir.isActive != 1 && (
+                    <ModalBody>
+                      {/* {modir.isActive != 1 && (
                         <p>
                           صرفا در صورتی امکان افزودن واحد سازمانی جدید را دارید
                           که اطلاعات مدیر در وضعیت تایید شده باشد
                         </p>
-                      )}
-                      {modir.isActive == 1 && (
-                        <form>
-                          <div className="relative mt-2 flex justify-end col-span-1">
-                            <span className="text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24">
-                              کد واحد سازمانی
-                            </span>
-                            <input
-                              className="input-text-modal mt-2 "
-                              type="number"
-                              placeholder="کد واحد سازمانی"
-                              value={unitCode}
-                              onChange={() => setUnitCode(event.target.value)}
-                            ></input>
-                          </div>
-                        </form>
-                      )}
+                      )} */}
+                      {/* {modir.isActive == 1 && ( */}
+                      <form>
+                        <div className="relative mt-2 flex justify-end col-span-1">
+                          <span className="text-[10px] absolute bg-slate-200 p-1 rounded-md left-2  w-24">
+                            کد واحد سازمانی
+                          </span>
+                          <input
+                            className="input-text-modal mt-2 "
+                            type="number"
+                            placeholder="کد واحد سازمانی"
+                            value={unitCode}
+                            onChange={() => setUnitCode(event.target.value)}
+                          ></input>
+                        </div>
+                      </form>
+                      {/* )} */}
                     </ModalBody>
-                    <ModalFooter >
+                    <ModalFooter>
                       <Button
                         color="foreground"
                         variant="light"
@@ -172,14 +169,15 @@ function ModirPage(params) {
                       >
                         بستن
                       </Button>
-                      {modir.isActive == 1 && (
-                        <Button isLoading={isLoading}
+                      {/* {modir.isActive == 1 && ( */}
+                        <Button
+                          isLoading={isLoading}
                           className="bg-btn-primary shadow-lg shadow-indigo-500/20 text-white flex-center"
                           onPress={() => addModirUnitHandler(event, onClose)}
                         >
                           افزودن
                         </Button>
-                      )}
+                      {/* )} */}
                     </ModalFooter>
                   </>
                 )}

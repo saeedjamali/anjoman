@@ -17,8 +17,8 @@ export const roles = {
 };
 
 export const year = [
-  { id: 1, name: "1402-1403", currentYear: true },
-  { id: 2, name: "1403-1404", currentYear: false },
+  { id: 1, name: "1402-1403", currentYear: false },
+  { id: 2, name: "1403-1404", currentYear: true },
 ];
 
 ///?رشته های تحصیلی  ==> در قسمت مدرسین آموزش خانواده
@@ -82,7 +82,8 @@ export const testCenter = [
   },
 ];
 
-export const statusTitle = [{ status: 0, title: "نامشخص" },
+export const statusTitle = [
+  { status: 0, title: "نامشخص" },
   { status: 1, title: "ثبت نام قطعی" },
   { status: 2, title: "قبولی در آزمون " },
   { status: 3, title: "مردود علمی" },
@@ -90,8 +91,8 @@ export const statusTitle = [{ status: 0, title: "نامشخص" },
   { status: 5, title: "قبولی در مصاحبه" },
   { status: 6, title: "رد مصاحبه" },
   { status: 7, title: "اعتراض به آزمون" },
-  { status: 8, title: "اعتراض به مصاحبه" }
-  ]
+  { status: 8, title: "اعتراض به مصاحبه" },
+];
 
 ///?استان ها ==> در قسمت مدرسین آموزش خانواده
 // ? with web api

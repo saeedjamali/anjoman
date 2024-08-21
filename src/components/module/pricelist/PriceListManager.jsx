@@ -38,8 +38,8 @@ const INITIAL_VISIBLE_COLUMNS = ["code", "grade", "gender", "type", "material", 
 const statusColorMap = {
     1: "primary",
     2: "danger",
-    3: "success",
-    4: "warning",
+    3: "warning",
+    4: "success",
     5: "secondary",
 };
 
@@ -284,7 +284,7 @@ export default function PriceListManager({ selectedKeys,
             case "gender":
                 return (
                     <Chip className="capitalize" color={statusColorMap[priceItem.gender]} size="sm" variant="flat">
-                        {cellValue == 1 ? 'پسر ' : 'دختر'}
+                        {cellValue == 1 ? 'پسر ' : cellValue == 2 ? 'دختر' : 'نامشخص'}
                     </Chip>
                 );
             case "grade":

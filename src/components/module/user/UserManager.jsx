@@ -182,11 +182,11 @@ export default function UserManager({ selectedKeys,
                 // const users = data.users.map(user => { return { ...user.User } })
                 // console.log("datata-->", data.users)
                 setUsers(data.users);
-                setIsLoading(false);
+
             } else {
                 toast.info("کاربری یافت نشد")
             }
-
+            setIsLoading(false); 
         } catch (error) {
             console.log("catch error when get users -->", error);
         }

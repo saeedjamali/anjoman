@@ -135,7 +135,7 @@ function Sidebar() {
                                 </span>
                             </SidebarItem>
                         }
-                        {modir?.isActive == 1 && user.role == "modir" &&
+                        {/* {modir?.isActive == 1 && user.role == "modir" &&
                             <SidebarItem title='سرویس مدارس' subMenu={[{ title: 'قرارداد', url: '/p-modir' }]} >
                                 <span className='pl-2 flex-center'>
                                     <BsBusFront />
@@ -143,7 +143,7 @@ function Sidebar() {
                                 </span>
                             </SidebarItem>
 
-                        }
+                        } */}
                         {modir?.isActive == 1 && modir?.role == "modir" &&
                             <SidebarItem title='دوره های آمورشی' subMenu={[{ title: 'قرارداد', url: '/p-modir' }, { title: 'شرکت ها', url: '/p-modir' }]} />
 
