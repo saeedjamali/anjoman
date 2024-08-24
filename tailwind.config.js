@@ -50,6 +50,9 @@ module.exports = {
         footer: "#e4e5ed",
         "header-second": "#f0f0f5",
       },
+      // backgroundImage: {
+      //   'hero-pattern': "url('/images/6856.jpg')",
+      // }
     },
   },
   plugins: [nextui()],
