@@ -38,6 +38,15 @@ export default function Home() {
         theme="light"
       />
       <div className="w-full md:h-screen bg-white lg:flex lg:flex-row-reverse relative ">
+        <div className="absolute top-0 w-full right-0 left-0 opacity-10">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path
+              fill="#2ac2f2"
+              fill-opacity="1"
+              d="M0,32L60,26.7C120,21,240,11,360,26.7C480,43,600,85,720,96C840,107,960,85,1080,106.7C1200,128,1320,192,1380,224L1440,256L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
+            ></path>
+          </svg>
+        </div>
         <div className="order-2 lg:order-1 w-full h-64 md:h-2/5 lg:h-screen lg:w-[60%] xl:w-[70%] bg-gradient-to-b from-primary_color via-primary_color to-secondary_color flex-center  rounded-b-2xl lg:rounded-bl-none lg:rounded-r-2xl ">
           <div className="w-3/5 h-full flex-col-center top-1/4  lg:top-0 space-y-8 mt-8 lg:mt-0 ">
             {/* //? LOGO */}
@@ -112,7 +121,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute bottom-0 w-full right-0 opacity-10">
+          <div className="absolute bottom-0 w-full right-0 left-0 opacity-10">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
               <path
                 fill="#808fff"
