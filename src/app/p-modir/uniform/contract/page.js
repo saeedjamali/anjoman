@@ -133,9 +133,10 @@ function page() {
   useEffect(() => {
     setIsLoadingContractList(true);
     const getContract = async () => {
-      const filterUnit = units.filter((u) => u.isConfirm == 1);
+      //? مدارس تایید شده
+      // const filterUnit = units.filter((u) => u.isConfirm == 1);
       let urlUnits = "";
-      for (const unit of filterUnit) {
+      for (const unit of units) {
         urlUnits += `/${unit.schoolCode}`;
       }
       try {
@@ -522,9 +523,9 @@ function page() {
                       setSelectedYear(key);
                       setFilterUnits(
                         units?.filter(
-                          (item) =>
-                            item.year == year[key - 1]?.name &&
-                            item.isConfirm == 1
+                          (item) => item.year == year[key - 1]?.name
+                          //? مدارس تایید شده
+                          // && item.isConfirm == 1
                         )
                       );
                       setSelectedUnit([]);
@@ -936,9 +937,9 @@ function page() {
                       setSelectedYear(key);
                       setFilterUnits(
                         units?.filter(
-                          (item) =>
-                            item.year == year[key - 1]?.name &&
-                            item.isConfirm == 1
+                          (item) => item.year == year[key - 1]?.name
+                          //? مدارس تایید شده
+                          // && item.isConfirm == 1
                         )
                       );
                       setSelectedUnit([]);

@@ -126,7 +126,8 @@ function Sidebar() {
                             </SidebarItem>
                         }
                         {
-                            modir?.isActive == 1 && user.role == "modir" &&
+                            // modir?.isActive == 1 && user.role == "modir" &&
+                            user.role == "modir" &&
                             <SidebarItem title='لباس فرم' subMenu={[{ title: 'قرارداد', url: '/p-modir/uniform/contract' }]}
                             >
                                 <span className='pl-2 flex-center'>

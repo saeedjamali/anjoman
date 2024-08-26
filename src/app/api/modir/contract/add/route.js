@@ -91,7 +91,8 @@ export async function POST(req) {
 
     imageContractList?.map(async (img, index) => {
       const buffer = Buffer.from(await img.arrayBuffer());
-      const filename = Date.now()+"" + getRndInteger(10000, 100000) + img.name;
+      const filename =
+        Date.now() + "" + getRndInteger(10000, 100000) + img.name;
       const imgPath = path.join(process.cwd(), "upload/contract/" + filename);
       await writeFile(imgPath, buffer);
 
