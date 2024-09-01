@@ -103,12 +103,15 @@ function ModirInformation({ modir }) {
                 theme="light"
             />
             <div className='w-full border-2 border-slate-100 mt-2 font-iranSans'>
-                <div className='flex items-center  bg-slate-100 p-2' onClick={() => setIsModriInformation(prev => !prev)}>
-                    <span className=' w-full flex text-[12px]'>{`اطلاعات مدیر ${isActiveState==0 ? '(در ورود اول تکمیل شود)' : ''}`}</span>
+                <div className='flex items-center justify-between  bg-slate-100 p-2  font-bold' onClick={() => setIsModriInformation(prev => !prev)}>
+                    {isActiveState == 0 ? <div className='flex  items-center'>
+                        <span className=' flex text-[12px]'>اطلاعات مدیر</span><span className='  flex text-[8px] mr-2 font-bold animate-bounce text-gray-900'>(در ورود اول تکمیل شود)</span></div> :
+                        <span className=' w-full flex text-[12px]'>اطلاعات مدیر</span>}
+                    {/* <span className=' w-full flex text-[12px]'>{`اطلاعات مدیر ${isActiveState == 0 ? <span>(در ورود اول تکمیل شود)</span> : ''}`}</span> */}
                     <span className={isActiveState == 0 ? 'text-orange-500 ' : isActiveState == 1 ? ' text-green-500 ' : 'text-red-500'}>
 
                         {!isShowModirInformation ?
-                            <IoIosArrowDropdownCircle /> : <IoIosArrowDropupCircle /> 
+                            <IoIosArrowDropdownCircle /> : <IoIosArrowDropupCircle />
                         }
                     </span>
 

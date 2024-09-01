@@ -115,8 +115,8 @@ function SchoolInformation({ unit, user }) {
 
     return (
         <div>
-            <div className='w-full border-2 border-slate-100 mt-2 '>
-                <div className='flex items-center  bg-slate-100 p-2' onClick={() => setIsShowSchoolInformation(prev => !prev)}>
+            <div className='w-full border-2 border-slate-100 mt-2'>
+                <div className='flex items-center  bg-slate-100 p-2  font-bold' onClick={() => setIsShowSchoolInformation(prev => !prev)}>
                     <p className=' w-full flex text-[12px]'>{`  اطلاعات واحد سازمانی ${schoolName}   - سال تحصیلی ${year}`} </p>
                     <span className={isConfirm == 0 ? 'text-orange-500 ' : isConfirm == 1 ? ' text-green-500 ' : 'text-red-500'}>
 
