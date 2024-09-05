@@ -270,7 +270,7 @@ export default function PriceListContract({ selectedYear, selectedUnit, selected
                                                     </div>
                                                     <div className="flex gap-2 ">
                                                         <Input required autoFocus type="Number" label="تعداد" color={"success"} value={quantity == 0 ? null : quantity} onChange={(event) => setQuantity(event.target.value)} />
-                                                        <Input required type="text" label="قیمت قرارداد (ریال)" color={"success"} value={priceInContract == 0 ? null : parseFloat(priceInContract.replace(/,/g, '')).toLocaleString()} onChange={(e) => setPriceInContract(e.target.value)} />
+                                                        <Input required type="Number" label="قیمت قرارداد (ریال)" color={"success"} value={priceInContract == 0 ? null : parseFloat(priceInContract.replace(/,/g, '')).toLocaleString()} onChange={(e) => setPriceInContract(e.target.value)} />
                                                     </div>
                                                     <span className="text-[12px] text-black">کلیه قیمت ها براساس قیمت واحد می باشد و از درج قیمت کلی خودداری شود</span>
                                                 </div>
