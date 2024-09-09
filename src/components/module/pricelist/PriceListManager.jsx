@@ -290,7 +290,7 @@ export default function PriceListManager({ selectedKeys,
             case "grade":
                 return (
                     <Chip className="capitalize" color={statusColorMap[priceItem.grade]} size="sm" variant="flat">
-                        {cellValue == 1 ? 'کودکستان' : cellValue == 2 ? 'پیش دبستانی' : cellValue == 3 ? 'ابتدایی' : cellValue == 4 ? 'دوره اول متوسطه' : 'دوره دوم متوسطه'}
+                        {cellValue == 1 ? 'کودکستان' : cellValue == 2 ? 'پیش دبستانی' : cellValue == 3 ? 'ابتدایی' : cellValue == 4 ? 'دوره اول متوسطه' : cellValue == 5 ? 'دوره دوم متوسطه' : 'نامشخص'}
                     </Chip>
                 );
             case "actions":
