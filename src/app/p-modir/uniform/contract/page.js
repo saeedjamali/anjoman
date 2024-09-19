@@ -32,6 +32,8 @@ import {
   Tooltip,
   Link,
   Checkbox,
+  RadioGroup,
+  Radio,
 } from "@nextui-org/react";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import ComboSearch from "@/components/module/ComboSearch";
@@ -53,6 +55,7 @@ import { traverse } from "@/utils/convertnumtopersian";
 import { CheckIcon, NotificationIcon, PlusIcon } from "@/utils/icon";
 import ImageLoader from "@/components/module/contrct/ImageLoader";
 import { valiadteMeliCode, valiadtePhone } from "@/utils/auth";
+import ImageProfileUploader from "@/components/module/uploader/ImageProfileUploader";
 function page() {
   const [images, setImages] = useState([]);
   const maxNumberContract = 2;
@@ -87,6 +90,7 @@ function page() {
   const [showSubmitForm, setShowSubmitForm] = useState(false);
   const [imageContractList, setImageContractList] = useState([]);
   const [imageFormDressList, setImageFormDressList] = useState([]);
+
   const [imageContractUrls, setImageContractUrls] = useState([]);
   const [imageFormDressUrls, setImageFormDressUrls] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -109,9 +113,21 @@ function page() {
   //?new company added
   const [companyOwner, setCompanyOwner] = useState(null);
   const [companyPhone, setCompanyPhone] = useState(null);
-  const [companyOwnercode, setCompanyOwnercode] = useState(null);
+  const [companyOwnercode, setCompanyOwnercode] = useState("1111111111");
   const [companyName, setCompanyName] = useState(null);
   const [companyAddress, setCompanyAddress] = useState(null);
+  const [isNoCompany, setIsNoCompany] = useState(false);
+
+  //? Price list
+  const [grade, setGrade] = useState(null);
+  const [gender, setGender] = useState(null);
+  const [type, setType] = useState(null);
+  const [material, setMaterial] = useState(null);
+  const [size, setSize] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [priceInContract, setPriceInContract] = useState(null);
+  const [quantity, setQuantity] = useState(null);
+  const [certImagePricelist, setCertImagePricelist] = useState([]);
 
   if (isClient) {
     // Check if document is finally loaded
@@ -273,7 +289,9 @@ function page() {
       for (const image of imageFormDressList) {
         formData.append("imageFormDressList", image.file);
       }
-
+      for (const image of certImagePricelist) {
+        formData.append("certImagePricelist", image.file);
+      }
       //?  liara uploader
       // for (const url of imageContractUrls) {
       //   formData.append("imageContractUrls", url);
@@ -357,6 +375,20 @@ function page() {
     setImageFormDressList(imageList);
   };
 
+  const onChangeCertImagePricelist = (imageList, addUpdateIndex) => {
+    // data for submit
+    if (imageList.length > 1) {
+      toast.info("صرفا امکان بارگذاری یک تصویر وجود دارد");
+      return;
+    }
+    setCertImagePricelist(imageList);
+  };
+
+  const showModal = () => {
+    onOpen();
+    console.log("User------>", user);
+  };
+
   const getCompany = async (key) => {
     setFetchCompany([]);
     try {
@@ -422,6 +454,8 @@ function page() {
       console.log("error in catch get address-->", error);
     }
   };
+
+  const showAlarmHandler = () => {};
 
   return (
     <>
@@ -579,7 +613,10 @@ function page() {
                         این قسمت
                         <span
                           className="bg-blue-500 font-bold px-1 mx-2 text-white rounded-lg cursor-pointer"
-                          onClick={onOpen}
+                          onClick={() => {
+                            setAction(2);
+                            onOpen();
+                          }}
                         >
                           {" "}
                           اضافه{" "}
@@ -853,6 +890,27 @@ function page() {
                                           }
                                           selectedPricelist={selectedPricelist}
                                         />
+                                        <div className="mt-4">
+                                          چنانچه محصول شما در لیست محصولات یافت
+                                          نشد از{" "}
+                                          <span
+                                            className="text-blue-500 font-bold cursor-pointer "
+                                            onClick={() => {
+                                              setAction(3);
+                                              onOpen();
+                                            }}
+                                          >
+                                            {" "}
+                                            اینجا{" "}
+                                          </span>{" "}
+                                          اضافه نمایید. برای ثبت محصول جدید خارج
+                                          از لیست، اخذ مجوز
+                                          <span className="text-red-500 font-bold mx-1">
+                                            {" "}
+                                            الزامی{" "}
+                                          </span>
+                                          می باشد.
+                                        </div>
                                       </div>
                                     ) : (
                                       <div className="mt-2">
@@ -1205,7 +1263,25 @@ function page() {
                                 </div>
                               </TableCell>
                             </TableRow>
-
+                            <TableRow key="9">
+                              <TableCell>
+                                تصاویر بارگذاری شده از مجوز محصول{" "}
+                              </TableCell>
+                              <TableCell>
+                                <div className="gap-2 flex w-full ">
+                                  {currenContract.certImagePricelist.map(
+                                    (image, index) => (
+                                      <div key={index}>
+                                        <ImageLoader
+                                          imageUrl={image}
+                                          code={"pricelist"}
+                                        />
+                                      </div>
+                                    )
+                                  )}
+                                </div>
+                              </TableCell>
+                            </TableRow>
                             <TableRow key="10">
                               <TableCell>توضیحات کارشناس</TableCell>
                               <TableCell>
@@ -1236,12 +1312,13 @@ function page() {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         radius="lg"
+        size="2xl"
         classNames={{
-          body: "py-6",
+          body: "py-6 bg-white",
           backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
           base: "border-[#292f46] bg-slate-700 text-[#a8b0d3]",
-          header: "border-b-[1px] border-[#292f46]",
-          footer: "border-t-[1px] border-[#292f46]",
+          header: " border-[#292f46]  bg-primary_color text-white",
+          footer: " border-[#292f46] bg-white",
           closeButton: "hover:bg-white/5 active:bg-white/10",
         }}
       >
@@ -1268,7 +1345,7 @@ function page() {
                             </div>
                             <div className="flex gap-2 ">
                               <input
-                                className={`input-text-information mt-2 text-white `}
+                                className={`input-text-information mt-2 `}
                                 name="maleno"
                                 type="text"
                                 disabled
@@ -1322,7 +1399,7 @@ function page() {
               </>
             )}
           </ModalContent>
-        ) : (
+        ) : action == 2 ? (
           <ModalContent>
             {(onClose) => (
               <>
@@ -1332,29 +1409,40 @@ function page() {
                 <ModalBody>
                   {
                     <div>
-                      <form>
-                        <div className="relative mt-2 flex justify-end col-span-1">
-                          <div className="flex flex-col  w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
-                            <div className="space-y-2">
-                              <Input
-                                isRequired
-                                type="text"
-                                label="نام و نام خانوادگی مالک"
-                                value={companyOwner}
-                                onChange={() =>
-                                  setCompanyOwner(event.target.value)
-                                }
-                              />
-                              <Input
-                                isRequired
-                                type="Number"
-                                label="شماره همراه مالک"
-                                value={companyPhone}
-                                onChange={() =>
-                                  setCompanyPhone(event.target.value)
-                                }
-                              />
-                              <Input
+                      <div className="my-4 font-bold">
+                        <Checkbox
+                          size="sm"
+                          radius="md"
+                          isSelected={isNoCompany}
+                          onValueChange={setIsNoCompany}
+                        >
+                          از عدم وجود نام شرکت در لیست شرکت ها اطمینان دارم.
+                        </Checkbox>
+                      </div>
+                      {isNoCompany && (
+                        <form>
+                          <div className="relative mt-2 flex justify-end col-span-1">
+                            <div className="flex flex-col  w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
+                              <div className="space-y-2">
+                                <Input
+                                  isRequired
+                                  type="text"
+                                  label="نام و نام خانوادگی مالک"
+                                  value={companyOwner}
+                                  onChange={() =>
+                                    setCompanyOwner(event.target.value)
+                                  }
+                                />
+                                <Input
+                                  isRequired
+                                  type="Number"
+                                  label="شماره همراه مالک"
+                                  value={companyPhone}
+                                  onChange={() =>
+                                    setCompanyPhone(event.target.value)
+                                  }
+                                />
+                                {/* <Input
                                 isRequired
                                 type="Number"
                                 label="کدملی"
@@ -1362,29 +1450,30 @@ function page() {
                                 onChange={() =>
                                   setCompanyOwnercode(event.target.value)
                                 }
-                              />
-                              <Input
-                                isRequired
-                                type="text"
-                                label="نام شرکت"
-                                value={companyName}
-                                onChange={() =>
-                                  setCompanyName(event.target.value)
-                                }
-                              />
-                              <Input
-                                isRequired
-                                type="text"
-                                label="آدرس"
-                                value={companyAddress}
-                                onChange={() =>
-                                  setCompanyAddress(event.target.value)
-                                }
-                              />
+                              /> */}
+                                <Input
+                                  isRequired
+                                  type="text"
+                                  label="نام شرکت"
+                                  value={companyName}
+                                  onChange={() =>
+                                    setCompanyName(event.target.value)
+                                  }
+                                />
+                                <Input
+                                  isRequired
+                                  type="text"
+                                  label="آدرس"
+                                  value={companyAddress}
+                                  onChange={() =>
+                                    setCompanyAddress(event.target.value)
+                                  }
+                                />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </form>
+                        </form>
+                      )}
                     </div>
                   }
                 </ModalBody>
@@ -1416,10 +1505,10 @@ function page() {
                         return;
                       }
 
-                      if (!valiadteMeliCode(companyOwnercode)) {
-                        toast.info("کد ملی ده رقمی وارد شود");
-                        return;
-                      }
+                      // if (!valiadteMeliCode(companyOwnercode)) {
+                      //   toast.info("کد ملی ده رقمی وارد شود");
+                      //   return;
+                      // }
 
                       try {
                         setIsLoading(true);
@@ -1463,7 +1552,211 @@ function page() {
               </>
             )}
           </ModalContent>
-        )}
+        ) : action == 3 ? (
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1 font-iranyekanMedium text-md">
+                  تکمیل اطلاعات محصول
+                </ModalHeader>
+                <ModalBody>
+                  {
+                    <div>
+                      <form>
+                        <div className="relative mt-2 flex justify-end col-span-1">
+                          <div className="flex flex-col  w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
+                            <div className="space-y-2">
+                              <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                                <RadioGroup
+                                  isRequired
+                                  tabIndex={4}
+                                  isDisabled={false}
+                                  className="flex justify-between items-start p-2 text-[14px]"
+                                  label="مقطع"
+                                  orientation="horizontal"
+                                  value={grade + ""}
+                                  onValueChange={setGrade}
+                                >
+                                  <Radio value="1" size="sm">
+                                    کودکستان
+                                  </Radio>
+                                  <Radio value="2" size="sm">
+                                    پیش دبستانی{" "}
+                                  </Radio>
+                                  <Radio value="3" size="sm">
+                                    ابتدایی{" "}
+                                  </Radio>
+                                  <Radio value="4" size="sm">
+                                    متوسطه اول{" "}
+                                  </Radio>
+                                  <Radio value="5" size="sm">
+                                    متوسطه دوم{" "}
+                                  </Radio>
+                                </RadioGroup>
+                              </div>
+                              <div className="bg-stone-100 rounded-lg w-full items-start justify-start ">
+                                <RadioGroup
+                                  isRequired
+                                  tabIndex={4}
+                                  isDisabled={false}
+                                  className="flex justify-between items-start p-2 text-[14px]"
+                                  label="جنسیت"
+                                  orientation="horizontal"
+                                  value={gender + ""}
+                                  onValueChange={setGender}
+                                >
+                                  <Radio value="2" size="sm">
+                                    دختر
+                                  </Radio>
+                                  <Radio value="1" size="sm">
+                                    پسر
+                                  </Radio>
+                                </RadioGroup>
+                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
+                                <div className=" relative flex justify-start col-span-1 ">
+                                  <Input
+                                    isRequired
+                                    type="text"
+                                    label="نوع لباس"
+                                    placeholder="مانند : مانتو شلوار"
+                                    value={type}
+                                    onChange={() => setType(event.target.value)}
+                                  />
+                                </div>
+                                <div className=" relative  flex justify-start col-span-1 mt-2 md:mt-0 ">
+                                  <Input
+                                    isRequired
+                                    type="text"
+                                    label="جنس لباس"
+                                    placeholder="مانند تترون مشهد"
+                                    value={material}
+                                    onChange={() =>
+                                      setMaterial(event.target.value)
+                                    }
+                                  />
+                                </div>
+                              </div>
+                              <Input
+                                isRequired
+                                type="text"
+                                label="سایز"
+                                placeholder="مانند سایز 1 و 2"
+                                value={size}
+                                onChange={() => setSize(event.target.value)}
+                              />
+
+                              <div className="grid grid-cols-1 md:grid-cols-2  md:gap-4">
+                                <div className=" relative flex justify-start col-span-1 ">
+                                  <Input
+                                    isRequired
+                                    type="Number"
+                                    label="قیمت اتحادیه"
+                                    value={price}
+                                    onChange={() =>
+                                      setPrice(event.target.value)
+                                    }
+                                  />
+                                </div>
+                                <div className=" relative flex justify-start col-span-1  mt-2 md:mt-0 ">
+                                  <Input
+                                    isRequired
+                                    type="Number"
+                                    label="قیمت قرارداد"
+                                    value={priceInContract}
+                                    onChange={() =>
+                                      setPriceInContract(event.target.value)
+                                    }
+                                  />
+                                </div>
+                              </div>
+
+                              <Input
+                                isRequired
+                                type="text"
+                                label="تعداد"
+                                value={quantity}
+                                onChange={() => setQuantity(event.target.value)}
+                              />
+
+                              <div className=" flex items-center justify-between bg-slate-100 rounded-md p-4 text-[12px]">
+                                <div className="text-slate-800">
+                                  تصویر مجوز محصول
+                                </div>
+                                <div className="flex ">
+                                  <ImageProfileUploader
+                                    imageItems={certImagePricelist}
+                                    onChange={onChangeCertImagePricelist}
+                                    maxNumber={1}
+                                    acceptType={acceptType}
+                                    maxFileSize={maxFileSize}
+                                    // user={user}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  }
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="foreground" variant="light" onPress={onClose}>
+                    بستن
+                  </Button>
+                  <Button
+                    isLoading={isLoading}
+                    className="bg-green-700 text-white"
+                    color="success"
+                    variant="light"
+                    onClick={async () => {
+                      if (
+                        !(
+                          gender &&
+                          grade &&
+                          material &&
+                          priceInContract &&
+                          price &&
+                          quantity &&
+                          type &&
+                          size &&
+                          certImagePricelist.length != 0
+                        )
+                      ) {
+                        toast.error("کلیه موارد با دقت تکمیل شود");
+                        return;
+                      }
+                      const customPricelist = {
+                        gender,
+                        grade,
+                        material,
+                        priceInContract,
+                        price,
+                        quantity,
+                        type,
+                        size,
+                        code: 1000 + selectedPricelist.length,
+                        year: currentYear.name,
+                        group: "5",
+                      };
+                      setSelectedPricelist((prev) => [
+                        ...prev,
+                        customPricelist,
+                      ]);
+
+                      setIsLoading(false);
+                      onClose();
+                    }}
+                  >
+                    افزودن
+                    {/* <div className="flex-center">{false && <Spinner />}</div> */}
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        ) : null}
       </Modal>
     </>
   );

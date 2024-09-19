@@ -132,7 +132,7 @@ export default function PriceListContract({ selectedYear, selectedUnit, selected
 
     const renderCell = React.useCallback((item, columnKey) => {
         const cellValue = item[columnKey];
-
+        console.log("item--->", item)
         switch (columnKey) {
             case "gender":
 

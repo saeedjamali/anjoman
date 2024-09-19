@@ -2,15 +2,15 @@ import mongoose from "mongoose";
 import user from "@/models/base/User";
 import modir from "@/models/modiran/modir";
 import company from "@/models/company/company";
-import { unitSchema } from "@/models/base/Unit"
-import { pricelistSchema } from "@/models/company/pricelist"
+import { unitSchema } from "@/models/base/Unit";
+import { pricelistSchema } from "@/models/company/pricelist";
 
 const schema = mongoose.Schema(
   {
     code: {
       type: Number,
       default: () => Date.now(),
-      immutable: false
+      immutable: false,
     },
     imageContractList: {
       type: [String],
@@ -22,16 +22,20 @@ const schema = mongoose.Schema(
       default: [],
       required: false,
     },
+    certImagePricelist: {
+      type: [String],
+      default: [],
+      required: false,
+    },
     year: {
       type: String,
       default: "",
-      required: true
+      required: true,
     },
     address: {
       type: String,
       default: "",
-      required: false
-
+      required: false,
     },
     lng: {
       type: String,
@@ -71,11 +75,11 @@ const schema = mongoose.Schema(
     },
     description: {
       type: String,
-      default: ""
+      default: "",
     },
     limited: {
       type: Number,
-      default: 1
+      default: 1,
     },
     // modirUnit: {
     //     type: mongoose.Types.ObjectId,

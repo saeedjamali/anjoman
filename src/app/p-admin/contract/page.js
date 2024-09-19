@@ -150,8 +150,7 @@ function ContractPage() {
           // console.log("foundUnit ----->", unit.schoolCode)
           contractlist.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
           const foundUnit = contractlist.find(
-            (cl) => cl.unitcode == unit.schoolCode 
-            && cl.isConfirm != 2
+            (cl) => cl.unitcode == unit.schoolCode && cl.isConfirm != 2
           );
           if (foundUnit) {
             // console.log("founded--->", foundUnit);
@@ -234,9 +233,7 @@ function ContractPage() {
   return (
     <>
       <ToastContainer
-        bodyClassName={() =>
-          " flex-center text-sm font-white p-3"
-        }
+        bodyClassName={() => " flex-center text-sm font-white p-3"}
         position="top-left"
         rtl={true}
         autoClose={5000}
@@ -259,9 +256,7 @@ function ContractPage() {
               {/* {<CountUp start={0} end={countUnits}></CountUp>} */}
               {countUnits}
             </span>
-            <span className="text-white  text-md">
-              واحد سازمانی
-            </span>
+            <span className="text-white  text-md">واحد سازمانی</span>
           </Button>
           <Button
             className="flex flex-col items-center justify-center h-24 col-span-1"
@@ -272,36 +267,26 @@ function ContractPage() {
                 ? countUnits - uniqueUnitValue.length
                 : 0}
             </span>
-            <span className="text-white  text-md">
-              بدون اقدام
-            </span>
+            <span className="text-white  text-md">بدون اقدام</span>
           </Button>
           <Button
             className="flex flex-col items-center justify-center h-24 col-span-1"
             color="secondary"
           >
-            <span className="text-white  text-2xl">
-              {countWithoutContract}
-            </span>
-            <span className="text-white  text-md">
-              بدون قرارداد
-            </span>
+            <span className="text-white  text-2xl">{countWithoutContract}</span>
+            <span className="text-white  text-md">بدون قرارداد</span>
           </Button>
           <Button
             className="flex flex-col items-center justify-center h-24 col-span-1"
             color="success"
           >
-            <span className="text-white text-2xl">
-              {countIsConfirm}
-            </span>
-            <span className="text-white text-md">
-              قرارداد تایید شده
-            </span>
+            <span className="text-white text-2xl">{countIsConfirm}</span>
+            <span className="text-white text-md">قرارداد تایید شده</span>
           </Button>
         </div>
         <div className="p-4 bg-slate-200 rounded-lg">
           <div className="mb-4 p-4 bg-slate-300 rounded-lg flex items-center justify-between">
-            <span >لیست قراردادها</span>
+            <span>لیست قراردادها</span>
 
             <div className="flex-center gap-8">
               <span className="text-[12px]">
@@ -486,6 +471,25 @@ function ContractPage() {
                                     <ImageLoader
                                       imageUrl={image}
                                       code={"formdress"}
+                                    />
+                                  </div>
+                                )
+                              )}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow key="9">
+                          <TableCell>
+                            تصاویر بارگذاری شده از مجوز محصول
+                          </TableCell>
+                          <TableCell>
+                            <div className="gap-2 flex w-full ">
+                              {currenContract.certImagePricelist.map(
+                                (image, index) => (
+                                  <div key={index}>
+                                    <ImageLoader
+                                      imageUrl={image}
+                                      code={"pricelist"}
                                     />
                                   </div>
                                 )

@@ -9,6 +9,7 @@ import path from "path";
 export async function POST(req) {
   const { isConnected, message } = await connectToDB();
   const formData = await req.formData();
+  const certImagePricelist = formData.getAll("certImagePricelist");
   const imageFormDressList = formData.getAll("imageFormDressList");
   const imageFormDressUrls = formData.getAll("imageFormDressUrls");
   const imageContractList = formData.getAll("imageContractList");
@@ -139,6 +140,26 @@ export async function POST(req) {
           $push: {
             // imageFormDressList: `${process.env.LOCAL_URL}/upload/formdress/${filename}`,
             imageFormDressList: `${filename}`,
+          },
+        }
+      );
+    });
+
+    certImagePricelist?.map(async (img, index) => {
+      const buffer = Buffer.from(await img.arrayBuffer());
+      const filename =
+        Date.now() + "" + getRndInteger(10000, 100000) + img.name;
+      const imgPath = path.join(process.cwd(), "upload/pricelist/" + filename);
+      await writeFile(imgPath, buffer);
+      // imageContractListUrl.push(
+      //   `${process.env.LOCAL_URL}/upload/formdress/${filename}`
+      // );
+      await contractModel.updateOne(
+        { _id: contract._id },
+        {
+          $push: {
+            // imageFormDressList: `${process.env.LOCAL_URL}/upload/formdress/${filename}`,
+            certImagePricelist: `${filename}`,
           },
         }
       );
