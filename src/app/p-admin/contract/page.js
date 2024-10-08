@@ -445,7 +445,7 @@ function ContractPage() {
                         </TableRow>
 
                         <TableRow key="7">
-                          <TableCell>تصاویر بارگذاری شده از قرارداد</TableCell>
+                          <TableCell>تصاویر بارگذاری شده از صورت‌جلسه شورای مدرسه</TableCell>
                           <TableCell>
                             <div className="gap-2 flex w-full ">
                               {currenContract.imageContractList.map(

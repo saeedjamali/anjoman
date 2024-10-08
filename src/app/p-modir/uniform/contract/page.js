@@ -716,7 +716,7 @@ function page() {
                               </TableRow>
                               <TableRow key="7">
                                 <TableCell>
-                                  <div>تصاویر بارگذاری شده از قرارداد</div>
+                                  <div>تصاویر بارگذاری شده از صورت‌جلسه شورای مدرسه</div>
                                   <div className="text-[10px] text-red-400">
                                     حداکثر دو تصویر با حجم 300 کیلوبایت
                                   </div>
@@ -1165,7 +1165,7 @@ function page() {
 
                             <TableRow key="7">
                               <TableCell>
-                                تصاویر بارگذاری شده از قرارداد
+                                تصاویر بارگذاری شده از صورت‌جلسه شورای مدرسه
                               </TableCell>
                               <TableCell>
                                 <div className="gap-2 flex w-full ">
