@@ -7,8 +7,9 @@ export async function POST(req) {
     const body = await req.json();
     const { phone, code } = body;
 
-    // Validation (You) ✅
-
+    if (!phone) {
+        throw new Error("phone is not corrected...");
+      }
     try {
         const { isConnected } = await connectToDB();
         if (!isConnected) {
