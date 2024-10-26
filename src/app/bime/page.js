@@ -164,7 +164,7 @@ function bimePage() {
             </p>
           </CardFooter>
         </Card>
-        <p className="z-0 text-white text-[10px] absolute bottom-4   shadow-sm text-center">
+        <p className="z-0 text-white text-[10px] absolute bottom-3   shadow-sm text-center">
           مالکیت مادی و معنوی این سایت متعلق به اداره کل آموزش و پرورش خراسان
           رضوی می باشد.
         </p>

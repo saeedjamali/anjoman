@@ -289,6 +289,15 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                 type="text"
                                 color='primary'
                                 value={prs?.regCode + " - " + prs?.regName} />
+                            <Input
+                                label="وضعیت فعلی بیمه عمر "
+                                isInvalid={isInvalidIdentifier}
+                                size='sm'
+                                isDisabled
+                                type="text"
+                                color='primary'
+                                value={prs?.result ? "غیرفعال" : " فعال"} />
+
 
                             {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
                             <div className='relative mt-2  flex justify-start items-start text-right'>
