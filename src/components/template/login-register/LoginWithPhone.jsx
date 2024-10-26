@@ -302,8 +302,11 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
 
                             {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
                             <div className='relative mt-2  flex justify-start items-start text-right'>
-                                <Checkbox tabIndex={11} size='sm' isSelected={isSubmit} onValueChange={setIsSubmit} radius="md">
-                                    اینجانب با اطلاع و آگاهی کامل از شرایط قرارداد بیمه عمر مکمل1404-1403( حق بیمه سالانه4/801/824ریال و پرداخت غرامت نقص عضو،ازکارافتادگی در اثر حوادث و فوت700/000/000ریال)  انصراف خود را از این بیمه اعلام می نمایم.
+                                <Checkbox size='sm' isSelected={isSubmit} onValueChange={setIsSubmit} radius="md" >
+                                    <p className='text-[12px] text-justify'>
+                                        اینجانب با اطلاع و آگاهی کامل از شرایط قرارداد بیمه عمر مکمل1404-1403( حق بیمه سالانه4/801/824ریال و پرداخت غرامت نقص عضو،ازکارافتادگی در اثر حوادث و فوت700/000/000ریال)  انصراف خود را از این بیمه اعلام می نمایم.
+                                    </p>
+
                                 </Checkbox>
                             </div>
                             {/* isDisabled={!isSubmit} */}
