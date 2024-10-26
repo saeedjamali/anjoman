@@ -140,8 +140,8 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
             const data = await res.json();
 
             if (data.status == 200) {
-                setIsAuth(false)
-                setIsSendSms(false);
+                // setIsAuth(false)
+                // setIsSendSms(false);
 
                 toast.success(data.message);
             } else {
@@ -155,6 +155,10 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         }
     }
 
+    const handleExit = () => {
+        setIsAuth(false)
+        setIsSendSms(false);
+    }
 
     return (
         <div>
@@ -219,6 +223,12 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                     >
                                         {({ remainingTime }) => remainingTime}
                                     </CountdownCircleTimer>
+                                </span>
+                            </Button>
+                            <Button type='submit' className="w-full bg-btn-secondary text-black  text-[16px] py-2 rounded-full mt-4 flex-center" onClick={() => setIsSendSms(false)} >
+                                <span className='flex-1 text-[14px]'>بازگشت به مرحله قبل</span>
+                                <span className="ml-2 text-[10px]">
+
                                 </span>
                             </Button>
                         </form>
@@ -286,10 +296,13 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                     اینجانب با اطلاع و آگاهی کامل از شرایط قرارداد بیمه عمر مکمل1404-1403( حق بیمه سالانه4/801/824ریال و پرداخت غرامت نقص عضو،ازکارافتادگی در اثر حوادث و فوت700/000/000ریال)  انصراف خود را از این بیمه اعلام می نمایم.
                                 </Checkbox>
                             </div>
-                            <Button isLoading={isLoading} type='submit' isDisabled={!isSubmit} color='success' className="w-full  text-white text-[16px] py-2 rounded-full mt-8 flex-center " onClick={() => handleSubmit(event)}>
+                            {/* isDisabled={!isSubmit} */}
+                            <Button isLoading={isLoading} type='submit' color='success' className="w-full  text-white text-[16px] py-2 rounded-full mt-8 flex-center " onClick={() => handleSubmit(event)}>
                                 تایید
                             </Button>
-
+                            <Button type='submit' color='danger' className="w-full  text-white text-[16px] py-2 rounded-full mt-8 flex-center " onClick={() => handleExit(event)}>
+                                خروج
+                            </Button>
 
                         </form>
 

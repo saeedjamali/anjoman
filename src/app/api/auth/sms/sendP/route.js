@@ -12,14 +12,14 @@ export async function POST(req) {
     connectToDB();
     const body = await req.json();
     const { phone } = body;
-    console.log("Phone---->",phone)
+    console.log("Phone---->", phone);
     if (!phone) {
       throw new Error("This api protected and you can't access it !!");
     }
     const now = new Date();
     const expTime = now.getTime() + 300_000; // 5 Mins
     const code = Math.floor(Math.random() * 99999);
-   
+
     request.post(
       {
         url: "https://sms.3300.ir/api/wsSend.ashx",
@@ -28,7 +28,7 @@ export async function POST(req) {
           password: "r@zAv!1398*",
           line: "9830007485",
           mobile: phone,
-          message: { "کد اعتبارسنجی ثبت بیمه ": code },
+          message: `کد اعتبارسنجی سامانه ثبت بیمه عمر:${code}  `,
           type: 0,
           template: 0,
         },
