@@ -17,7 +17,6 @@ export async function PUT(req, { params }) {
       return Response.json({ message: "اطلاعات پرسنل یافت نشد", status: 401 });
     }
 
-    console.log("prs---------->", prs);
     if (prs.phone && prs.phone != phone) {
       return Response.json({
         message: "اطلاعات قبلا با شماره همراه دیگری ثبت شده است",
