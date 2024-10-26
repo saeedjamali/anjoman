@@ -127,6 +127,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
     }
 
     const handleSubmit = async (event) => {
+        console.log("isSubmit--->", isSubmit)
         event.preventDefault();
         setIsLoading(true)
         try {
@@ -142,7 +143,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
             if (data.status == 200) {
                 // setIsAuth(false)
                 // setIsSendSms(false);
-
+                setPrs({ ...prs, result: isSubmit })
                 toast.success(data.message);
             } else {
                 toast.error(data.message);
