@@ -58,7 +58,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         const res = await fetch(`/api/prs/${identifier}`);
         const data = await res.json();
         if (data.status == 200) {
-            console.log("Data is --->", data)
+            // console.log("Data is --->", data)
             setPrs(data.prs)
             const res = await fetch("/api/auth/sms/sendP", {
                 method: "POST",
@@ -127,7 +127,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
     }
 
     const handleSubmit = async (event) => {
-        console.log("isSubmit--->", isSubmit)
+        // console.log("isSubmit--->", isSubmit)
         event.preventDefault();
         setIsLoading(true)
         try {
@@ -296,7 +296,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                 size='sm'
                                 isDisabled
                                 type="text"
-                                color='primary'
+                                color={prs?.result ? 'danger' : 'success'}
                                 value={prs?.result ? "غیرفعال" : " فعال"} />
 
 
