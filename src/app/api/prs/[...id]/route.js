@@ -6,7 +6,8 @@ export async function GET(req, { params }) {
   // if (!(await authenticateMe())) {
   //   return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
   // }
-  const prsCode = params.id;
+  const prsCode = params.id[0];
+  const phone = params.id[1];
 
   try {
     const { isConnected, message } = await connectToDB();
@@ -22,10 +23,31 @@ export async function GET(req, { params }) {
     }
 
     const foundedPrs = await prsModel.findOne({ prsCode });
-   
+
     if (!foundedPrs) {
       return Response.json({
         message: "کد پرسنلی یافت نشد",
+        status: 401,
+      });
+    }
+
+    if (foundedPrs && foundedPrs.phone && foundedPrs.phone != phone) {
+      let phoneSlice =
+        "" +
+        foundedPrs.phone.slice(8, 11) +
+        "****" +
+        foundedPrs.phone.slice(0, 4) +
+        "";
+      return Response.json({
+        message: `برای این کد پرسنلی قبلا با شماره همراه ${phoneSlice} فرم تکمیل شده است`,
+        status: 401,
+      });
+    }
+    const foundedPhone = await prsModel.findOne({ phone });
+
+    if (foundedPhone && foundedPhone.prsCode != prsCode) {
+      return Response.json({
+        message: "این شماره همراه قبلا برای فرد دیگری استفاده شده است.",
         status: 401,
       });
     }

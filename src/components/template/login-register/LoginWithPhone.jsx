@@ -55,7 +55,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
 
 
         setWaitForSendOtpCode(true);
-        const res = await fetch(`/api/prs/${identifier}`);
+        const res = await fetch(`/api/prs/${identifier}/${phone}`);
         const data = await res.json();
         if (data.status == 200) {
             // console.log("Data is --->", data)
@@ -79,7 +79,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
 
         } else {
 
-            toast.error("پرسنلی با این کد پرسنلی یافت نشد");
+            toast.error(data.message);
             setWaitForSendOtpCode(false);
         }
         setWaitForSendOtpCode(false);
