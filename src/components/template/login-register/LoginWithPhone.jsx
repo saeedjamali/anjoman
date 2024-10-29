@@ -1,30 +1,50 @@
 import { useAppProvider } from '@/components/context/AppProviders';
 import { valiadteMeliCode, valiadtePassword, valiadtePhone, valiadtePrsCode, valiadteRegionCode, valiadteSchoolCode } from '@/utils/auth';
 import { authTypes, roles, year } from '@/utils/constants'
-import { Button, Checkbox } from '@nextui-org/react';
+import {
+    Button, Checkbox, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    useDisclosure,
+} from '@nextui-org/react';
 import { Input } from "@nextui-org/react";
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { IoMdArrowRoundForward } from 'react-icons/io'
 import { toast } from 'react-toastify';
 import { EyeFilledIcon, EyeSlashFilledIcon } from '@/utils/icon';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
-
+import { useReactToPrint } from 'react-to-print';
 function LoginWithPhone({ SetAuthTypesForm, role }) {
     const [isVisible, setIsVisible] = React.useState(false);
     const [isInvalidPhone, setIsInvalidPhone] = useState(false)
     const [isInvalidPassword, setIsInvalidPassword] = useState(false)
     const [isInvalidIdentifier, setIsInvalidIdentifier] = useState(false)
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const toggleVisibility = () => setIsVisible(!isVisible);
     const [otp, setOtp] = useState("");
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingReport, setIsLoadingReport] = useState(false)
     const [isSendSms, setIsSendSms] = useState(false)
     const [isAuth, setIsAuth] = useState(false)
     const [isSubmit, setIsSubmit] = useState(false)
     const [prs, setPrs] = useState(null)
+    const [report, setReport] = useState(null)
+    const [result, setResult] = useState(null)
+    const [prss, setPrss] = useState(null)
+    const { regions, setRegions } = useState(null);
 
     const finishTimer = () => {
         setIsSendSms(false)
     }
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: 'Report',
+        onAfterPrint: () => console.log('Printed PDF successfully!'),
+        copyStyles: true
+    });
 
     const { phone,
         setPhone,
@@ -86,12 +106,6 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         setIsInvalidPhone(false)
         setIsInvalidPassword(false)
         setIsInvalidIdentifier(false)
-
-
-
-
-
-
 
     }
 
@@ -161,10 +175,35 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         setIsSendSms(false);
     }
 
+    const handleReport = async () => {
+        setIsLoadingReport(true);
+        try {
+
+
+
+            const res = await fetch("/api/prs/getall", {
+                method: "POST",
+                header: {
+                    "content-Type": "application/json"
+                },
+                body: JSON.stringify({ role: prs.role })
+            });
+            const dataPrs = await res.json();
+            setReport(dataPrs.result.report.sort((a, b) => a.regCode - b.regCode))
+            setResult(dataPrs.result)
+
+            setIsLoadingReport(false)
+        } catch (error) {
+
+            setIsLoadingReport(false)
+
+        }
+        onOpen();
+    }
+
     return (
         <div>
             <div className="min-w-64 flex flex-col h-auto min-h-80">
-
                 <div className="w-full flex-1" >
                     {!isSendSms && !isAuth &&
                         <form className="w-full" >
@@ -320,10 +359,150 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                         </form>
 
                     }
+
+                    {isAuth && prs?.role == "9998" &&
+                        <Button isLoading={isLoadingReport} type='submit' color='primary' className="w-full  text-white text-[16px] py-2 rounded-full mt-4 flex-center " onClick={() => handleReport(event)}>
+                            {isLoadingReport ? " در حال تولید گزارش " : "مشاهده گزارش "}
+                        </Button>
+                    }
                 </div>
 
             </div>
-        </div>
+
+            <Modal
+                backdrop="opaque"
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+
+                size='5xl'
+                radius="lg"
+                classNames={{
+                    body: "py-6 bg-white",
+                    backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+                    base: "border-[#292f46] bg-slate-500 text-black",
+                    header: " border-[#292f46] text-white  bg-primary_color ",
+                    footer: " border-[#292f46] bg-white",
+                    closeButton: "hover:bg-white/5 active:bg-white/10 ",
+                }}
+            >
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col justify-between items-start ">
+                                گزارش آماری
+                            </ModalHeader>
+                            <ModalBody className='overflow-auto scroll-auto max-h-[450px]'>
+
+                                <div dir="rtl" className=' bg-white' >
+                                    <div dir="rtl" className=' bg-white p-4 ' ref={componentRef}>
+
+                                        <p className='font-bold my-8 text-center'> گزارش آماری انصراف از بیمه عمر استان خراسان رضوی
+                                            <span className='text-[12px] '> (تاریخ گزارش : {new Date().toLocaleString('fa-IR')})</span>
+                                        </p>
+
+                                        <div className='grid grid-cols-3 gap-4 font-bold m-8 ring-1 ring-black rounded-md p-4'>
+                                            <div className='p-4 col-span-1 bg-slate-300 rounded-lg flex flex-col'>
+                                                <p className='text-center'>کل پرسنل</p>
+                                                <div className='flex justify-between items-center'>
+                                                    <div className='flex flex-col'>
+                                                        <span className='mt-4'> کل : {result?.allShaqel + result?.allBaz} </span>
+
+                                                        <span className='mt-4'> انصراف: {result?.allcancelShaqel + result?.allCancelBaz} </span>
+                                                    </div>
+                                                    <span className='w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white'>
+                                                        {(((result?.allcancelShaqel + result?.allCancelBaz) / (result?.allShaqel + result?.allBaz)) * 100).toFixed(2)} %
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                            <div className='p-4 col-span-1 bg-slate-300 rounded-lg flex flex-col'>
+                                                <p className='text-center'>شاغلین</p>
+                                                <div className='flex justify-between items-center'>
+                                                    <div className='flex flex-col'>
+                                                        <span className='mt-4'> کل : {result?.allShaqel} </span>
+                                                        <span className='mt-4'> انصراف: {result?.allcancelShaqel} </span>
+                                                    </div>
+                                                    <span className='w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white'>
+                                                        {(((result?.allcancelShaqel) / (result?.allShaqel)) * 100).toFixed(2)} %
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                            <div className='p-4 col-span-1 bg-slate-300 rounded-lg flex flex-col'>
+                                                <p className='text-center'>بازنشسته</p>
+                                                <div className='flex justify-between items-center'>
+                                                    <div className='flex flex-col'>
+                                                        <span className='mt-4'> کل : {result?.allBaz} </span>
+                                                        <span className='mt-4'> انصراف: {result?.allCancelBaz} </span>
+                                                    </div>
+                                                    <span className='w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white '>
+                                                        {(((result?.allCancelBaz) / (result?.allBaz)) * 100).toFixed(2)} %
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+
+
+                                        </div>
+                                        <Table className='' isStriped aria-label="Example static collection table " >
+                                            <TableHeader>
+                                                <TableColumn >منطقه</TableColumn>
+                                                <TableColumn > نام منطقه </TableColumn>
+                                                <TableColumn > شاغل</TableColumn>
+                                                <TableColumn >انصرافی</TableColumn>
+                                                <TableColumn > بازنشسته</TableColumn>
+                                                <TableColumn >انصرافی</TableColumn>
+                                                <TableColumn >کل</TableColumn>
+                                                <TableColumn >انصرافی</TableColumn>
+                                                <TableColumn >درصد انصراف</TableColumn>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {report.map(item => {
+                                                    return (
+                                                        <TableRow TableRow key="1">
+                                                            <TableCell>{item.regCode}</TableCell>
+                                                            <TableCell className='text-[12px] '>{item.regName}</TableCell>
+                                                            <TableCell>{item.countShaqelPrs}</TableCell>
+                                                            <TableCell>{item.countCancelShaqelPrs}</TableCell>
+                                                            <TableCell>{item.countBazPrs}</TableCell>
+                                                            <TableCell>{item.countCancelBazPrs}</TableCell>
+                                                            <TableCell>{item.countBazPrs + item.countShaqelPrs}</TableCell>
+                                                            <TableCell>{item.countCancelShaqelPrs + item.countCancelBazPrs}</TableCell>
+                                                            <TableCell>% {((item.countCancelBazPrs + item.countCancelShaqelPrs) / (item.countBazPrs + item.countShaqelPrs) * 100).toFixed(2)}</TableCell>
+                                                        </TableRow>
+                                                    )
+                                                })
+
+                                                }
+
+
+
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </ModalBody>
+
+                            <ModalFooter>
+                                <Button
+                                    isLoading={isLoadingReport}
+                                    onClick={handlePrint}
+                                    color="success"
+                                    variant="light"
+                                >
+                                    چاپ گزارش
+                                </Button>
+                                <Button color="foreground" variant="light" onPress={onClose}>
+                                    بستن
+                                </Button>
+
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+        </div >
     )
 }
 
