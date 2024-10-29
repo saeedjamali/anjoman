@@ -16,6 +16,8 @@ import { toast } from 'react-toastify';
 import { EyeFilledIcon, EyeSlashFilledIcon } from '@/utils/icon';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { useReactToPrint } from 'react-to-print';
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 function LoginWithPhone({ SetAuthTypesForm, role }) {
     const [isVisible, setIsVisible] = React.useState(false);
     const [isInvalidPhone, setIsInvalidPhone] = useState(false)
@@ -200,7 +202,56 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         }
         onOpen();
     }
+    const exportToExcel = (data) => {
+        // let resultData = [];
 
+        const sortedReport = report.map((item) => {
+            return {
+                regCode: item.regCode,
+                regName: item.regName,
+                countShaqelPrs: item.countShaqelPrs,
+                countCancelShaqelPrs: item.countCancelShaqelPrs,
+                countBazPrs: item.countBazPrs,
+                countCancelBazPrs: item.countCancelBazPrs,
+                all: item.countShaqelPrs + item.countBazPrs,
+                allCancel: item.countCancelShaqelPrs + item.countCancelBazPrs,
+                percent: (item.countCancelShaqelPrs + item.countCancelBazPrs) / (item.countShaqelPrs + item.countBazPrs)
+            }
+        })
+        // report.sort((a, b) => a.isConfirm.localeCompare(b.isConfirm));
+        var Heading = [
+            [
+                "کد منطقه",
+                "نام منطقه",
+                " شاغلین",
+                "انصرافی شاغلین",
+                " بازنشسته",
+                "انصرافی بازنشسته",
+                "کل پرسنل",
+                "کل انصراف",
+                "درصد انصراف"
+
+            ],
+        ];
+
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils?.json_to_sheet([]);
+        XLSX.utils.sheet_add_aoa(worksheet, Heading);
+        XLSX.utils.sheet_add_json(worksheet, sortedReport, {
+            origin: "A2",
+            skipHeader: true,
+        });
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+        const excelBuffer = XLSX.write(workbook, {
+            bookType: "xlsx",
+            type: "array",
+        });
+        const blob = new Blob([excelBuffer], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+        });
+
+        saveAs(blob, `bime${new Date().toLocaleString('fa-IR')}.xlsx`);
+    };
     return (
         <div>
             <div className="min-w-64 flex flex-col h-auto min-h-80">
@@ -484,7 +535,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                 </div>
                             </ModalBody>
 
-                            <ModalFooter>
+                            <ModalFooter className='bg-slate-100'>
                                 <Button
                                     isLoading={isLoadingReport}
                                     onClick={handlePrint}
@@ -492,6 +543,9 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                     variant="light"
                                 >
                                     چاپ گزارش
+                                </Button>
+                                <Button color="primary" variant="light" onPress={onClose} onClick={exportToExcel}>
+                                    خروجی اکسل
                                 </Button>
                                 <Button color="foreground" variant="light" onPress={onClose}>
                                     بستن
