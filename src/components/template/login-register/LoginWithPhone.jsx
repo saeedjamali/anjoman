@@ -215,9 +215,10 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                 countCancelBazPrs: item.countCancelBazPrs,
                 all: item.countShaqelPrs + item.countBazPrs,
                 allCancel: item.countCancelShaqelPrs + item.countCancelBazPrs,
-                percent: (item.countCancelShaqelPrs + item.countCancelBazPrs) / (item.countShaqelPrs + item.countBazPrs)
+                percent: (((item.countCancelShaqelPrs + item.countCancelBazPrs) / (item.countShaqelPrs + item.countBazPrs)) * 100).toFixed(2) + "%"
             }
         })
+        console.log("sortedReport--->", sortedReport)
         // report.sort((a, b) => a.isConfirm.localeCompare(b.isConfirm));
         var Heading = [
             [
