@@ -40,7 +40,7 @@ const schema = mongoose.Schema(
     level: {
       type: Number,
       required: true,
-      default: 1, //? 1: region   2: province  3: global  999: poweruser
+      default: 1, //? 1: region   2: province  3: global  999: poweruser  11:sherkat
       length: 1,
     },
     comment: {

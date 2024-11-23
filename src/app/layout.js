@@ -1,3 +1,4 @@
+
 import AppProvider from "@/components/context/AppProviders";
 import "./globals.css";
 import { authenticateMe } from "@/utils/authenticateMe";

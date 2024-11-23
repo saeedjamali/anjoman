@@ -60,7 +60,7 @@ function page() {
   const [images, setImages] = useState([]);
   const maxNumberContract = 2;
   const maxNumberFormDress = 4;
-  const maxFileSize = 300000; //300KB
+  const maxFileSize = 1000000; //300KB
   const acceptType = "jpg";
   let filterUnit = [];
   const { user, setUser, modir, setModir, units, setUnits } = useUserProvider();

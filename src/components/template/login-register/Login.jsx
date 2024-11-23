@@ -99,7 +99,9 @@ function Login({ role, SetAuthTypesForm }) {
                 },
                 body: JSON.stringify({ phone, password, role: role.name })
             });
+
             const data = await res.json();
+            
             if (data.status == 200) {
                 toast.success(data.message);
                 secureLocalStorage.setItem("hash_foj23ndas34dahsd2syt43fdkd", phone);

@@ -8,6 +8,7 @@ export async function GET(req, { params }) {
     return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
   }
 
+ 
   // const regionId = await params.regionid;
   const level = params.regionlevelyear[0];
   const regionCode = params.regionlevelyear[1];
@@ -56,7 +57,19 @@ export async function GET(req, { params }) {
         },
       ]);
     }
-
+   
+    if (level == 11) {
+      contractlist = await contractModel
+        .find({ $and: [{ "Unit.regionCode": regionCode }, { year },{ isConfirm:1 }] })
+        .populate([
+          {
+            path: "company",
+          },
+          {
+            path: "modir",
+          },
+        ]);
+    }
     if (contractlist.length != 0) {
       return Response.json({
         message: "لیست قرارداد ها با موفقیت دریافت شد",

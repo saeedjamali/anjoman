@@ -37,11 +37,11 @@ const schema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    role: {
+    role: { //999 admin
       type: Number,
       default: 0,
     },
-    result: {
+    result: { 
       type: Boolean,
       default: false,
     },

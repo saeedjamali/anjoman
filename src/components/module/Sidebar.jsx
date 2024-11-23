@@ -109,8 +109,9 @@ function Sidebar() {
                                 </span>
                             </SidebarItem>
                         }
+                        
                         {
-                            admin?.isActive == 1 && user.role == "admin" && (admin.level == 1 || admin.level == 2 || admin.level == 3 || admin.level == 999) &&
+                            admin?.isActive == 1 && user.role == "admin" && (admin.level == 1 || admin.level == 2 || admin.level == 3 || admin.level == 11 || admin.level == 999) &&
                             <SidebarItem title='لباس فرم' subMenu={[{ title: 'تایید قرارداد', url: '/p-admin/contract' }]} >
                                 <span className='pl-2 flex-center'>
                                     <PiShirtFoldedLight />

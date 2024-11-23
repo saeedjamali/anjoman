@@ -10,7 +10,8 @@ const schema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    role: {
+    role: { 
+      //? modir - admin - lecturer - parent -sherkat - user
       type: String,
       default: "USER",
     },

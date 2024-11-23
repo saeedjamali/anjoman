@@ -18,7 +18,7 @@ function Footer() {
                             {currentYear.name}
                         </span>
                     </div>
-                    <span className='mr-4 text-[10px]'> نقش : {modir ? 'مدیر ' : admin?.level == 1 ? 'کارشناس منطقه' : admin?.level == 2 ? 'کارشناس استان' : admin?.level == 3 ? 'کارشناس ستاد' : admin?.level == 999 ? 'مدیر سیستم' : 'مدرس دوره آموزش خانواده'} </span>
+                    <span className='mr-4 text-[10px]'> نقش : {modir ? 'مدیر ' : admin?.level == 1 ? 'کارشناس منطقه' : admin?.level == 2 ? 'کارشناس استان' : admin?.level == 3 ? 'کارشناس ستاد' : admin?.level == 999 ? 'مدیر سیستم' :admin?.level == 11 ? 'شرکت'  : 'مدرس دوره آموزش خانواده'} </span>
 
                 </div>
             </div>

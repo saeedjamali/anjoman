@@ -19,6 +19,7 @@ export async function POST(req) {
       return Response.json({ message: "خطا در ارتباط با پایگاه", status: 419 });
     }
     const body = await req.json();
+    // console.log("body--->", body);
     const { phone, password, role } = body;
 
     // Validation
@@ -35,6 +36,7 @@ export async function POST(req) {
     const user = await UserModel.findOne({
       $and: [{ role }, { phone }],
     });
+    // console.log("user--->", user);
 
     if (!user) {
       return Response.json({
@@ -62,7 +64,7 @@ export async function POST(req) {
         });
       }
     }
-  
+
     const isCorrectPasswordWithHash = await verifyPassword(
       password,
       user.password
@@ -79,14 +81,14 @@ export async function POST(req) {
     const refreshToken = await generateRefreshToken({ phone, role });
 
     await UserModel.findOneAndUpdate(
-      { phone },
+      { $and: [{ phone }, { role }] },
       {
         $set: {
           refreshToken,
         },
       }
     );
-
+    // console.log("u--->", u);
     const headers = new Headers();
     headers.append("Set-Cookie", `token=${accessToken};path=/;httpOnly=true;`);
     headers.append(

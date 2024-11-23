@@ -25,6 +25,7 @@ import {
   TableCell,
   TableColumn,
   Tooltip,
+  user,
 } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
@@ -59,11 +60,11 @@ import ContractManager from "@/components/module/contrct/ContractManager";
 import ImageLoader from "@/components/module/contrct/ImageLoader";
 
 function ContractPage() {
-  const [images, setImages] = useState([]);
-  const maxNumberContract = 2;
-  const maxNumberFormDress = 4;
-  const maxFileSize = 100000; //100KB
-  const acceptType = "jpg";
+  // const [images, setImages] = useState([]);
+  // const maxNumberContract = 2;
+  // const maxNumberFormDress = 4;
+  // const maxFileSize = 100000; //100KB
+  // const acceptType = "jpg";
   let sumOfQuntity = 0,
     sumOfPrice = 0,
     sumOfContractPrice = 0;
@@ -135,6 +136,10 @@ function ContractPage() {
     ]);
   }, [contractlist]);
 
+  // useEffect(() => {
+  //   console.log("currenContract----|>", currenContract);
+  // }, [showDetailContractItem]);
+
   //? rep number == isConfirm ==> 0 : currently , 1: confirm ,2:canceled , 10: no contract
   const exportToExcel = (data, repNumber) => {
     let resultData = [];
@@ -146,12 +151,13 @@ function ContractPage() {
       //   );
       //   break;
       case 100: //?گزارش جامع
-        resultData = UnitsInRegion.map((unit) => {
+        resultData = UnitsInRegion?.map((unit) => {
           // console.log("foundUnit ----->", unit.schoolCode)
           contractlist.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
           const foundUnit = contractlist.find(
             (cl) => cl.unitcode == unit.schoolCode && cl.isConfirm != 2
           );
+          console.log("foundUnit--->", foundUnit);
           if (foundUnit) {
             // console.log("founded--->", foundUnit);
             return {
@@ -178,6 +184,7 @@ function ContractPage() {
               modirname: foundUnit.modir.name,
               modirphone: foundUnit.modir.phone,
               createdAt: foundUnit.createdAt,
+              description: foundUnit?.description,
             };
           } else {
             return {
@@ -192,7 +199,7 @@ function ContractPage() {
       // console.log("foundUnit-->", resultData)
     }
 
-    resultData.sort((a, b) => a.isConfirm.localeCompare(b.isConfirm));
+    resultData?.sort((a, b) => a.isConfirm.localeCompare(b.isConfirm));
     var Heading = [
       [
         "کد منطقه",
@@ -209,6 +216,7 @@ function ContractPage() {
         "نام مدیر",
         "شماره تماس مدیر",
         "تاریخ ثبت ",
+        "توضیحات منطقه",
       ],
     ];
 
@@ -292,12 +300,14 @@ function ContractPage() {
               <span className="text-[12px]">
                 در حال بررسی ({countCurrentAction}) مورد
               </span>
-              <span
-                className="cursor-pointer"
-                onClick={() => exportToExcel(contractlist, 100)}
-              >
-                <FaDownload className="text-slate-900" />
-              </span>
+              {admin.level != 11 && (
+                <span
+                  className="cursor-pointer"
+                  onClick={() => exportToExcel(contractlist, 100)}
+                >
+                  <FaDownload className="text-slate-900" />
+                </span>
+              )}
             </div>
           </div>
           <ContractManager
@@ -342,8 +352,25 @@ function ContractPage() {
                           </TableCell>
                         </TableRow>
                         <TableRow key="3">
+                          <TableCell>مدیر واحد سازمانی</TableCell>
+                          <TableCell> {currenContract?.modir.name}</TableCell>
+                        </TableRow>
+                        <TableRow key="3">
+                          <TableCell>شماره همراه مدیر </TableCell>
+                          <TableCell> {currenContract?.modir.phone}</TableCell>
+                        </TableRow>
+                        <TableRow key="3">
                           <TableCell>شرکت طرف قرارداد</TableCell>
-                          <TableCell> {currenContract?.company.name}</TableCell>
+                          <TableCell
+                            className={`${
+                              currenContract?.company.creator
+                                ? "text-red-600"
+                                : "text-green-500"
+                            }`}
+                          >
+                            {" "}
+                            {currenContract?.company.name}
+                          </TableCell>
                         </TableRow>
                         <TableRow key="4">
                           <TableCell>آدرس شرکت طرف قرارداد</TableCell>
@@ -415,6 +442,8 @@ function ContractPage() {
                                             {(
                                               pr.quantity * pr.price
                                             ).toLocaleString()}
+                                            (قیمت واحد :
+                                            {Number(pr.price).toLocaleString()})
                                           </span>
                                           &#x2022;{" "}
                                           <span
@@ -445,7 +474,9 @@ function ContractPage() {
                         </TableRow>
 
                         <TableRow key="7">
-                          <TableCell>تصاویر بارگذاری شده از صورت‌جلسه شورای مدرسه</TableCell>
+                          <TableCell>
+                            تصاویر بارگذاری شده از صورت‌جلسه شورای مدرسه
+                          </TableCell>
                           <TableCell>
                             <div className="gap-2 flex w-full ">
                               {currenContract.imageContractList.map(

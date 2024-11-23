@@ -163,18 +163,19 @@ export default function ContractManager({
             try {
                 const response = await fetch(`/api/admin/contract/getperregion/${level}/${regionCode}/${provinceCode}/${currentYear.name}`);
                 const data = await response.json();
-
+                // console.log("contractlist--->", data);
                 if (data.status == 201) {
                     toast.success(data.message);
                     const newlist = [...data.contractlist];
                     // console.log("Data contract --->", newlist)
                     // setContractlist(newlist);
                     const viewContractlist = newlist.map((cl) => {
+                        // console.log(cl)
                         return {
                             ...cl,
 
-                            companyname: cl.isConfirm == 10 ? "فاقد قرارداد" : cl.company.name,
-                            companycode: cl.isConfirm == 10 ? "فاقد قرارداد" : cl.company.code,
+                            companyname: cl.isConfirm == 10 ? "فاقد قرارداد" : cl?.company.name,
+                            companycode: cl.isConfirm == 10 ? "فاقد قرارداد" : cl?.company.code,
                             unitname: cl.Unit.schoolName,
                             unitcode: cl.Unit.schoolCode,
                             regionname: cl.Unit.regionName,
@@ -302,7 +303,7 @@ export default function ContractManager({
                                         <EyeIcon onClick={(e) => {
                                             e.preventDefault();
                                             setCurrenContract(currentItem)
-                                            setShowDetailContractItem(prev => !prev)
+                                            setShowDetailContractItem(true)
                                             setAction(1);
 
 
@@ -325,20 +326,38 @@ export default function ContractManager({
                                 </Tooltip></div>}
 
                         {contract.isConfirm == 10 &&
-                            <Tooltip content="حذف">
-                                <span className="text-lg text-danger cursor-pointer active:opacity-50" >
-                                    <DeleteIcon className="text-red-500" onClick={(e) => {
-                                        e.preventDefault();
-                                        setCurrenContract(currentItem)
-                                        setAction(3)
-                                        setLimited(currentItem.limited)
-                                        setDescription(currentItem.description)
-                                        onOpen();
+                            <div className="flex gap-4">
+                                <Tooltip content="حذف">
+                                    <span className="text-lg text-danger cursor-pointer active:opacity-50" >
+                                        <DeleteIcon className="text-red-500" onClick={(e) => {
+                                            e.preventDefault();
+                                            setCurrenContract(currentItem)
+                                            setAction(3)
+                                            setLimited(currentItem.limited)
+                                            setDescription(currentItem.description)
+                                            onOpen();
 
 
-                                    }} />
-                                </span>
-                            </Tooltip>}
+                                        }} />
+                                    </span>
+                                </Tooltip>
+                                {/* <Tooltip content="تایید/رد  ">
+                                    <span className="text-lg text-danger cursor-pointer active:opacity-50" >
+                                        <EditIcon className="text-blue-500" onClick={(e) => {
+                                            e.preventDefault();
+                                            setCurrenContract(currentItem)
+                                            setAction(2)
+                                            setLimited(currentItem.limited)
+                                            setDescription(currentItem.description)
+                                            onOpen();
+
+
+                                        }} />
+                                    </span>
+                                </Tooltip> */}
+                            </div>}
+
+
 
 
                     </div>
@@ -528,7 +547,7 @@ export default function ContractManager({
                     wrapper: "max-h-[382px]",
                 }}
                 selectedKeys={selectedKeys}
-                selectionMode="multiple"
+                selectionMode="single"
                 sortDescriptor={sortDescriptor}
                 topContent={topContent}
                 topContentPlacement="outside"
