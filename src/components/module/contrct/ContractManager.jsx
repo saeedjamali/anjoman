@@ -310,20 +310,23 @@ export default function ContractManager({
                                         }} />
                                     </span>
                                 </Tooltip>
-                                <Tooltip content="تایید/رد  ">
-                                    <span className="text-lg text-danger cursor-pointer active:opacity-50" >
-                                        <EditIcon className="text-blue-500" onClick={(e) => {
-                                            e.preventDefault();
-                                            setCurrenContract(currentItem)
-                                            setAction(2)
-                                            setLimited(currentItem.limited)
-                                            setDescription(currentItem.description)
-                                            onOpen();
+                                {admin.level != 11 &&
+                                    <Tooltip content="تایید/رد  ">
+                                        <span className="text-lg text-danger cursor-pointer active:opacity-50" >
+                                            <EditIcon className="text-blue-500" onClick={(e) => {
+                                                e.preventDefault();
+                                                setCurrenContract(currentItem)
+                                                setAction(2)
+                                                setLimited(currentItem.limited)
+                                                setDescription(currentItem.description)
+                                                onOpen();
 
 
-                                        }} />
-                                    </span>
-                                </Tooltip></div>}
+                                            }} />
+                                        </span>
+                                    </Tooltip>
+                                }
+                            </div>}
 
                         {contract.isConfirm == 10 &&
                             <div className="flex gap-4">
