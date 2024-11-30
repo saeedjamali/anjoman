@@ -3,9 +3,8 @@ import prsModel from "@/models/bime/Prs";
 import { valiadtePrsCode, valiadteSchoolCode } from "@/utils/auth";
 
 export async function GET(req, { params }) {
-  // if (!(await authenticateMe())) {
-  //   return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
-  // }
+  return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
+
   const prsCode = params.id[0];
   const phone = params.id[1];
 

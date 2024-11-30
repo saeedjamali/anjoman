@@ -3,6 +3,7 @@ import prsModel from "@/models/bime/Prs";
 import { authAdmin, authManagerApi } from "@/utils/authenticateMe";
 
 export async function PUT(req, { params }) {
+  return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
   try {
     const body = await req.json();
     const { prsCode, phone, result } = body;

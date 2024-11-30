@@ -5,6 +5,7 @@ import { valiadtePrsCode, valiadteSchoolCode } from "@/utils/auth";
 import { Result } from "postcss";
 
 export async function POST(req, { params }) {
+  return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
   // if (!(await authenticateMe())) {
   //   return Response.json({ message: "دسترسی غیر مجاز", status: 500 });
   // }
