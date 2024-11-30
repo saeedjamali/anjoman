@@ -59,6 +59,9 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
     const handleRegister = async (event) => {
 
         event.preventDefault();
+        toast.info("زمان تکمیل فرم به اتمام رسیده است.")
+        return;
+
 
         if (!valiadtePrsCode(identifier.trim())) {
             setIsInvalidIdentifier(true)
