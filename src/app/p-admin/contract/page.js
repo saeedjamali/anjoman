@@ -372,6 +372,10 @@ function ContractPage() {
                             {currenContract?.company.name}
                           </TableCell>
                         </TableRow>
+                        <TableRow key="3">
+                          <TableCell>نام تولید کننده</TableCell>
+                          <TableCell>{currenContract?.company.owner}</TableCell>
+                        </TableRow>
                         <TableRow key="4">
                           <TableCell>آدرس شرکت طرف قرارداد</TableCell>
                           <TableCell>
