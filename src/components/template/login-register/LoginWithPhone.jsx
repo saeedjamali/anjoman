@@ -18,6 +18,10 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { useReactToPrint } from 'react-to-print';
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import Image from 'next/image';
+import ImageWithText from '@/app/quran/component/ImageWithText';
+import { InputOtp } from '@heroui/input-otp';
+
 function LoginWithPhone({ SetAuthTypesForm, role }) {
     const [isVisible, setIsVisible] = React.useState(false);
     const [isInvalidPhone, setIsInvalidPhone] = useState(false)
@@ -32,10 +36,11 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
     const [isAuth, setIsAuth] = useState(false)
     const [isSubmit, setIsSubmit] = useState(false)
     const [prs, setPrs] = useState(null)
+    const [prsCode, setPrsCode] = useState(null)
+    const [identifier, setIdentifier] = useState(null)
     const [report, setReport] = useState(null)
     const [result, setResult] = useState(null)
-    const [prss, setPrss] = useState(null)
-    const { regions, setRegions } = useState(null);
+
 
     const finishTimer = () => {
         setIsSendSms(false)
@@ -50,24 +55,30 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
 
     const { phone,
         setPhone,
-        identifier,
-        setIdentifier,
+
         password,
         setPassword } = useAppProvider();
     const [waitForSendOtpCode, setWaitForSendOtpCode] = useState(false);
 
     const handleRegister = async (event) => {
 
-        event.preventDefault();
-        toast.info("زمان تکمیل فرم به اتمام رسیده است.")
-        return;
+        // event.preventDefault();
+        // toast.info("زمان تکمیل فرم به اتمام رسیده است.")
+        // return;
 
 
-        if (!valiadtePrsCode(identifier.trim())) {
+        if (!valiadtePrsCode(prsCode.trim())) {
             setIsInvalidIdentifier(true)
             toast.error("کد پرسنلی باید 8 رقمی وارد شود");
             return false
         }
+
+        if (!valiadteMeliCode(identifier.trim())) {
+            setIsInvalidIdentifier(true)
+            toast.error("کد ملی باید 10 رقمی وارد شود");
+            return false
+        }
+
 
         if (!valiadtePhone(phone?.trim())) {
             toast.error("شماره همراه وارد شده صحیح نمی باشد.");
@@ -80,7 +91,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
 
 
         setWaitForSendOtpCode(true);
-        const res = await fetch(`/api/prs/${identifier}/${phone}`);
+        const res = await fetch(`/api/quran/prs/${prsCode}/${identifier}/${phone}`);
         const data = await res.json();
         if (data.status == 200) {
             // console.log("Data is --->", data)
@@ -150,7 +161,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         event.preventDefault();
         setIsLoading(true)
         try {
-            const res = await fetch("/api/prs/update", {
+            const res = await fetch("/api/quran/prs/update", {
                 method: "PUT",
                 header: {
                     "content-Type": "application/json"
@@ -163,6 +174,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                 // setIsAuth(false)
                 // setIsSendSms(false);
                 setPrs({ ...prs, result: isSubmit })
+                onOpen()
                 toast.success(data.message);
             } else {
                 toast.error(data.message);
@@ -205,106 +217,138 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         }
         onOpen();
     }
-    const exportToExcel = (data) => {
-        // let resultData = [];
 
-        const sortedReport = report.map((item) => {
-            return {
-                regCode: item.regCode,
-                regName: item.regName,
-                countShaqelPrs: item.countShaqelPrs,
-                countCancelShaqelPrs: item.countCancelShaqelPrs,
-                countBazPrs: item.countBazPrs,
-                countCancelBazPrs: item.countCancelBazPrs,
-                all: item.countShaqelPrs + item.countBazPrs,
-                allCancel: item.countCancelShaqelPrs + item.countCancelBazPrs,
-                percent: (((item.countCancelShaqelPrs + item.countCancelBazPrs) / (item.countShaqelPrs + item.countBazPrs)) * 100).toFixed(2) + "%"
-            }
-        })
-        console.log("sortedReport--->", sortedReport)
-        // report.sort((a, b) => a.isConfirm.localeCompare(b.isConfirm));
-        var Heading = [
-            [
-                "کد منطقه",
-                "نام منطقه",
-                " شاغلین",
-                "انصرافی شاغلین",
-                " بازنشسته",
-                "انصرافی بازنشسته",
-                "کل پرسنل",
-                "کل انصراف",
-                "درصد انصراف"
-
-            ],
-        ];
-
-        const workbook = XLSX.utils.book_new();
-        const worksheet = XLSX.utils?.json_to_sheet([]);
-        XLSX.utils.sheet_add_aoa(worksheet, Heading);
-        XLSX.utils.sheet_add_json(worksheet, sortedReport, {
-            origin: "A2",
-            skipHeader: true,
-        });
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-        const excelBuffer = XLSX.write(workbook, {
-            bookType: "xlsx",
-            type: "array",
-        });
-        const blob = new Blob([excelBuffer], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-        });
-
-        saveAs(blob, `bime${new Date().toLocaleString('fa-IR')}.xlsx`);
-    };
     return (
         <div>
-            <div className="min-w-64 flex flex-col h-auto min-h-80">
+            <div className="min-w-64 flex flex-col h-full min-h-[440px]">
                 <div className="w-full flex-1" >
                     {!isSendSms && !isAuth &&
-                        <form className="w-full" >
+                        <div className="w-full flex flex-col justify-around items-center" >
 
-                            <Input
-                                label="کد پرسنلی"
-                                inputProps={{ maxLength: 8 }}
-                                isInvalid={isInvalidIdentifier}
-                                size='sm'
-                                // maxLength={11}
-                                // placeholder="ترکیب حروف و اعداد"
-                                errorMessage="کد پرسنلی 8 رقم می باشد"
-                                type="number"
-                                // className="max-w-xs "
-                                value={identifier} onChange={() => setIdentifier(event.target.value)} />
+                            <div className="w-full space-y-2">
+                                <Input
+                                    label="کد پرسنلی"
+                                    inputProps={{ maxLength: 8 }}
+                                    isInvalid={isInvalidIdentifier}
+                                    size='sm'
+                                    // maxLength={11}
+                                    // placeholder="ترکیب حروف و اعداد"
+                                    errorMessage="کد پرسنلی 8 رقم می باشد"
+                                    type="number"
+
+                                    value={prsCode} onChange={() => setPrsCode(event.target.value)}
+                                    classNames={{
+                                        label: "text-black/50 dark:text-white/90",
+                                        input: [
+                                            "bg-transparent",
+                                            "text-black/90 dark:text-lime-800",
+                                            "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+                                        ],
+                                        innerWrapper: "bg-transparent",
+                                        inputWrapper: [
+                                            "shadow-xl",
+                                            "bg-default-200/50",
+                                            "dark:bg-default/60",
+                                            "backdrop-blur-xl",
+                                            "backdrop-saturate-200",
+                                            "hover:bg-default-200/70",
+                                            "dark:hover:bg-default/70",
+                                            "group-data-[focus=true]:bg-default-200/50",
+                                            "dark:group-data-[focus=true]:bg-default/60",
+                                            "!cursor-text",
+                                        ],
+                                    }} />
+
+                                <Input
+                                    label="کد ملی"
+                                    inputProps={{ maxLength: 10 }}
+                                    isInvalid={isInvalidIdentifier}
+                                    size='sm'
+                                    // maxLength={11}
+                                    // placeholder="ترکیب حروف و اعداد"
+                                    errorMessage="کد ملی 10 رقم می باشد"
+                                    type="number"
+                                    // className="max-w-xs "
+                                    value={identifier} onChange={() => setIdentifier(event.target.value)}
+                                    classNames={{
+                                        label: "text-black/50 dark:text-white/90",
+                                        input: [
+                                            "bg-transparent",
+                                            "text-black/90 dark:text-white/90",
+                                            "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+                                        ],
+                                        innerWrapper: "bg-transparent",
+                                        inputWrapper: [
+                                            "shadow-xl",
+                                            "bg-default-200/50",
+                                            "dark:bg-default/60",
+                                            "backdrop-blur-xl",
+                                            "backdrop-saturate-200",
+                                            "hover:bg-default-200/70",
+                                            "dark:hover:bg-default/70",
+                                            "group-data-[focus=true]:bg-default-200/50",
+                                            "dark:group-data-[focus=true]:bg-default/60",
+                                            "!cursor-text",
+                                        ],
+                                    }}
+                                />
 
 
-                            <Input
-                                label="شماره همراه"
-                                inputProps={{ maxLength: 11 }}
-                                isInvalid={isInvalidPhone}
-                                size='sm'
-                                // maxLength={11}
-                                // placeholder="ترکیب حروف و اعداد"
-                                errorMessage="شماره همراه 11 رقمی"
-                                type="number"
-                                className="mt-8 "
-                                value={phone} onChange={(event) => setPhone(event.target.value)} />
-                            {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
+                                <Input
+                                    label="شماره همراه"
+                                    inputProps={{ maxLength: 11 }}
+                                    isInvalid={isInvalidPhone}
+                                    size='sm'
+                                    // maxLength={11}
+                                    // placeholder="ترکیب حروف و اعداد"
+                                    errorMessage="شماره همراه 11 رقمی"
+                                    type="number"
 
-                            <Button isLoading={waitForSendOtpCode} type='submit' className="w-full bg-btn-primary text-white text-[16px] py-2 rounded-full mt-8 flex-center " onClick={() => handleRegister(event)}>
+                                    value={phone} onChange={(event) => setPhone(event.target.value)}
+
+                                    classNames={{
+                                        label: "text-black/50 dark:text-white/90",
+                                        input: [
+                                            "bg-transparent",
+                                            "text-black/90 dark:text-white/90",
+                                            "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+                                        ],
+                                        innerWrapper: "bg-transparent",
+                                        inputWrapper: [
+                                            "shadow-xl",
+                                            "bg-default-200/50",
+                                            "dark:bg-default/60",
+                                            "backdrop-blur-xl",
+                                            "backdrop-saturate-200",
+                                            "hover:bg-default-200/70",
+                                            "dark:hover:bg-default/70",
+                                            "group-data-[focus=true]:bg-default-200/50",
+                                            "dark:group-data-[focus=true]:bg-default/60",
+                                            "!cursor-text",
+                                        ],
+                                    }} />
+                                {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
+
+                            </div>
+                            <Button isLoading={waitForSendOtpCode} type='submit' className="w-full bg-emerald-600 text-white text-[16px] py-2 rounded-lg  flex-center mt-12 " onClick={() => handleRegister(event)}>
                                 ارسال کد یکبار مصرف
                             </Button>
 
 
-                        </form>
+                        </div>
 
 
                     }
                     {isSendSms && !isAuth &&
-                        <form className="w-full flex-1 flex-col-center " onSubmit={(event) => handleVerifyOtp(event)} >
+                        <form className="w-full flex-1 flex-col-center  min-h-[420px] " onSubmit={(event) => handleVerifyOtp(event)} >
                             <span className=" text-header-font-color mb-8 mt-4 lg:mb-12 flex-center w-full text-center text-[14px]">{`کد ارسالی به شماره همراه خود را در این قسمت وارد کنید`}</span>
-                            <input type="number" placeholder="کد اعتبارسنجی" className="input-text  text-center" value={otp} onChange={(event) => setOtp(event.target.value)} />
+                            {/* <input type="number" placeholder="کد اعتبارسنجی" className="input-text  text-center" value={otp} onChange={(event) => setOtp(event.target.value)} /> */}
+                            <div className="flex flex-col items-start gap-2" dir="ltr">
 
+                                <InputOtp variant={"faded"} length={5} value={otp} onValueChange={setOtp} />
+                            </div>
                             {/* <span className=' text-[12px] mt-6'> زمان باقی مانده : </span> */}
-                            <Button isLoading={isLoading} type='submit' className="w-full bg-btn-primary text-white  text-[16px] py-2 rounded-full mt-12 flex-center" onClick={event => handleVerifyOtp(event)} >
+                            <Button isLoading={isLoading} type='submit' className="w-full  text-white  text-[16px] py-2 rounded-lg mt-12 flex-center bg-emerald-600" onClick={event => handleVerifyOtp(event)} >
                                 <span className='flex-1 text-[14px]'>اعتبارسنجی و ورود</span>
                                 <span className="ml-2 text-[10px]">
                                     <CountdownCircleTimer
@@ -312,7 +356,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                         strokeWidth={2}
                                         isPlaying
                                         duration={120}
-                                        colors={["#8080FF", "#2AD4FF"]}
+                                        colors={["#8080FF", "#052e16"]}
                                         colorsTime={[120, 60]}
                                         onComplete={finishTimer}
                                     >
@@ -320,7 +364,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                     </CountdownCircleTimer>
                                 </span>
                             </Button>
-                            <Button type='submit' className="w-full bg-btn-secondary text-black  text-[16px] py-2 rounded-full mt-4 flex-center" onClick={() => setIsSendSms(false)} >
+                            <Button type='submit' className="w-full bg-btn-secondary text-black  text-[16px] py-2 rounded-lg mt-4 flex-center" onClick={() => setIsSendSms(false)} >
                                 <span className='flex-1 text-[14px]'>بازگشت به مرحله قبل</span>
                                 <span className="ml-2 text-[10px]">
 
@@ -330,86 +374,34 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                     }
 
                     {isAuth &&
-                        <form className="w-full gap-4 space-y-4 " >
+                        <form className="w-full gap-4 space-y-4 text-right flex flex-col justify-between min-h-[420px]" >
+                            <div>
+                                <p className='text-right text-[14px] text-sky-800 '>همکار محترم {prs.gender == "مرد" ? "جناب آقای " : " سرکار خانم"} {prs.name} {prs.family} خوش آمدید</p>
 
-                            <Input
-                                label="کد پرسنلی"
-                                inputProps={{ maxLength: 8 }}
-                                isInvalid={isInvalidIdentifier}
-                                size='sm'
-                                isDisabled
-                                type="number"
-                                color='primary'
-                                className='text-black'
-                                value={prs?.prsCode} />
+                                {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
+                                <div className='relative mt-2  flex justify-start items-start text-right'>
+                                    <Checkbox size='sm' isSelected={isSubmit} onValueChange={setIsSubmit} radius="md" >
+                                        <p className='text-[12px] text-justify'>اینجانب تمایل به دریافت ابلاغیه قران و نماز را دارم
+                                        </p>
 
-
-                            <Input
-                                label="کد ملی"
-                                inputProps={{ maxLength: 8 }}
-                                isInvalid={isInvalidIdentifier}
-                                size='sm'
-                                isDisabled
-                                type="number"
-                                color='primary'
-                                value={prs?.meliCodee} />
-
-
-
-                            <Input
-                                label="نام و نام خانوادگی"
-                                isInvalid={isInvalidIdentifier}
-                                size='sm'
-                                isDisabled
-                                color='primary'
-                                type="text"
-
-                                value={prs?.name + " " + prs?.family} />
-
-                            <Input
-                                label="وضعیت اشتغال"
-                                isInvalid={isInvalidIdentifier}
-                                size='sm'
-                                isDisabled
-                                type="text"
-                                color='primary'
-                                value={prs.status == 1 ? "شاغل" : prs.status == 2 ? "بازنشسته" : "نامشخص"} onChange={() => setIdentifier(event.target.value)} />
-
-
-                            <Input
-                                label="منطقه"
-                                isInvalid={isInvalidIdentifier}
-                                size='sm'
-                                isDisabled
-                                type="text"
-                                color='primary'
-                                value={prs?.regCode + " - " + prs?.regName} />
-                            <Input
-                                label="وضعیت فعلی بیمه عمر "
-                                isInvalid={isInvalidIdentifier}
-                                size='sm'
-                                isDisabled
-                                type="text"
-                                color={prs?.result ? 'danger' : 'success'}
-                                value={prs?.result ? "غیرفعال" : " فعال"} />
-
-
-                            {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
-                            <div className='relative mt-2  flex justify-start items-start text-right'>
-                                <Checkbox size='sm' isSelected={isSubmit} onValueChange={setIsSubmit} radius="md" >
-                                    <p className='text-[12px] text-justify'>
-                                        اینجانب با اطلاع و آگاهی کامل از شرایط قرارداد بیمه عمر مکمل1404-1403( حق بیمه سالانه4/801/824ریال و پرداخت غرامت نقص عضو،ازکارافتادگی در اثر حوادث و فوت700/000/000ریال)  انصراف خود را از این بیمه اعلام می نمایم.
-                                    </p>
-
-                                </Checkbox>
+                                    </Checkbox>
+                                </div>
+                                {/* <ImageWithText
+                                    imageSrc="/images/quran/eblaq.jpg"
+                                    altText="Example Image"
+                                    text={prs.name+" "+prs.family}
+                                    textPosition={{ top: '32%', left: '38%' }} // Adjust position as needed
+                                /> */}
                             </div>
                             {/* isDisabled={!isSubmit} */}
-                            <Button isLoading={isLoading} type='submit' color='success' className="w-full  text-white text-[16px] py-2 rounded-full mt-8 flex-center " onClick={() => handleSubmit(event)}>
-                                تایید
-                            </Button>
-                            <Button type='submit' color='danger' className="w-full  text-white text-[16px] py-2 rounded-full mt-8 flex-center " onClick={() => handleExit(event)}>
-                                خروج
-                            </Button>
+                            <div>
+                                <Button isLoading={isLoading} isDisabled={!isSubmit} type='submit' className="w-full bg-emerald-900  text-white text-[16px] py-2 rounded-full mt-8 flex-center " onClick={() => handleSubmit(event)}>
+                                    تایید و مشاهده ابلاغیه
+                                </Button>
+                                <Button type='submit' color='danger' className="w-full  text-white text-[16px] py-2 rounded-full mt-4 flex-center " onClick={() => handleExit(event)}>
+                                    خروج
+                                </Button>
+                            </div>
 
                         </form>
 
@@ -432,7 +424,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                 size='5xl'
                 radius="lg"
                 classNames={{
-                    body: "py-6 bg-white",
+                    body: "bg-white",
                     backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
                     base: "border-[#292f46] bg-slate-500 text-black",
                     header: " border-[#292f46] text-white  bg-primary_color ",
@@ -440,101 +432,23 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                     closeButton: "hover:bg-white/5 active:bg-white/10 ",
                 }}
             >
-                <ModalContent>
+                <ModalContent className=' '>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col justify-between items-start ">
-                                گزارش آماری
+                            <ModalHeader className="flex flex-col justify-between items-start bg-sky-900 ">
+                                مشاهده و چاپ ابلاغیه
                             </ModalHeader>
-                            <ModalBody className='overflow-auto scroll-auto max-h-[450px]'>
+                            <ModalBody className='overflow-auto scroll-auto max-h-[450px] bg-sky-100'>
 
-                                <div dir="rtl" className=' bg-white' >
-                                    <div dir="rtl" className=' bg-white p-4 ' ref={componentRef}>
+                                <div dir="rtl" className=' bg-white min-h-[450px]' >
+                                    <div dir="rtl" className=" bg-white  relative" ref={componentRef}>
 
-                                        <p className='font-bold my-8 text-center'> گزارش آماری انصراف از بیمه عمر استان خراسان رضوی
-                                            <span className='text-[12px] '> (تاریخ گزارش : {new Date().toLocaleString('fa-IR')})</span>
-                                        </p>
+                                        <img src={"/images/quran/eblaq.jpg"} width={100} height={100} className=' w-full bg-cover rounded-sm '>
 
-                                        <div className='grid grid-cols-3 gap-4 font-bold m-8 ring-1 ring-black rounded-md p-4'>
-                                            <div className='p-4 col-span-1 bg-slate-300 rounded-lg flex flex-col'>
-                                                <p className='text-center'>کل پرسنل</p>
-                                                <div className='flex justify-between items-center'>
-                                                    <div className='flex flex-col'>
-                                                        <span className='mt-4'> کل : {result?.allShaqel + result?.allBaz} </span>
-
-                                                        <span className='mt-4'> انصراف: {result?.allcancelShaqel + result?.allCancelBaz} </span>
-                                                    </div>
-                                                    <span className='w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white'>
-                                                        {(((result?.allcancelShaqel + result?.allCancelBaz) / (result?.allShaqel + result?.allBaz)) * 100).toFixed(2)} %
-                                                    </span>
-                                                </div>
-
-                                            </div>
-                                            <div className='p-4 col-span-1 bg-slate-300 rounded-lg flex flex-col'>
-                                                <p className='text-center'>شاغلین</p>
-                                                <div className='flex justify-between items-center'>
-                                                    <div className='flex flex-col'>
-                                                        <span className='mt-4'> کل : {result?.allShaqel} </span>
-                                                        <span className='mt-4'> انصراف: {result?.allcancelShaqel} </span>
-                                                    </div>
-                                                    <span className='w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white'>
-                                                        {(((result?.allcancelShaqel) / (result?.allShaqel)) * 100).toFixed(2)} %
-                                                    </span>
-                                                </div>
-
-                                            </div>
-                                            <div className='p-4 col-span-1 bg-slate-300 rounded-lg flex flex-col'>
-                                                <p className='text-center'>بازنشسته</p>
-                                                <div className='flex justify-between items-center'>
-                                                    <div className='flex flex-col'>
-                                                        <span className='mt-4'> کل : {result?.allBaz} </span>
-                                                        <span className='mt-4'> انصراف: {result?.allCancelBaz} </span>
-                                                    </div>
-                                                    <span className='w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white '>
-                                                        {(((result?.allCancelBaz) / (result?.allBaz)) * 100).toFixed(2)} %
-                                                    </span>
-                                                </div>
-
-                                            </div>
-
-
-
-                                        </div>
-                                        <Table className='' isStriped aria-label="Example static collection table " >
-                                            <TableHeader>
-                                                <TableColumn >منطقه</TableColumn>
-                                                <TableColumn > نام منطقه </TableColumn>
-                                                <TableColumn > شاغل</TableColumn>
-                                                <TableColumn >انصرافی</TableColumn>
-                                                <TableColumn > بازنشسته</TableColumn>
-                                                <TableColumn >انصرافی</TableColumn>
-                                                <TableColumn >کل</TableColumn>
-                                                <TableColumn >انصرافی</TableColumn>
-                                                <TableColumn >درصد انصراف</TableColumn>
-                                            </TableHeader>
-                                            <TableBody>
-                                                {report.map(item => {
-                                                    return (
-                                                        <TableRow TableRow key="1">
-                                                            <TableCell>{item.regCode}</TableCell>
-                                                            <TableCell className='text-[12px] '>{item.regName}</TableCell>
-                                                            <TableCell>{item.countShaqelPrs}</TableCell>
-                                                            <TableCell>{item.countCancelShaqelPrs}</TableCell>
-                                                            <TableCell>{item.countBazPrs}</TableCell>
-                                                            <TableCell>{item.countCancelBazPrs}</TableCell>
-                                                            <TableCell>{item.countBazPrs + item.countShaqelPrs}</TableCell>
-                                                            <TableCell>{item.countCancelShaqelPrs + item.countCancelBazPrs}</TableCell>
-                                                            <TableCell>% {((item.countCancelBazPrs + item.countCancelShaqelPrs) / (item.countBazPrs + item.countShaqelPrs) * 100).toFixed(2)}</TableCell>
-                                                        </TableRow>
-                                                    )
-                                                })
-
-                                                }
-
-
-
-                                            </TableBody>
-                                        </Table>
+                                        </img>
+                                        <div className='absolute top-[33%] right-[50%] z-10 h-24 font-iranNastaliq text-[80%] md:text-[18px] text-black'>{prs.name} {prs.family}</div>
+                                        <div className='absolute top-[36.5%] right-[29%] z-10 h-24  text-[70%] md:text-[12px] text-black font-iranSans'>{prs.prs}</div>
+                                        <div className='absolute top-[36.5%] right-[47%] z-10 h-24 font-iranNastaliq text-[80%] md:text-[18px] text-black'>{prs.province}</div>
                                     </div>
                                 </div>
                             </ModalBody>
@@ -546,11 +460,9 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                     color="success"
                                     variant="light"
                                 >
-                                    چاپ گزارش
+                                    چاپ / دانلود
                                 </Button>
-                                <Button color="primary" variant="light" onPress={onClose} onClick={exportToExcel}>
-                                    خروجی اکسل
-                                </Button>
+
                                 <Button color="foreground" variant="light" onPress={onClose}>
                                     بستن
                                 </Button>

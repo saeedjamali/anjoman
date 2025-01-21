@@ -28,7 +28,7 @@ export async function POST(req) {
           password: "r@zAv!1398*",
           line: "9830007485",
           mobile: phone,
-          message: `کد اعتبارسنجی سامانه ثبت بیمه عمر:${code}  `,
+          message: `کد اعتبارسنجی سامانه قران و عترت:${code}  `,
           type: 0,
           template: 0,
         },

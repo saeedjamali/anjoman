@@ -149,6 +149,10 @@ body {
     @apply p-4 bg-slate-200 rounded-lg
   }
 
+  .bg-glass {
+    @apply bg-sky-100 backdrop-blur-md rounded-xl border border-white/20 shadow-lg p-2
+  }
+
 }
 
 
