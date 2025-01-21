@@ -21,7 +21,10 @@ import { saveAs } from "file-saver";
 import Image from 'next/image';
 import ImageWithText from '@/app/quran/component/ImageWithText';
 import { InputOtp } from '@heroui/input-otp';
-
+import { setOptions } from 'leaflet';
+// import PrintableComponent from '@/components/quran/PrintableComponent ';
+import dynamic from 'next/dynamic';
+const PrintableComponent = dynamic(() => import('@/components/quran/PrintableComponent '), { ssr: false });
 function LoginWithPhone({ SetAuthTypesForm, role }) {
     const [isVisible, setIsVisible] = React.useState(false);
     const [isInvalidPhone, setIsInvalidPhone] = useState(false)
@@ -40,11 +43,15 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
     const [identifier, setIdentifier] = useState(null)
     const [report, setReport] = useState(null)
     const [result, setResult] = useState(null)
+    const [isPrint, setIsPrint] = useState(false)
 
 
     const finishTimer = () => {
         setIsSendSms(false)
     }
+
+
+
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -66,14 +73,14 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         // toast.info("زمان تکمیل فرم به اتمام رسیده است.")
         // return;
 
-
-        if (!valiadtePrsCode(prsCode.trim())) {
+        setOtp("")
+        if (!valiadtePrsCode(prsCode?.trim())) {
             setIsInvalidIdentifier(true)
             toast.error("کد پرسنلی باید 8 رقمی وارد شود");
             return false
         }
 
-        if (!valiadteMeliCode(identifier.trim())) {
+        if (!valiadteMeliCode(identifier?.trim())) {
             setIsInvalidIdentifier(true)
             toast.error("کد ملی باید 10 رقمی وارد شود");
             return false
@@ -175,6 +182,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                 // setIsSendSms(false);
                 setPrs({ ...prs, result: isSubmit })
                 onOpen()
+                setIsPrint(true)
                 toast.success(data.message);
             } else {
                 toast.error(data.message);
@@ -338,11 +346,23 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                     }
                     {isSendSms && !isAuth &&
                         <form className="w-full flex-1 flex-col-center  min-h-[420px] " onSubmit={(event) => handleVerifyOtp(event)} >
-                            <span className=" text-header-font-color mb-8 mt-4 lg:mb-12 flex-center w-full text-center text-[14px]">{`کد ارسالی به شماره همراه خود را در این قسمت وارد کنید`}</span>
+                            <span className=" text-emerald-950 mb-8 mt-4 lg:mb-12 flex-center w-full text-center text-[14px]">{`کد ارسالی به شماره همراه خود را در این قسمت وارد کنید`}</span>
                             {/* <input type="number" placeholder="کد اعتبارسنجی" className="input-text  text-center" value={otp} onChange={(event) => setOtp(event.target.value)} /> */}
-                            <div className="flex flex-col items-start gap-2" dir="ltr">
+                            <div className="flex flex-col items-center justify-center gap-2 text-center" dir="ltr">
 
-                                <InputOtp variant={"faded"} length={5} value={otp} onValueChange={setOtp} />
+                                <InputOtp variant={"faded"} length={5} value={otp} onValueChange={setOtp} errorMessage="کد ارسالی نامعتبر است" color={"default"} classNames={{
+
+                                    segmentWrapper: "gap-x-2",
+                                    segment: [
+                                        "relative",
+                                        "h-10",
+                                        "w-10",
+                                        "border-1",
+                                        "border-green-900",
+                                        // "bg-green-900"
+
+                                    ],
+                                }} />
                             </div>
                             {/* <span className=' text-[12px] mt-6'> زمان باقی مانده : </span> */}
                             <Button isLoading={isLoading} type='submit' className="w-full  text-white  text-[16px] py-2 rounded-lg mt-12 flex-center bg-emerald-600" onClick={event => handleVerifyOtp(event)} >
@@ -362,7 +382,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                 </span>
                             </Button>
                             <Button type='submit' className="w-full bg-btn-secondary text-black  text-[16px] py-2 rounded-lg mt-4 flex-center" onClick={() => setIsSendSms(false)} >
-                                <span className='flex-1 text-[14px]'>بازگشت به مرحله قبل</span>
+                                <span className='flex-1 text-[14px] text-emerald-950'>بازگشت به مرحله قبل</span>
                                 <span className="ml-2 text-[10px]">
 
                                 </span>
@@ -383,6 +403,12 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
 
                                     </Checkbox>
                                 </div>
+                                {/* {isPrint &&
+                                    <div className=''>
+
+                                        <PrintableComponent ref={componentRef} prs={prs} />
+                                    </div>
+                                } */}
                                 {/* <ImageWithText
                                     imageSrc="/images/quran/eblaq.jpg"
                                     altText="Example Image"
@@ -393,7 +419,10 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                             {/* isDisabled={!isSubmit} */}
                             <div>
                                 <Button isLoading={isLoading} isDisabled={!isSubmit} type='submit' className="w-full bg-emerald-900  text-white text-[16px] py-2 rounded-full mt-8 flex-center " onClick={() => handleSubmit(event)}>
-                                    تایید و مشاهده ابلاغیه
+                                    مشاهده و چاپ ابلاغیه
+                                </Button>
+                                <Button isLoading={isLoading} isDisabled={!isSubmit} type='submit' className="w-full bg-emerald-900  text-white text-[16px] py-2 rounded-full  mt-4 flex-center " onClick={handlePrint}>
+                                    چاپ
                                 </Button>
                                 <Button type='submit' color='danger' className="w-full  text-white text-[16px] py-2 rounded-full mt-4 flex-center " onClick={() => handleExit(event)}>
                                     خروج
@@ -443,9 +472,9 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                         <img src={"/images/quran/eblaq.jpg"} width={100} height={100} className=' w-full bg-cover rounded-sm '>
 
                                         </img>
-                                        <div className='absolute top-[33%] right-[50%] z-10 h-24 font-iranNastaliq text-[80%] md:text-[20px] text-gray-700 font-bold'>{prs.name} {prs.family}</div>
-                                        <div className='absolute top-[36.5%] right-[29%] z-10 h-24  text-[70%] md:text-[12px] text-black font-iranSans  text-gray-700 font-bold'>{prs.prs}</div>
-                                        <div className='absolute top-[36.5%] right-[47%] z-10 h-24 font-iranNastaliq text-[80%] md:text-[20px] text-gray-700 font-bold'>{prs.province}</div>
+                                        <div className='absolute top-[33%] right-[50%] z-10 h-24 font-iranNastaliq text-[12px] md:text-[20px] text-gray-700 font-bold'>{prs.name} {prs.family}</div>
+                                        <div className='absolute top-[36.5%] right-[29%] z-10 h-24  text-[10px] md:text-[12px] font-iranSans  text-gray-700 font-bold'>{prs.prs}</div>
+                                        <div className='absolute top-[36.5%] right-[47%] z-10 h-24 font-iranNastaliq text-[12px] md:text-[20px] text-gray-700 font-bold'>{prs.province}</div>
                                     </div>
                                 </div>
                             </ModalBody>
