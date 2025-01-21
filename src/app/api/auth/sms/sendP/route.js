@@ -18,7 +18,9 @@ export async function POST(req) {
     }
     const now = new Date();
     const expTime = now.getTime() + 300_000; // 5 Mins
-    const code = Math.floor(Math.random() * 99999);
+    const code = Math.floor(Math.random() * 99999)
+      .toString()
+      .padEnd(5, "0");
 
     request.post(
       {

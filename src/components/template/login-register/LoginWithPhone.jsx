@@ -238,7 +238,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
 
                                     value={prsCode} onChange={() => setPrsCode(event.target.value)}
                                     classNames={{
-                                        label: "text-black/50 dark:text-white/90",
+                                        label: "text-black/80 dark:text-white/90",
                                         input: [
                                             "bg-transparent",
                                             "text-black/90 dark:text-lime-800",
@@ -246,13 +246,10 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                         ],
                                         innerWrapper: "bg-transparent",
                                         inputWrapper: [
-                                            "shadow-xl",
+
                                             "bg-default-200/50",
-                                            "dark:bg-default/60",
-                                            "backdrop-blur-xl",
-                                            "backdrop-saturate-200",
-                                            "hover:bg-default-200/70",
-                                            "dark:hover:bg-default/70",
+
+
                                             "group-data-[focus=true]:bg-default-200/50",
                                             "dark:group-data-[focus=true]:bg-default/60",
                                             "!cursor-text",
@@ -356,7 +353,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                         strokeWidth={2}
                                         isPlaying
                                         duration={120}
-                                        colors={["#8080FF", "#052e16"]}
+                                        colors={["#22c55e", "#052e16"]}
                                         colorsTime={[120, 60]}
                                         onComplete={finishTimer}
                                     >
@@ -446,9 +443,9 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                         <img src={"/images/quran/eblaq.jpg"} width={100} height={100} className=' w-full bg-cover rounded-sm '>
 
                                         </img>
-                                        <div className='absolute top-[33%] right-[50%] z-10 h-24 font-iranNastaliq text-[80%] md:text-[18px] text-black'>{prs.name} {prs.family}</div>
-                                        <div className='absolute top-[36.5%] right-[29%] z-10 h-24  text-[70%] md:text-[12px] text-black font-iranSans'>{prs.prs}</div>
-                                        <div className='absolute top-[36.5%] right-[47%] z-10 h-24 font-iranNastaliq text-[80%] md:text-[18px] text-black'>{prs.province}</div>
+                                        <div className='absolute top-[33%] right-[50%] z-10 h-24 font-iranNastaliq text-[80%] md:text-[20px] text-gray-700 font-bold'>{prs.name} {prs.family}</div>
+                                        <div className='absolute top-[36.5%] right-[29%] z-10 h-24  text-[70%] md:text-[12px] text-black font-iranSans  text-gray-700 font-bold'>{prs.prs}</div>
+                                        <div className='absolute top-[36.5%] right-[47%] z-10 h-24 font-iranNastaliq text-[80%] md:text-[20px] text-gray-700 font-bold'>{prs.province}</div>
                                     </div>
                                 </div>
                             </ModalBody>
