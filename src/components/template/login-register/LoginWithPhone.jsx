@@ -373,7 +373,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                     {isAuth &&
                         <form className="w-full gap-4 space-y-4 text-right flex flex-col justify-between min-h-[420px]" >
                             <div>
-                                <p className='text-right text-[14px] text-sky-800 '>همکار محترم {prs.gender == "مرد" ? "جناب آقای " : " سرکار خانم"} {prs.name} {prs.family} خوش آمدید</p>
+                                <p className='text-right text-[14px] text-emerald-800 '>همکار محترم {prs.gender == "مرد" ? "جناب آقای " : " سرکار خانم"} {prs.name} {prs.family} خوش آمدید</p>
 
                                 {/* <input type="password" placeholder="رمز عبور" className="input-text  mt-4" value={password} onChange={() => setPassword(event.target.value)} /> */}
                                 <div className='relative mt-2  flex justify-start items-start text-right'>
