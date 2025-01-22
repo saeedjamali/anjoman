@@ -221,7 +221,6 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         }
         onOpen();
     }
-    console.log(isSubmit)
     return (
         <div>
             <div className="min-w-64 flex flex-col h-full min-h-[440px]">
@@ -480,7 +479,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                     isLoading={isLoadingReport}
                                     onClick={() => handlePrint()}
                                     color="success"
-                                    className='text-white bg-emerald-900 cursor-pointer'
+                                    className='text-white bg-emerald-900 cur'
                                 >
                                     چاپ / دانلود
                                 </Button>
