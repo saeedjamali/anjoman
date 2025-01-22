@@ -480,7 +480,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                     isLoading={isLoadingReport}
                                     onClick={handlePrint}
                                     color="success"
-                                    variant="light"
+                                    className='text-white bg-emerald-900'
                                 >
                                     چاپ / دانلود
                                 </Button>
