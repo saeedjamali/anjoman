@@ -1,5 +1,5 @@
 import { useAppProvider } from '@/components/context/AppProviders';
-import { valiadteMeliCode, valiadtePassword, valiadtePhone, valiadtePrsCode, valiadteRegionCode, valiadteSchoolCode } from '@/utils/auth';
+import { valiadteMeliCode, valiadtePassword, valiadtePhone, valiadtePrsCode } from '@/utils/auth';
 import { authTypes, roles, year } from '@/utils/constants'
 import {
     Button, Checkbox, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Modal,
@@ -18,13 +18,9 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { useReactToPrint } from 'react-to-print';
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import Image from 'next/image';
-import ImageWithText from '@/app/quran/component/ImageWithText';
+
 import { InputOtp } from '@heroui/input-otp';
-import { setOptions } from 'leaflet';
-// import PrintableComponent from '@/components/quran/PrintableComponent ';
-import dynamic from 'next/dynamic';
-const PrintableComponent = dynamic(() => import('@/components/quran/PrintableComponent '), { ssr: false });
+
 function LoginWithPhone({ SetAuthTypesForm, role }) {
     const [isVisible, setIsVisible] = React.useState(false);
     const [isInvalidPhone, setIsInvalidPhone] = useState(false)
@@ -421,9 +417,9 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                                 <Button isLoading={isLoading} isDisabled={!isSubmit} type='submit' className="w-full bg-emerald-900  text-white text-[16px] py-2 rounded-full mt-8 flex-center " onClick={() => handleSubmit(event)}>
                                     مشاهده و چاپ ابلاغیه
                                 </Button>
-                                <Button isLoading={isLoading} isDisabled={!isSubmit} type='submit' className="w-full bg-emerald-900  text-white text-[16px] py-2 rounded-full  mt-4 flex-center " onClick={handlePrint}>
+                                {/* <Button isLoading={isLoading} isDisabled={!isSubmit} type='submit' className="w-full bg-emerald-900  text-white text-[16px] py-2 rounded-full  mt-4 flex-center " onClick={handlePrint}>
                                     چاپ
-                                </Button>
+                                </Button> */}
                                 <Button type='submit' color='danger' className="w-full  text-white text-[16px] py-2 rounded-full mt-4 flex-center " onClick={() => handleExit(event)}>
                                     خروج
                                 </Button>
