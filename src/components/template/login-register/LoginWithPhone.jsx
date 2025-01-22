@@ -221,7 +221,7 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
         }
         onOpen();
     }
-
+    console.log(isSubmit)
     return (
         <div>
             <div className="min-w-64 flex flex-col h-full min-h-[440px]">
@@ -478,9 +478,9 @@ function LoginWithPhone({ SetAuthTypesForm, role }) {
                             <ModalFooter className='bg-slate-100'>
                                 <Button
                                     isLoading={isLoadingReport}
-                                    onClick={handlePrint}
+                                    onClick={() => handlePrint()}
                                     color="success"
-                                    className='text-white bg-emerald-900'
+                                    className='text-white bg-emerald-900 cursor-pointer'
                                 >
                                     چاپ / دانلود
                                 </Button>
