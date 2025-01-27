@@ -15,7 +15,6 @@ export async function POST(req) {
 
   const formData = await req.formData();
 
-  console.log("formData--->", formData);
   const year = formData.get("year");
   const region = formData.get("region");
   const owner = formData.get("owner");
